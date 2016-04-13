@@ -1,18 +1,34 @@
+*.class
+*.log
+
+# sbt specific
+.cache
+.history
+.lib/
+lib_managed/
+src_managed/
+
+# Scala-IDE specific
+.scala_dependencies
+.worksheet
+
+# Play framework
 logs
 project/project
 project/target
 target
 tmp
-.history
 dist
-/.idea
-/*.iml
-/out
-/.idea_modules
-/.classpath
-/.project
-/RUNNING_PID
-/.settings
 
+# IDE
+.idea/
 
-    
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
