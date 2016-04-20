@@ -1,13 +1,17 @@
 package models
 
+import play.api.libs.json.Json
 import slick.driver.MySQLDriver.api._
 
-class Admin(tag: Tag) extends Table[(Int, String, String)](tag, "admin"){
-  def id = column[Int]("id", O.PrimaryKey)
-  def email = column[String]("email")
-  def digest = column[String]("digest")
+case class Admin(id: Int, name: String)
 
-  def * = (id, email, digest)
+class Admins(tag: Tag) extends Table[Admin](tag, "admin") {
+  def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
+  def name = column[String]("name")
+
+  def * = (id, name) <> (Admin.tupled, Admin.unapply)
 }
 
-
+object AdminFormatter {
+  implicit val adminFormat = Json.format[Admin]
+}
