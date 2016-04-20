@@ -22,6 +22,7 @@ dist
 
 # IDE
 .idea/
+*.iml
 
 # OS generated files #
 ######################
