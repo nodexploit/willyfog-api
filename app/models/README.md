@@ -32,4 +32,4 @@ object AdminFormatter {
 }
 ```
 
-We assume that you use (Slick)[https://github.com/playframework/play-slick] as your preferred ORM.
+We assume that you use [Slick](https://github.com/playframework/play-slick) as your preferred ORM.
