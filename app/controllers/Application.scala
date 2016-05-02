@@ -10,14 +10,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 class Application @Inject()(adminDAO: AdminDAO) extends Controller {
 
-  def index = Action.async {
-    val queries = for {
-      all <- adminDAO.all()
-      count <- adminDAO.count()
-    } yield (all, count)
-
-    queries map { case (c,a) =>
-      Ok(Json.toJson(c.head))
-    }
+  def index = Action {
+    Ok("Hello")
   }
 }

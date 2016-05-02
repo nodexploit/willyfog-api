@@ -1,5 +1,8 @@
 package models
 
+import java.sql.Timestamp
+import java.text.SimpleDateFormat
+
 import play.api.libs.json._
 
 /**
