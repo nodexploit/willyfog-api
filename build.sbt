@@ -7,12 +7,12 @@ lazy val `willyfog` = (project in file(".")).enablePlugins(PlayScala)
 scalaVersion := "2.11.8"
 
 libraryDependencies ++= Seq(
+  jdbc,
+  "mysql" % "mysql-connector-java" % "5.1.36",
+  "com.typesafe.play" %% "anorm" % "2.5.0",
   cache,
   ws,
-  specs2 % Test,
-  "mysql" % "mysql-connector-java" % "5.1.38",
-  "com.typesafe.play" %% "play-slick" % "2.0.0",
-  "com.typesafe.play" %% "play-slick-evolutions" % "2.0.0"
+  specs2 % Test
 )
 
 unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )  

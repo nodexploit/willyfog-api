@@ -1,16 +1,17 @@
 package controllers
 
+import anorm.{Macro, RowParser}
 import com.google.inject.Inject
-import dao.AdminDAO
+import models.{User, Users}
 import play.api.libs.json.Json
 import play.api.mvc._
-import models.AdminFormatter._
+import models.Users._
 
-import scala.concurrent.ExecutionContext.Implicits.global
-
-class Application @Inject()(adminDAO: AdminDAO) extends Controller {
+class Application @Inject () (users: Users) extends Controller {
 
   def index = Action {
-    Ok("Hello")
+    val all: List[User] = users.all
+    Ok(Json.toJson(all))
   }
+
 }
