@@ -1,4 +1,14 @@
-# willyfog
-Public repository for end-of-degree project. Adrián González Leiva and Nicolás Vargas Ortega. 
+# willyfog API
 
-The main purpose for this project is to build the application logic for the web application and mobile application of our end-of-degree project.
+![Willy Fog](docs/willy-fog.jpg "Willy Fog")
+
+API for end-of-degree project for ERASMUS. This will serve an application to simplify
+the process of setting equivalences between subjects of different universities.
+
+## Database
+
+```
+# In the root of the project
+mysql -uuser -p -e "CREATE DATABASE willyfog_dev"
+mysql -uuser -p willyfog_dev < db/schema.sql
+```
