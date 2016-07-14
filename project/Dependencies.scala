@@ -1,6 +1,6 @@
 import sbt._
 
-object WillyfogDependencies {
+object Dependencies {
   // Versions
   lazy val finchVersion = "0.11.0-M1"
 

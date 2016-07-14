@@ -5,7 +5,7 @@
 API for end-of-degree project for ERASMUS. This will serve an application to simplify
 the process of setting equivalences between subjects of different universities.
 
-Willyfog API is build with Finch.
+Willyfog API is built on top of Finch.
 
 ![Finch Releases](https://github.com/finagle/finch/releases)
 
