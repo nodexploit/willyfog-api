@@ -17,9 +17,9 @@ USE `willyfog_db` ;
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`student`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `willyfog_db`.`student` ;
+DROP TABLE IF EXISTS `willyfog_db`.`students` ;
 
-CREATE TABLE IF NOT EXISTS `willyfog_db`.`student` (
+CREATE TABLE IF NOT EXISTS `willyfog_db`.`students` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `nif` VARCHAR(12) NOT NULL,
   `name` VARCHAR(25) NOT NULL,
@@ -34,9 +34,9 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`student` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`admin`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `willyfog_db`.`admin` ;
+DROP TABLE IF EXISTS `willyfog_db`.`admins` ;
 
-CREATE TABLE IF NOT EXISTS `willyfog_db`.`admin` (
+CREATE TABLE IF NOT EXISTS `willyfog_db`.`admins` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(45) NOT NULL,
   `digest` VARCHAR(45) NOT NULL,
@@ -48,9 +48,9 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`admin` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`coordinator`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `willyfog_db`.`coordinator` ;
+DROP TABLE IF EXISTS `willyfog_db`.`coordinators` ;
 
-CREATE TABLE IF NOT EXISTS `willyfog_db`.`coordinator` (
+CREATE TABLE IF NOT EXISTS `willyfog_db`.`coordinators` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`))
   ENGINE = InnoDB;
@@ -59,9 +59,9 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`coordinator` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`recognizer`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `willyfog_db`.`recognizer` ;
+DROP TABLE IF EXISTS `willyfog_db`.`recognizers` ;
 
-CREATE TABLE IF NOT EXISTS `willyfog_db`.`recognizer` (
+CREATE TABLE IF NOT EXISTS `willyfog_db`.`recognizers` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`))
   ENGINE = InnoDB;
@@ -70,9 +70,9 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`recognizer` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`professor`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `willyfog_db`.`professor` ;
+DROP TABLE IF EXISTS `willyfog_db`.`professors` ;
 
-CREATE TABLE IF NOT EXISTS `willyfog_db`.`professor` (
+CREATE TABLE IF NOT EXISTS `willyfog_db`.`professors` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `surname` VARCHAR(45) NOT NULL,
@@ -89,12 +89,12 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`professor` (
   UNIQUE INDEX `recognizer_id_UNIQUE` (`recognizer_id` ASC),
   CONSTRAINT `fk_professor_coordinator1`
   FOREIGN KEY (`coordinator_id`)
-  REFERENCES `willyfog_db`.`coordinator` (`id`)
+  REFERENCES `willyfog_db`.`coordinators` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_professor_recognizer1`
   FOREIGN KEY (`recognizer_id`)
-  REFERENCES `willyfog_db`.`recognizer` (`id`)
+  REFERENCES `willyfog_db`.`recognizers` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;
@@ -103,9 +103,9 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`professor` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`country`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `willyfog_db`.`country` ;
+DROP TABLE IF EXISTS `willyfog_db`.`countries` ;
 
-CREATE TABLE IF NOT EXISTS `willyfog_db`.`country` (
+CREATE TABLE IF NOT EXISTS `willyfog_db`.`countries` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
@@ -116,9 +116,9 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`country` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`city`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `willyfog_db`.`city` ;
+DROP TABLE IF EXISTS `willyfog_db`.`cities` ;
 
-CREATE TABLE IF NOT EXISTS `willyfog_db`.`city` (
+CREATE TABLE IF NOT EXISTS `willyfog_db`.`cities` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `country_id` BIGINT NOT NULL,
@@ -126,7 +126,7 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`city` (
   INDEX `fk_city_country1_idx` (`country_id` ASC),
   CONSTRAINT `fk_city_country1`
   FOREIGN KEY (`country_id`)
-  REFERENCES `willyfog_db`.`country` (`id`)
+  REFERENCES `willyfog_db`.`countries` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;
@@ -135,9 +135,9 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`city` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`centre`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `willyfog_db`.`centre` ;
+DROP TABLE IF EXISTS `willyfog_db`.`centres` ;
 
-CREATE TABLE IF NOT EXISTS `willyfog_db`.`centre` (
+CREATE TABLE IF NOT EXISTS `willyfog_db`.`centres` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `city_id` BIGINT NOT NULL,
@@ -145,7 +145,7 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`centre` (
   INDEX `fk_centre_city1_idx` (`city_id` ASC),
   CONSTRAINT `fk_centre_city1`
   FOREIGN KEY (`city_id`)
-  REFERENCES `willyfog_db`.`city` (`id`)
+  REFERENCES `willyfog_db`.`cities` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;
@@ -154,16 +154,16 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`centre` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`degree`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `willyfog_db`.`degree` ;
+DROP TABLE IF EXISTS `willyfog_db`.`degrees` ;
 
-CREATE TABLE IF NOT EXISTS `willyfog_db`.`degree` (
+CREATE TABLE IF NOT EXISTS `willyfog_db`.`degrees` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `centre_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Degree_Centre_idx` (`centre_id` ASC),
   CONSTRAINT `fk_Degree_Centre`
   FOREIGN KEY (`centre_id`)
-  REFERENCES `willyfog_db`.`centre` (`id`)
+  REFERENCES `willyfog_db`.`centres` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;
@@ -172,9 +172,9 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`degree` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`subject`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `willyfog_db`.`subject` ;
+DROP TABLE IF EXISTS `willyfog_db`.`subjects` ;
 
-CREATE TABLE IF NOT EXISTS `willyfog_db`.`subject` (
+CREATE TABLE IF NOT EXISTS `willyfog_db`.`subjects` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `degree_id` BIGINT NOT NULL,
   `recognizer_id` BIGINT NULL,
@@ -183,12 +183,12 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`subject` (
   INDEX `fk_subject_recognizer1_idx` (`recognizer_id` ASC),
   CONSTRAINT `fk_Subject_Degree1`
   FOREIGN KEY (`degree_id`)
-  REFERENCES `willyfog_db`.`degree` (`id`)
+  REFERENCES `willyfog_db`.`degrees` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_subject_recognizer1`
   FOREIGN KEY (`recognizer_id`)
-  REFERENCES `willyfog_db`.`recognizer` (`id`)
+  REFERENCES `willyfog_db`.`recognizers` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;
@@ -207,12 +207,12 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`coordinator_coord_centre` (
   INDEX `fk_coordinator_coord_centre_centre1_idx` (`centre_id` ASC),
   CONSTRAINT `fk_Centre_has_Coordinator_Coordinator1`
   FOREIGN KEY (`coordinator_id`)
-  REFERENCES `willyfog_db`.`coordinator` (`id`)
+  REFERENCES `willyfog_db`.`coordinators` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_coordinator_coord_centre_centre1`
   FOREIGN KEY (`centre_id`)
-  REFERENCES `willyfog_db`.`centre` (`id`)
+  REFERENCES `willyfog_db`.`centres` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;
@@ -221,9 +221,9 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`coordinator_coord_centre` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`request`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `willyfog_db`.`request` ;
+DROP TABLE IF EXISTS `willyfog_db`.`requests` ;
 
-CREATE TABLE IF NOT EXISTS `willyfog_db`.`request` (
+CREATE TABLE IF NOT EXISTS `willyfog_db`.`requests` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `student_id` BIGINT NOT NULL,
   `recognizer_id` BIGINT NULL,
@@ -232,12 +232,12 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`request` (
   INDEX `fk_request_recognizer1_idx` (`recognizer_id` ASC),
   CONSTRAINT `fk_request_student1`
   FOREIGN KEY (`student_id`)
-  REFERENCES `willyfog_db`.`student` (`id`)
+  REFERENCES `willyfog_db`.`students` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_request_recognizer1`
   FOREIGN KEY (`recognizer_id`)
-  REFERENCES `willyfog_db`.`recognizer` (`id`)
+  REFERENCES `willyfog_db`.`recognizers` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;
@@ -256,12 +256,12 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`student_enrolled_degree` (
   INDEX `fk_student_enrolled_degree_degree1_idx` (`degree_id` ASC),
   CONSTRAINT `fk_degree_has_student_student1`
   FOREIGN KEY (`student_id`)
-  REFERENCES `willyfog_db`.`student` (`id`)
+  REFERENCES `willyfog_db`.`students` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_student_enrolled_degree_degree1`
   FOREIGN KEY (`degree_id`)
-  REFERENCES `willyfog_db`.`degree` (`id`)
+  REFERENCES `willyfog_db`.`degrees` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;
@@ -280,12 +280,12 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`subject_equivalent_subject` (
   INDEX `fk_subject_has_subject_subject1_idx` (`subject_id` ASC),
   CONSTRAINT `fk_subject_has_subject_subject1`
   FOREIGN KEY (`subject_id`)
-  REFERENCES `willyfog_db`.`subject` (`id`)
+  REFERENCES `willyfog_db`.`subjects` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_subject_has_subject_subject2`
   FOREIGN KEY (`subject_id_eq`)
-  REFERENCES `willyfog_db`.`subject` (`id`)
+  REFERENCES `willyfog_db`.`subjects` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;
@@ -305,12 +305,12 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`equivalences` (
   INDEX `fk_table1_subject2_idx` (`subject_id_eq` ASC),
   CONSTRAINT `fk_table1_subject1`
   FOREIGN KEY (`subject_id`)
-  REFERENCES `willyfog_db`.`subject` (`id`)
+  REFERENCES `willyfog_db`.`subjects` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_table1_subject2`
   FOREIGN KEY (`subject_id_eq`)
-  REFERENCES `willyfog_db`.`subject` (`id`)
+  REFERENCES `willyfog_db`.`subjects` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;
