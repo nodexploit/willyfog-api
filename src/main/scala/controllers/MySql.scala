@@ -6,7 +6,7 @@ trait MySql {
 
   implicit val client = Mysql.client
     .withCredentials("root", "root")
-    .withDatabase("willyfog_db")
+    .withDatabase("willyfog")
     .newRichClient("127.0.0.1:3306")
 
 }

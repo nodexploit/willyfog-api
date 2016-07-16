@@ -1,4 +1,3 @@
-import com.twitter.finagle.exp.Mysql
 import com.twitter.finagle.http.{Request, Response}
 import com.twitter.finagle.{Http, Service}
 import com.twitter.util.Await
@@ -16,6 +15,6 @@ object Main {
   val api: Service[Request, Response] = (homeEndpoint :+: AdminController.endpoints).toServiceAs[Application.Json]
 
   def main(args: Array[String]): Unit = {
-    Await.ready(Http.serve(":8080", api))
+    Await.ready(Http.serve(":7000", api))
   }
 }
