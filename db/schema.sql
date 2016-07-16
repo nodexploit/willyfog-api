@@ -319,7 +319,7 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`equivalences` (
  * OAuth2 - OpenID schema
  */
 
-CREATE TABLE oauth_clients (
+CREATE TABLE willyfog_db.oauth_clients (
   client_id VARCHAR(80) NOT NULL,
   client_secret VARCHAR(80),
   redirect_uri VARCHAR(2000) NOT NULL,
@@ -329,7 +329,7 @@ CREATE TABLE oauth_clients (
   PRIMARY KEY (client_id)
 );
 
-CREATE TABLE oauth_access_tokens (
+CREATE TABLE willyfog_db.oauth_access_tokens (
   access_token VARCHAR(40) NOT NULL,
   client_id VARCHAR(80) NOT NULL,
   user_id VARCHAR(255),
@@ -339,7 +339,7 @@ CREATE TABLE oauth_access_tokens (
   PRIMARY KEY (access_token)
 );
 
-CREATE TABLE oauth_authorization_codes (
+CREATE TABLE willyfog_db.oauth_authorization_codes (
   authorization_code VARCHAR(40) NOT NULL,
   client_id VARCHAR(80) NOT NULL,
   user_id VARCHAR(255),
@@ -351,7 +351,7 @@ CREATE TABLE oauth_authorization_codes (
   PRIMARY KEY (authorization_code)
 );
 
-CREATE TABLE oauth_refresh_tokens (
+CREATE TABLE willyfog_db.oauth_refresh_tokens (
   refresh_token VARCHAR(40) NOT NULL,
   client_id VARCHAR(80) NOT NULL,
   user_id VARCHAR(255),
@@ -361,7 +361,7 @@ CREATE TABLE oauth_refresh_tokens (
   PRIMARY KEY (refresh_token)
 );
 
-CREATE TABLE oauth_users (
+CREATE TABLE willyfog_db.oauth_users (
   username VARCHAR(255) NOT NULL,
   password VARCHAR(2000),
   first_name VARCHAR(255),
@@ -370,12 +370,12 @@ CREATE TABLE oauth_users (
   PRIMARY KEY (username)
 );
 
-CREATE TABLE oauth_scopes (
+CREATE TABLE willyfog_db.oauth_scopes (
   scope TEXT,
   is_default BOOLEAN
 );
 
-CREATE TABLE oauth_jwt (
+CREATE TABLE willyfog_db.oauth_jwt (
   client_id VARCHAR(80) NOT NULL,
   subject VARCHAR(80),
   public_key VARCHAR(2000),
@@ -383,9 +383,9 @@ CREATE TABLE oauth_jwt (
   PRIMARY KEY (client_id)
 );
 
-INSERT INTO oauth_clients (client_id, redirect_uri, grant_types)
+INSERT INTO willyfog_db.oauth_clients (client_id, redirect_uri, grant_types)
 VALUES ('testclient', 'http://192.168.33.10/login/callback', 'authorization_code');
-INSERT INTO oauth_users (username, password, first_name, last_name)
+INSERT INTO willyfog_db.oauth_users (username, password, first_name, last_name)
 VALUES ('willy', '$2y$10$5uzVJxZAXMdqDMuSMPRB4.VH1MvYtrOlzJqHLTQyLURkSO0MLRMt.', 'Willy', 'Fog')
 
 SET SQL_MODE=@OLD_SQL_MODE;
