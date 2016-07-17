@@ -25,6 +25,8 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`students` (
   `name` VARCHAR(25) NOT NULL,
   `surname` VARCHAR(60) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `DNI_UNIQUE` (`nif` ASC),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC))
@@ -40,6 +42,8 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`admins` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(45) NOT NULL,
   `digest` VARCHAR(45) NOT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `username_UNIQUE` (`email` ASC))
   ENGINE = InnoDB;
@@ -52,6 +56,8 @@ DROP TABLE IF EXISTS `willyfog_db`.`coordinators` ;
 
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`coordinators` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`))
   ENGINE = InnoDB;
 
@@ -63,6 +69,8 @@ DROP TABLE IF EXISTS `willyfog_db`.`recognizers` ;
 
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`recognizers` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`))
   ENGINE = InnoDB;
 
@@ -80,6 +88,8 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`professors` (
   `email` VARCHAR(45) NOT NULL,
   `coordinator_id` BIGINT NULL,
   `recognizer_id` BIGINT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `nif_UNIQUE` (`nif` ASC),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC),
@@ -108,6 +118,8 @@ DROP TABLE IF EXISTS `willyfog_db`.`countries` ;
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`countries` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC))
   ENGINE = InnoDB;
@@ -122,6 +134,8 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`cities` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `country_id` BIGINT NOT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   INDEX `fk_city_country1_idx` (`country_id` ASC),
   CONSTRAINT `fk_city_country1`
@@ -141,6 +155,8 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`centres` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `city_id` BIGINT NOT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   INDEX `fk_centre_city1_idx` (`city_id` ASC),
   CONSTRAINT `fk_centre_city1`
@@ -159,6 +175,8 @@ DROP TABLE IF EXISTS `willyfog_db`.`degrees` ;
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`degrees` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `centre_id` BIGINT NOT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   INDEX `fk_Degree_Centre_idx` (`centre_id` ASC),
   CONSTRAINT `fk_Degree_Centre`
@@ -178,6 +196,8 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`subjects` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `degree_id` BIGINT NOT NULL,
   `recognizer_id` BIGINT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   INDEX `fk_Subject_Degree1_idx` (`degree_id` ASC),
   INDEX `fk_subject_recognizer1_idx` (`recognizer_id` ASC),
@@ -202,6 +222,8 @@ DROP TABLE IF EXISTS `willyfog_db`.`coordinator_coord_centre` ;
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`coordinator_coord_centre` (
   `coordinator_id` BIGINT NOT NULL,
   `centre_id` BIGINT NOT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`coordinator_id`, `centre_id`),
   INDEX `fk_Centre_has_Coordinator_Coordinator1_idx` (`coordinator_id` ASC),
   INDEX `fk_coordinator_coord_centre_centre1_idx` (`centre_id` ASC),
@@ -227,6 +249,8 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`requests` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `student_id` BIGINT NOT NULL,
   `recognizer_id` BIGINT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   INDEX `fk_request_student1_idx` (`student_id` ASC),
   INDEX `fk_request_recognizer1_idx` (`recognizer_id` ASC),
@@ -251,6 +275,8 @@ DROP TABLE IF EXISTS `willyfog_db`.`student_enrolled_degree` ;
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`student_enrolled_degree` (
   `student_id` BIGINT NOT NULL,
   `degree_id` BIGINT NOT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`student_id`, `degree_id`),
   INDEX `fk_degree_has_student_student1_idx` (`student_id` ASC),
   INDEX `fk_student_enrolled_degree_degree1_idx` (`degree_id` ASC),
@@ -275,6 +301,8 @@ DROP TABLE IF EXISTS `willyfog_db`.`subject_equivalent_subject` ;
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`subject_equivalent_subject` (
   `subject_id` BIGINT NOT NULL,
   `subject_id_eq` BIGINT NOT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`subject_id`, `subject_id_eq`),
   INDEX `fk_subject_has_subject_subject2_idx` (`subject_id_eq` ASC),
   INDEX `fk_subject_has_subject_subject1_idx` (`subject_id` ASC),
@@ -300,6 +328,8 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`equivalences` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `subject_id` BIGINT NOT NULL,
   `subject_id_eq` BIGINT NOT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`, `subject_id`, `subject_id_eq`),
   INDEX `fk_table1_subject1_idx` (`subject_id` ASC),
   INDEX `fk_table1_subject2_idx` (`subject_id_eq` ASC),
@@ -325,6 +355,8 @@ CREATE TABLE willyfog_db.oauth_clients (
   redirect_uri VARCHAR(2000) NOT NULL,
   grant_types VARCHAR(80),
   scope VARCHAR(100), user_id VARCHAR(80),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   CONSTRAINT clients_client_id_pk
   PRIMARY KEY (client_id)
 );
@@ -335,6 +367,7 @@ CREATE TABLE willyfog_db.oauth_access_tokens (
   user_id VARCHAR(255),
   expires TIMESTAMP NOT NULL,
   scope VARCHAR(2000),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT access_token_pk
   PRIMARY KEY (access_token)
 );
@@ -347,6 +380,7 @@ CREATE TABLE willyfog_db.oauth_authorization_codes (
   expires TIMESTAMP NOT NULL,
   scope VARCHAR(2000),
   id_token VARCHAR(2000),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT auth_code_pk
   PRIMARY KEY (authorization_code)
 );
@@ -357,6 +391,7 @@ CREATE TABLE willyfog_db.oauth_refresh_tokens (
   user_id VARCHAR(255),
   expires TIMESTAMP NOT NULL,
   scope VARCHAR(2000),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT refresh_token_pk
   PRIMARY KEY (refresh_token)
 );
@@ -366,19 +401,24 @@ CREATE TABLE willyfog_db.oauth_users (
   password VARCHAR(2000),
   first_name VARCHAR(255),
   last_name VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   CONSTRAINT username_pk
   PRIMARY KEY (username)
 );
 
 CREATE TABLE willyfog_db.oauth_scopes (
   scope TEXT,
-  is_default BOOLEAN
+  is_default BOOLEAN,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE willyfog_db.oauth_jwt (
   client_id VARCHAR(80) NOT NULL,
   subject VARCHAR(80),
   public_key VARCHAR(2000),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT jwt_client_id_pk
   PRIMARY KEY (client_id)
 );
@@ -386,7 +426,7 @@ CREATE TABLE willyfog_db.oauth_jwt (
 INSERT INTO willyfog_db.oauth_clients (client_id, redirect_uri, grant_types)
 VALUES ('testclient', 'http://192.168.33.10/login/callback', 'authorization_code');
 INSERT INTO willyfog_db.oauth_users (username, password, first_name, last_name)
-VALUES ('willy', '$2y$10$5uzVJxZAXMdqDMuSMPRB4.VH1MvYtrOlzJqHLTQyLURkSO0MLRMt.', 'Willy', 'Fog')
+VALUES ('willy', '$2y$10$5uzVJxZAXMdqDMuSMPRB4.VH1MvYtrOlzJqHLTQyLURkSO0MLRMt.', 'Willy', 'Fog');
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
