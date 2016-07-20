@@ -1,7 +1,6 @@
 package models
 
 import java.time.LocalDateTime
-
 import com.twitter.finagle.exp.mysql._
 import com.twitter.util.Future
 import controllers.MySql
@@ -12,9 +11,9 @@ case class User(
                  surname: String,
                  nif: String,
                  email: String,
-                 digest: String,
-                 createdAt: LocalDateTime,
-                 updatedAt: LocalDateTime
+                 digest: String
+//                 createdAt: LocalDateTime,
+//                 updatedAt: LocalDateTime
                )
 
 object User extends MySql {
@@ -82,9 +81,9 @@ object User extends MySql {
       surname,
       nif,
       email,
-      digest,
-      LocalDateTime.parse(createdAt),
-      LocalDateTime.parse(updatedAt)
+      digest
+//      LocalDateTime.parse(createdAt),
+//      LocalDateTime.parse(updatedAt)
     )
   }
 }

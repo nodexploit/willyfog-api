@@ -2,9 +2,9 @@ import com.twitter.finagle.http.{Request, Response}
 import com.twitter.finagle.oauth2.AuthInfo
 import com.twitter.finagle.{Http, Service}
 import com.twitter.util.Await
+import io.finch.circe._
 import io.circe.generic.auto._
 import io.finch._
-import io.finch.circe._
 import models.User
 import oauth.WillyDataHandler
 import com.twitter.finagle.oauth2._
