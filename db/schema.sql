@@ -386,7 +386,7 @@ CREATE TABLE willyfog_db.oauth_jwt (
 INSERT INTO willyfog_db.oauth_clients (client_id, redirect_uri, grant_types)
 VALUES ('testclient', 'http://192.168.33.10/login/callback', 'authorization_code');
 INSERT INTO willyfog_db.oauth_users (username, password, first_name, last_name)
-VALUES ('willy', '$2y$10$5uzVJxZAXMdqDMuSMPRB4.VH1MvYtrOlzJqHLTQyLURkSO0MLRMt.', 'Willy', 'Fog')
+VALUES ('willy', '$2y$10$5uzVJxZAXMdqDMuSMPRB4.VH1MvYtrOlzJqHLTQyLURkSO0MLRMt.', 'Willy', 'Fog');
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
