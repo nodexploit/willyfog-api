@@ -1,7 +1,8 @@
 package models
 
 import java.time.LocalDateTime
-import com.twitter.finagle.exp.mysql.{LongValue, ResultSet, Row, StringValue}
+
+import com.twitter.finagle.exp.mysql._
 import com.twitter.util.Future
 import controllers.MySql
 
@@ -20,7 +21,7 @@ object User extends MySql {
 
   val tableName = "user"
 
-  def find(userId: String): Future[Option[User]] =
+  def find(userId: Long): Future[Option[User]] =
     client.prepare(
       s"""
          |SELECT * FROM $tableName
@@ -29,6 +30,21 @@ object User extends MySql {
     .map {
       case rs: ResultSet => rs.rows.map(toEntity).headOption
       case _ => None
+    }
+
+  def all(): Future[Seq[User]] =
+    client.select(
+      s"""
+         |SELECT * FROM $tableName
+       """.stripMargin)(toEntity)
+
+  def create(name: String, surname: String, nif: String, email: String, digest: String): Future[Long] =
+    client.prepare(
+      s"""
+         |INSERT INTO $tableName (name, surname, nif, email, digest) VALUES (?, ?, ?, ?, ?)
+       """.stripMargin)(name, surname, nif, email, digest)
+    .map { result =>
+      result.asInstanceOf[OK].insertId
     }
 
   /**
