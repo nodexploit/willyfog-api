@@ -1,9 +1,9 @@
 package models
 
+import java.time.LocalDateTime
 import com.twitter.finagle.exp.mysql.ResultSet
 import com.twitter.util.Future
 import controllers.MySql
-import org.joda.time.DateTime
 
 case class OAuthClient(
                         clientId: String,
@@ -11,14 +11,14 @@ case class OAuthClient(
                         redirectUri: Option[String],
                         grantTypes: Option[String],
                         scope: Option[String],
-                        userId: Option[String],
-                        createdAt: DateTime,
-                        updatedAt: DateTime
+                        userId: Option[Long],
+                        createdAt: LocalDateTime,
+                        updatedAt: LocalDateTime
                       )
 
-object OAuthClient extends MySql {
+object OAuthClient extends MySql{
 
-  val tableName = "oauth_clients"
+  val tableName = "oauth_client"
 
   def validate(clientId: String, clientSecret: String, grantType: String): Future[Boolean] =
     client.prepare(
@@ -26,8 +26,8 @@ object OAuthClient extends MySql {
          |SELECT * FROM $tableName
          |WHERE client_id = ? AND client_secret = ? AND grant_types = ?
        """.stripMargin)(clientId, clientSecret, grantType)
-      .map {
-        case rs: ResultSet => rs.rows.nonEmpty
-        case _ => false
-      }
+    .map {
+      case rs: ResultSet => rs.rows.nonEmpty
+      case _ => false
+    }
 }
