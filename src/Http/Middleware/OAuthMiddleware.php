@@ -4,7 +4,7 @@
 namespace Willyfog\Http\Middleware;
 
 use Interop\Container\ContainerInterface;
-use OAuth2\Request;
+use OAuth2\Request as OAuth2Request;
 use Willyfog\Http\Response;
 
 class OAuthMiddleware
@@ -28,7 +28,7 @@ class OAuthMiddleware
     {
         $server = $this->ci->get('oauth');
 
-        if (!$server->verifyResourceRequest(Request::createFromGlobals())) {
+        if (!$server->verifyResourceRequest(OAuth2Request::createFromGlobals())) {
             $response = Response::fromOAuthResponse($server->getResponse());
         } else {
             $response = $next($request, $response);

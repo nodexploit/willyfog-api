@@ -4,7 +4,7 @@
 namespace Willyfog\Http\Controllers\V1;
 
 use Interop\Container\ContainerInterface;
-use Willyfog\Models\User;
+use OAuth2\Request as OAuth2Request;
 
 class HomeController
 {
@@ -17,7 +17,9 @@ class HomeController
 
     public function index($request, $response, $args)
     {
-        $user = new User($this->ci);
-        return $user->greet();
+        $server = $this->ci->get('oauth');
+        $token = $server->getAccessTokenData(OAuth2Request::createFromGlobals());
+
+        return "Hello user ${token['user_id']}";
     }
 }

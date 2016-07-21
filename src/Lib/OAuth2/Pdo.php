@@ -6,7 +6,7 @@ namespace Willyfog\Lib\OAuth2;
 class Pdo extends \OAuth2\Storage\Pdo
 {
     /**
-     * WillyfogPdo constructor. override default table names.
+     * Pdo constructor. override default table names.
      * @param $connection
      * @param array $config
      */
