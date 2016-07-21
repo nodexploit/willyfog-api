@@ -11,9 +11,9 @@ case class User(
                  surname: String,
                  nif: String,
                  email: String,
-                 digest: String
-//                 createdAt: LocalDateTime,
-//                 updatedAt: LocalDateTime
+                 digest: String,
+                 createdAt: LocalDateTime,
+                 updatedAt: LocalDateTime
                )
 
 object User extends MySql {
@@ -72,8 +72,8 @@ object User extends MySql {
     val StringValue(nif) = row("u.nif").get
     val StringValue(email) = row("u.email").get
     val StringValue(digest) = row("u.digest").get
-    val StringValue(createdAt) = row("u.created_at").get
-    val StringValue(updatedAt) = row("u.updated_at").get
+    val TimestampValue(createdAt) = row("u.created_at").get
+    val TimestampValue(updatedAt) = row("u.updated_at").get
 
     User(
       id,
@@ -81,9 +81,9 @@ object User extends MySql {
       surname,
       nif,
       email,
-      digest
-//      LocalDateTime.parse(createdAt),
-//      LocalDateTime.parse(updatedAt)
+      digest,
+      createdAt.toLocalDateTime,
+      updatedAt.toLocalDateTime
     )
   }
 }

@@ -2,7 +2,8 @@ package models
 
 import java.time.{LocalDateTime, ZoneId}
 import java.util.Date
-import com.twitter.finagle.exp.mysql.{LongValue, ResultSet, Row, StringValue}
+
+import com.twitter.finagle.exp.mysql._
 import com.twitter.finagle.oauth2.{AccessToken, AuthInfo}
 import com.twitter.util.Future
 import controllers.MySql
@@ -70,8 +71,8 @@ object OAuthAccessToken extends MySql {
     val StringValue(accessToken) = row("access_token").get
     val scope = row("scope").collect{ case StringValue(s) => s }
     val LongValue(expires) = row("expires").get
-    val StringValue(createdAt) = row("created_at").get
-    val parsedCreatedAt = LocalDateTime.parse(createdAt)
+    val TimestampValue(createdAt) = row("created_at").get
+    val parsedCreatedAt = createdAt.toLocalDateTime
 
     AccessToken(
       accessToken,
