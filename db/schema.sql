@@ -380,7 +380,8 @@ CREATE TABLE willyfog_db.oauth_jwt (
 );
 
 INSERT INTO willyfog_db.oauth_client (client_id, redirect_uri, grant_types)
-VALUES ('testclient', 'http://192.168.33.10/login/callback', 'authorization_code');
+VALUES ('testclient', 'http://willyfog.com/login/callback', 'authorization_code');
+-- Hashed password: 'foobar'
 INSERT INTO willyfog_db.user (name, surname, digest, nif, email)
 VALUES ('Willy', 'Fog', '$2y$10$5uzVJxZAXMdqDMuSMPRB4.VH1MvYtrOlzJqHLTQyLURkSO0MLRMt.', '1111111H', 'willy@example.com');
 
