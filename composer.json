@@ -3,7 +3,8 @@
     "require": {
         "php": ">=5.5.0",
         "slim/slim": "^3.1",
-        "monolog/monolog": "^1.17"
+        "monolog/monolog": "^1.17",
+        "bshaffer/oauth2-server-php": "^1.8"
     },
     "autoload": {
         "psr-4": {"Willyfog\\": "src/"}

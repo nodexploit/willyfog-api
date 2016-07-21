@@ -1,4 +1,6 @@
 <?php
-// Application middleware
 
-// e.g: $app->add(new \Slim\Csrf\Guard);
+/*
+ * String-call provides CI constructor injection
+ */
+$app->add('\Willyfog\Http\Middleware\OAuthMiddleware');
