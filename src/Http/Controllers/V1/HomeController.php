@@ -22,7 +22,7 @@ class HomeController
         $token = $server->getAccessTokenData(OAuth2Request::createFromGlobals());
 
         $user = new User($this->ci);
-        $user = $user->create([
+        $user->create([
             'name' => 'pepe',
             'surname' => 'piscinas',
             'nif' => 'asd',
@@ -30,8 +30,11 @@ class HomeController
             'digest' => 'asd'
         ]);
 
-        return $user;
-
-//        return "Hello user ${token['user_id']}";
+        $flasg = $user->update(13, [
+            'name' => 'pepo',
+            'nif' => ''
+        ]);
+        
+        return "Hello user ${token['user_id']}";
     }
 }
