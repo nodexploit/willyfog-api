@@ -15,7 +15,7 @@ class BaseModel
      *
      * @var array
      */
-    protected $fillable;
+    protected $fillable = [];
 
     /**
      * Table name of the model.
@@ -24,9 +24,38 @@ class BaseModel
      */
     protected $table_name;
 
+    /**
+     * Page size of the pagination.
+     *
+     * @var int
+     */
+    protected $page_size = 10;
+
     public function __construct($ci)
     {
         $this->pdo = $ci->get('pdo');
+    }
+
+    public function paginate($page = null)
+    {
+        $table_name = $this->table_name;
+        $page_size = $this->page_size;
+        if ($page === null) {
+            $page = 0;
+        }
+
+        $stm = $this->pdo->prepare(
+            "SELECT * FROM $table_name LIMIT $page_size OFFSET $page;"
+        );
+        $stm->execute();
+
+        $results = $stm->fetchAll(\PDO::FETCH_ASSOC);
+
+        return [
+            'data'          => $results,
+            'page_size'     => $page_size,
+            'page'          => $page
+        ];
     }
 
     public function create(array $attributes = [])
