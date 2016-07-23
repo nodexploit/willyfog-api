@@ -20,6 +20,7 @@ USE `willyfog_db` ;
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`country` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
+  `deleted_at` TIMESTAMP,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -34,6 +35,7 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`city` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `country_id` BIGINT NOT NULL,
+  `deleted_at` TIMESTAMP,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -53,6 +55,7 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`centre` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `city_id` BIGINT NOT NULL,
+  `deleted_at` TIMESTAMP,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -71,6 +74,7 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`centre` (
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`degree` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `centre_id` BIGINT NOT NULL,
+  `deleted_at` TIMESTAMP,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -93,6 +97,7 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`user` (
   `nif` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
   `digest` VARCHAR(100) NOT NULL,
+  `deleted_at` TIMESTAMP,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`))
@@ -106,6 +111,7 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`subject` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `degree_id` BIGINT NOT NULL,
   `recognizer_id` BIGINT NOT NULL,
+  `deleted_at` TIMESTAMP,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -131,6 +137,7 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`request` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `user_id` BIGINT NOT NULL,
   `recognizer_id` BIGINT NOT NULL,
+  `deleted_at` TIMESTAMP,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -155,6 +162,7 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`request` (
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`subject_equivalent_subject` (
   `subject_id` BIGINT NOT NULL,
   `subject_id_eq` BIGINT NOT NULL,
+  `deleted_at` TIMESTAMP,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`subject_id`, `subject_id_eq`),
@@ -180,6 +188,7 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`equivalences` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `subject_id` BIGINT NOT NULL,
   `subject_id_eq` BIGINT NOT NULL,
+  `deleted_at` TIMESTAMP,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`, `subject_id`, `subject_id_eq`),
@@ -204,6 +213,7 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`equivalences` (
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`role` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `permission` INT NOT NULL,
+  `deleted_at` TIMESTAMP,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`))
@@ -216,6 +226,7 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`role` (
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`user_enrolled_degree` (
   `user_id` BIGINT NOT NULL,
   `degree_id` BIGINT NOT NULL,
+  `deleted_at` TIMESTAMP,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`, `degree_id`),
@@ -240,6 +251,7 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`user_enrolled_degree` (
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`user_has_role` (
   `user_id` BIGINT NOT NULL,
   `role_id` BIGINT NOT NULL,
+  `deleted_at` TIMESTAMP,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`, `role_id`),
@@ -264,6 +276,7 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`user_has_role` (
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`user_coord_centre` (
   `user_id` BIGINT NOT NULL,
   `centre_id` BIGINT NOT NULL,
+  `deleted_at` TIMESTAMP,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`, `centre_id`),
@@ -289,6 +302,7 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`permission` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `bit` INT NOT NULL,
   `name` VARCHAR(45) NOT NULL,
+  `deleted_at` TIMESTAMP,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`))

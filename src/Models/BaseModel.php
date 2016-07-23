@@ -8,43 +8,36 @@ class BaseModel
     /**
      * @var \PDO
      */
-    protected $pdo;
-
-    /**
-     * Mass assignable columns.
-     *
-     * @var array
-     */
-    protected $fillable = [];
+    protected $_pdo;
 
     /**
      * Table name of the model.
      *
      * @var string
      */
-    protected $table_name;
+    protected $_table_name;
 
     /**
      * Page size of the pagination.
      *
      * @var int
      */
-    protected $page_size = 10;
+    protected $_page_size = 10;
 
     public function __construct($ci)
     {
-        $this->pdo = $ci->get('pdo');
+        $this->_pdo = $ci->get('pdo');
     }
 
     public function paginate($page = null)
     {
-        $table_name = $this->table_name;
-        $page_size = $this->page_size;
+        $table_name = $this->_table_name;
+        $page_size = $this->_page_size;
         if ($page === null) {
             $page = 0;
         }
 
-        $stm = $this->pdo->prepare(
+        $stm = $this->_pdo->prepare(
             "SELECT * FROM $table_name LIMIT $page_size OFFSET $page;"
         );
         $stm->execute();
@@ -58,25 +51,55 @@ class BaseModel
         ];
     }
 
-    public function create(array $attributes = [])
+    /**
+     * Fill an instance with attributes. legacy.
+     *
+     * @param array $attributes
+     * @return $this
+     */
+    public function fill(array $attributes = [])
     {
-        $attributes = array_filter($attributes, function ($k) {
-            return in_array($k, $this->fillable);
-        }, ARRAY_FILTER_USE_KEY);
+        $attributes = $this->filterAttributes($attributes);
 
+        foreach ($attributes as $key => $value) {
+            $this->$key = $value;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Insert the model into database.
+     *
+     * @return bool
+     */
+    public function save()
+    {
+        $attributes = $this->insertableAttributes();
         $column_names = array_keys($attributes);
         $bindings = array_map(function ($value) {
             return ":$value";
         }, $column_names);
-        $table_name = $this->table_name;
+        $table_name = $this->_table_name;
 
-        $stm = $this->pdo->prepare(
-            "INSERT INTO $table_name " . implode(',', $column_names) . ') VALUES (' . implode(',', $bindings) . ')'
+        $stm = $this->_pdo->prepare(
+            "INSERT INTO $table_name (" . implode(',', $column_names) . ') VALUES (' . implode(',', $bindings) . ')'
         );
 
-        return $stm->execute(array_combine($bindings, array_values($attributes)));
+        $success = $stm->execute(array_combine($bindings, array_values($attributes)));
+
+        $this->id = $this->_pdo->lastInsertId();
+
+        return $success;
     }
 
+    /**
+     * Update given columns of the model.
+     *
+     * @param $id
+     * @param array $attributes
+     * @return bool
+     */
     public function update($id, array $attributes = [])
     {
         $attributes = array_filter($attributes, function ($v, $k) {
@@ -90,23 +113,71 @@ class BaseModel
         $sets = array_map(function ($binding, $value) {
             return "$binding=$value";
         }, $column_names, $bindings);
-        $table_name = $this->table_name;
+        $table_name = $this->_table_name;
 
-        $stm = $this->pdo->prepare(
+        $stm = $this->_pdo->prepare(
             "UPDATE $table_name SET " . implode(',', $sets) . " WHERE id = $id"
         );
 
         return $stm->execute(array_combine($bindings, array_values($attributes)));
     }
 
+    /**
+     * Soft deletes the entity.
+     *
+     * @param $id
+     * @return bool
+     */
     public function delete($id)
     {
-        $table_name = $this->table_name;
+        $table_name = $this->_table_name;
 
-        $stm = $this->pdo->prepare(
+        $stm = $this->_pdo->prepare(
             "DELETE FROM $table_name WHERE id = $id"
         );
 
         return $stm->execute();
+    }
+
+    /**
+     * Returns an assoc arrays of the attributes of the object. Only the one that matters to the database.
+     *
+     * @return array
+     */
+    private function getObjectVars()
+    {
+        $attributes = get_object_vars($this);
+
+        return array_filter($attributes, function ($v, $k) {
+            return $k[0] != '_';
+        }, ARRAY_FILTER_USE_BOTH);
+    }
+
+    /**
+     * Filter attributes to only assignable.
+     *
+     * @param $attributes
+     * @return array
+     */
+    private function filterAttributes($attributes)
+    {
+        $vars = $this->getObjectVars();
+        $object_keys = array_keys($vars);
+
+        return array_filter($attributes, function ($k) use ($object_keys) {
+            return in_array($k, $object_keys);
+        }, ARRAY_FILTER_USE_KEY);
+    }
+
+    /**
+     * Returns insertable attributes into the database.
+     *
+     * @return array
+     */
+    private function insertableAttributes()
+    {
+        return array_filter($this->getObjectVars(), function ($v, $k) {
+            return $v !== null;
+        }, ARRAY_FILTER_USE_BOTH);
     }
 }

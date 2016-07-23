@@ -24,7 +24,16 @@ class HomeController
         $token = $server->getAccessTokenData(OAuth2Request::createFromGlobals());
 
         $user = new User($this->ci);
+        $user->fill([
+            'name' => 'Willy',
+            'surname'   => 'Fog',
+            'nif' => 'asd',
+            'email' => 'asdas',
+            'digest' => 'asfsdf'
+        ]);
 
-        return $response->withJson($user->paginate());
+        $flag = $user->save();
+
+        return $response->withJson($user);
     }
 }
