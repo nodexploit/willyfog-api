@@ -127,16 +127,35 @@ class BaseModel
      *
      * @param $id
      * @return bool
+     * @throws \Exception
      */
     public function delete($id)
+    {
+        if ($this->isAlreadyDeleted($id)) {
+            throw new \Exception('Trying to delete an already deleted user.');
+        }
+
+        $table_name = $this->_table_name;
+        $now = date("Y-m-d h:i:s");
+
+        $stm = $this->_pdo->prepare(
+            "UPDATE $table_name SET deleted_at = '$now' WHERE id = $id"
+        );
+
+        return $stm->execute();
+    }
+
+    private function isAlreadyDeleted($id)
     {
         $table_name = $this->_table_name;
 
         $stm = $this->_pdo->prepare(
-            "DELETE FROM $table_name WHERE id = $id"
+            "SELECT COUNT(id) FROM $table_name WHERE id = $id AND deleted_at IS NOT NULL"
         );
 
-        return $stm->execute();
+        $stm->execute();
+
+        return !empty($stm->fetchAll(\PDO::FETCH_ASSOC));
     }
 
     /**
