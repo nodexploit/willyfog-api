@@ -71,6 +71,8 @@ class BaseModel
     /**
      * Insert the model into database.
      *
+     * TODO: check why not null constraint is not checked
+     *
      * @return bool
      */
     public function save()
@@ -119,7 +121,9 @@ class BaseModel
             "UPDATE $table_name SET " . implode(',', $sets) . " WHERE id = $id"
         );
 
-        return $stm->execute(array_combine($bindings, array_values($attributes)));
+        $success = $stm->execute(array_combine($bindings, array_values($attributes)));
+
+        return $success;
     }
 
     /**
@@ -150,12 +154,14 @@ class BaseModel
         $table_name = $this->_table_name;
 
         $stm = $this->_pdo->prepare(
-            "SELECT COUNT(id) FROM $table_name WHERE id = $id AND deleted_at IS NOT NULL"
+            "SELECT COUNT(id) AS deleted FROM $table_name WHERE id = $id AND deleted_at IS NOT NULL"
         );
 
         $stm->execute();
 
-        return !empty($stm->fetchAll(\PDO::FETCH_ASSOC));
+        $result = $stm->fetchAll(\PDO::FETCH_ASSOC);
+
+        return $result[0]['deleted'] == 1;
     }
 
     /**

@@ -6,8 +6,7 @@ namespace Willyfog\Http\Controllers\V1;
 
 use Interop\Container\ContainerInterface;
 use Slim\Http\Request;
-use Willyfog\Http\Response;
-
+use Slim\Http\Response;
 
 class BaseController
 {
@@ -34,24 +33,33 @@ class BaseController
     /**
      * Return Pagination of all of the elements in the database.
      *
+     * @param Request $request
+     * @param Response $response
+     * @param $args
      * @return Response
      */
     public function index(Request $request, Response $response, $args)
     {
-        return $response->withJson(call_user_func($this->model_name . '::paginate'));
+        $model = new $this->model_name($this->ci);
+        $page = $request->getQueryParam('page', 0);
+
+        return $response->withJson($model->paginate($page));
     }
 
     /**
      * Creates new model.
      *
      * @param Request $request
+     * @param Response $response
+     * @param $args
      * @return Response
      */
     public function create(Request $request, Response $response, $args)
     {
         $model = new $this->model_name($this->ci);
+        $model->fill($request->getParsedBody());
 
-        if ($model->create($request->getParsedBody())) {
+        if ($model->save()) {
             return $response->withJson($model);
         } else {
             return $response->withJson('Ups, we can\'t create the given model', 409);
@@ -61,14 +69,17 @@ class BaseController
     /**
      * Updates the given resource.
      *
+     * TODO: check if user id exists
+     *
      * @param Request $request
-     * @param $id
+     * @param Response $response
+     * @param $args
      * @return Response
      */
     public function update(Request $request, Response $response, $args)
     {
         $id = $args['id'];
-        $model = new $this->model_name($this->ci);
+        $model = new $this->model_name($this->ci);        
 
         if ($model->update($id, $request->getParsedBody())) {
             return $response->withJson($model);
@@ -80,7 +91,9 @@ class BaseController
     /**
      * Destroy the given resource
      *
-     * @param $id
+     * @param Request $request
+     * @param Response $response
+     * @param $args
      * @return Response
      */
     public function destroy(Request $request, Response $response, $args)

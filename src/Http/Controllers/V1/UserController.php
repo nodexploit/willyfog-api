@@ -4,7 +4,7 @@
 namespace Willyfog\Http\Controllers\V1;
 
 
-class UserController
+class UserController extends BaseController
 {
 
 }
