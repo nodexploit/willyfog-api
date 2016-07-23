@@ -33,3 +33,13 @@ $container['oauth'] = function ($c) {
     
     return new OAuth2\Server($storage);
 };
+
+$container['errorHandler'] = function ($c) {
+    return function ($request, $response, $exception) use ($c) {
+        if ($exception instanceof \Willyfog\Http\Exceptions\ResourceNotFound) {
+            return $response->withJson('Resource not found', 404);
+        } else {
+            return $response;
+        }
+    };
+};

@@ -31,6 +31,20 @@ class BaseController
     }
 
     /**
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return static
+     */
+    public function show(Request $request, Response $response, $args)
+    {
+        $model = new $this->model_name($this->ci);
+        $id = $args['id'];
+
+        return $response->withJson($model->find($id));
+    }
+
+    /**
      * Return Pagination of all of the elements in the database.
      *
      * @param Request $request
@@ -68,8 +82,6 @@ class BaseController
 
     /**
      * Updates the given resource.
-     *
-     * TODO: check if user id exists
      *
      * @param Request $request
      * @param Response $response

@@ -7,6 +7,7 @@ $app->group('/api/v1', function () use ($controllers) {
     $this->get('/', "$namespace\\HomeController:index");
 
     $this->get('/users', "$namespace\\UserController:index");
+    $this->get('/users/{id}', "$namespace\\UserController:show");
     $this->post('/users', "$namespace\\UserController:create");
     $this->put('/users/{id}', "$namespace\\UserController:update");
     $this->delete('/users/{id}', "$namespace\\UserController:destroy");
