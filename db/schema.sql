@@ -397,6 +397,8 @@ INSERT INTO willyfog_db.oauth_client (client_id, redirect_uri, grant_types)
 VALUES ('testclient', 'http://willyfog.com/login/callback', 'authorization_code');
 INSERT INTO willyfog_db.oauth_client (client_id, client_secret, redirect_uri, grant_types)
 VALUES ('webclient', 'websecret', 'http://willyfog.com/login/callback', 'authorization_code');
+INSERT INTO willyfog_db.oauth_client (client_id, client_secret, redirect_uri, grant_types)
+VALUES ('mobileclient', 'mobilesecret', 'willyfog://login/callback', 'authorization_code');
 -- Hashed password: 'foobar'
 INSERT INTO willyfog_db.user (name, surname, digest, nif, email)
 VALUES ('Willy', 'Fog', '$2y$10$5uzVJxZAXMdqDMuSMPRB4.VH1MvYtrOlzJqHLTQyLURkSO0MLRMt.', '1111111H', 'willy@example.com');
