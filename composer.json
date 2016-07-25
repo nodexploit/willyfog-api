@@ -7,6 +7,6 @@
         "bshaffer/oauth2-server-php": "^1.8"
     },
     "autoload": {
-        "psr-4": {"Willyfog\\": "src/"}
+        "psr-4": {"Willyfog\\": "app/"}
     }
 }

@@ -10,10 +10,10 @@ return [
         ],
         
         'database' => [
-            'host'      => '127.0.0.1',
-            'name'      => 'willyfog_db',
-            'username'  => 'root',
-            'password'  => 'root'
+            'host'      => DB_HOST,
+            'name'      => DB_NAME,
+            'username'  => DB_USER,
+            'password'  => DB_PASS
         ]
     ],
 ];
