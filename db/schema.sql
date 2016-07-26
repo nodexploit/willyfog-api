@@ -74,6 +74,7 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`centre` (
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`degree` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `centre_id` BIGINT NOT NULL,
+  `name` VARCHAR(100) NOT NULL,
   `deleted_at` TIMESTAMP,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -109,6 +110,7 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`user` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`subject` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(100) NOT NULL,
   `degree_id` BIGINT NOT NULL,
   `recognizer_id` BIGINT NOT NULL,
   `deleted_at` TIMESTAMP,

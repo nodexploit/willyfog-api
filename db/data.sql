@@ -17,3 +17,8 @@ INSERT INTO centre (id, city_id, name) VALUES (1, 1, 'Universidad de Málaga');
  * DEGREE
  */
 INSERT INTO degree (id, centre_id, name) VALUES (1, 1, 'Ingeniería Informática');
+
+/**
+ * SUBJECTS
+ */
+INSERT INTO `subject` (id, )
