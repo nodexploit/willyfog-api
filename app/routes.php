@@ -11,4 +11,6 @@ $app->group('/api/v1', function () use ($controllers) {
     $this->post('/users', "$namespace\\UserController:create");
     $this->put('/users/{id}', "$namespace\\UserController:update");
     $this->delete('/users/{id}', "$namespace\\UserController:destroy");
+
+    $this->get('/equivalences', "$namespace\\EquivalenceController:listAll");
 });

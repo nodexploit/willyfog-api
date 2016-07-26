@@ -31,11 +31,15 @@ class BaseModel implements \JsonSerializable
      *
      * @var array
      */
-    protected $_hidden = ['deleted_at'];
+    protected $_hidden;
 
     public function __construct($ci)
     {
         $this->_pdo = $ci->get('pdo');
+        $this->_hidden = array_merge(
+            ['deleted_at'],
+            $this->_hidden
+        );
     }
 
     /**

@@ -7,6 +7,8 @@ class User extends BaseModel
 {
     protected $_table_name = 'user';
 
+    protected $_hidden = ['digest'];
+
     public $id;
     public $name;
     public $surname;
