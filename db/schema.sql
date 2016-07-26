@@ -182,9 +182,9 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`subject_equivalent_subject` (
 
 
 -- -----------------------------------------------------
--- Table `willyfog_db`.`equivalences`
+-- Table `willyfog_db`.`equivalence`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `willyfog_db`.`equivalences` (
+CREATE TABLE IF NOT EXISTS `willyfog_db`.`equivalence` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `subject_id` BIGINT NOT NULL,
   `subject_id_eq` BIGINT NOT NULL,
