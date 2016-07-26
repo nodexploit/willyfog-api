@@ -226,6 +226,7 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`role` (
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`user_enrolled_degree` (
   `user_id` BIGINT NOT NULL,
   `degree_id` BIGINT NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
   `deleted_at` TIMESTAMP,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
