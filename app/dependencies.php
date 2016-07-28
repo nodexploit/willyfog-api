@@ -13,7 +13,7 @@ $container['logger'] = function ($c) {
 
 $container['pdo'] = function ($c) {
     $database = $c->get('settings')['database'];
-    $dsn = "mysql:dbname=${database['name']};host=${database['host']}";
+    $dsn = "mysql:dbname=${database['name']};host=${database['host']};charset=utf8";
 
     return new PDO($dsn, $database['username'], $database['password']);
 };
@@ -23,7 +23,7 @@ $container['pdo'] = function ($c) {
  */
 $container['oauth'] = function ($c) {
     $database = $c->get('settings')['database'];
-    $dsn = "mysql:dbname=${database['name']};host=${database['host']}";
+    $dsn = "mysql:dbname=${database['name']};host=${database['host']};charset=utf8";
     
     $storage = new \Willyfog\Lib\OAuth2\Pdo([
         'dsn' => $dsn,
