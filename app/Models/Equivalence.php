@@ -9,7 +9,7 @@ class Equivalence extends BaseModel
 
     public $id;
     public $subject_id;
-    public $subject_id_eq;
+    public $subject_eq_id;
     public $created_at;
     public $updated_at;
 }

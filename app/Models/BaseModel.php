@@ -83,17 +83,16 @@ class BaseModel implements \JsonSerializable
         $page_size = $this->_page_size;
         if ($page === null) {
             $page = 0;
+        } else {
+            $page = (int) htmlentities($page);
         }
 
         $stm = $this->_pdo->prepare(
-            "SELECT * FROM $table_name LIMIT :page_size OFFSET :page"
+            "SELECT * FROM $table_name LIMIT 10 OFFSET $page"
         );
-        $stm->execute([
-            'page_size' => $page_size,
-            'page'      => $page
-        ]);
+        $stm->execute();
 
-        $results = $stm->fetchAll(\PDO::FETCH_ASSOC);
+        $results = $stm->fetchAll(\PDO::FETCH_OBJ);
 
         return [
             'data'          => $results,
