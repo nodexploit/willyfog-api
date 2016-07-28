@@ -555,7 +555,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `willyfog_db`;
-INSERT INTO `willyfog_db`.`country` (`id`, `name`, `deleted_at`, `created_at`, `updated_at`) VALUES (1, 'España', NULL, DEFAULT, DEFAULT);
+INSERT INTO `willyfog_db`.`country` (`id`, `name`, `deleted_at`, `created_at`, `updated_at`) VALUES (1, 'Espana', NULL, DEFAULT, DEFAULT);
 
 COMMIT;
 
@@ -565,7 +565,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `willyfog_db`;
-INSERT INTO `willyfog_db`.`city` (`id`, `name`, `country_id`, `deleted_at`, `created_at`, `updated_at`) VALUES (1, 'Málaga', 1, NULL, DEFAULT, DEFAULT);
+INSERT INTO `willyfog_db`.`city` (`id`, `name`, `country_id`, `deleted_at`, `created_at`, `updated_at`) VALUES (1, 'Malaga', 1, NULL, DEFAULT, DEFAULT);
 
 COMMIT;
 
@@ -575,7 +575,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `willyfog_db`;
-INSERT INTO `willyfog_db`.`centre` (`id`, `name`, `city_id`, `deleted_at`, `created_at`, `updated_at`) VALUES (1, 'Universidad de Málaga', 1, NULL, DEFAULT, DEFAULT);
+INSERT INTO `willyfog_db`.`centre` (`id`, `name`, `city_id`, `deleted_at`, `created_at`, `updated_at`) VALUES (1, 'Universidad de Malaga', 1, NULL, DEFAULT, DEFAULT);
 
 COMMIT;
 
@@ -585,8 +585,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `willyfog_db`;
-INSERT INTO `willyfog_db`.`degree` (`id`, `centre_id`, `name`, `deleted_at`, `created_at`, `updated_at`) VALUES (1, 1, 'Ingeniería Informática', NULL, DEFAULT, DEFAULT);
-INSERT INTO `willyfog_db`.`degree` (`id`, `centre_id`, `name`, `deleted_at`, `created_at`, `updated_at`) VALUES (2, 1, 'Matemáticas', NULL, DEFAULT, DEFAULT);
+INSERT INTO `willyfog_db`.`degree` (`id`, `centre_id`, `name`, `deleted_at`, `created_at`, `updated_at`) VALUES (1, 1, 'Ingeniera Informatica', NULL, DEFAULT, DEFAULT);
+INSERT INTO `willyfog_db`.`degree` (`id`, `centre_id`, `name`, `deleted_at`, `created_at`, `updated_at`) VALUES (2, 1, 'Matematicas', NULL, DEFAULT, DEFAULT);
 
 COMMIT;
 
@@ -596,8 +596,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `willyfog_db`;
-INSERT INTO `willyfog_db`.`subject` (`id`, `degree_id`, `name`, `deleted_at`, `created_at`, `updated_at`) VALUES (1, 1, 'Cálculo', NULL, DEFAULT, DEFAULT);
-INSERT INTO `willyfog_db`.`subject` (`id`, `degree_id`, `name`, `deleted_at`, `created_at`, `updated_at`) VALUES (2, 2, 'Inglés', NULL, DEFAULT, DEFAULT);
+INSERT INTO `willyfog_db`.`subject` (`id`, `degree_id`, `name`, `deleted_at`, `created_at`, `updated_at`) VALUES (1, 1, 'Calculo', NULL, DEFAULT, DEFAULT);
+INSERT INTO `willyfog_db`.`subject` (`id`, `degree_id`, `name`, `deleted_at`, `created_at`, `updated_at`) VALUES (2, 2, 'Ingles', NULL, DEFAULT, DEFAULT);
 
 COMMIT;
 

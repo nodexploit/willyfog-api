@@ -12,5 +12,5 @@ $app->group('/api/v1', function () use ($controllers) {
     $this->put('/users/{id}', "$namespace\\UserController:update");
     $this->delete('/users/{id}', "$namespace\\UserController:destroy");
 
-    $this->get('/equivalences', "$namespace\\EquivalenceController:listAll");
+    $this->get('/equivalences', "$namespace\\EquivalenceController:search");
 });
