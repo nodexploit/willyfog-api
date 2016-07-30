@@ -7,6 +7,7 @@ import http.actions.OAuth2Action;
 import models.User;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.With;
 
 @With(OAuth2Action.class)
 public class Application extends Controller {
