@@ -1,12 +1,14 @@
 package models;
 
 import java.util.Date;
+import java.util.List;
 
 public class Request extends BaseModel {
 
     private Integer student_id;
-    private Integer subject_id;
-    private Integer subject_eq_id;
+    private Integer origin_subject_id;
+    private Integer mobility_id;
+    private List<RequestDestinationSubject> destination_subjects;
     private Date deleted_at;
     private Date updated_at;
 
@@ -16,22 +18,6 @@ public class Request extends BaseModel {
 
     public void setStudentId(Integer student_id) {
         this.student_id = student_id;
-    }
-
-    public Integer getSubjectId() {
-        return subject_id;
-    }
-
-    public void setSubjectId(Integer subject_id) {
-        this.subject_id = subject_id;
-    }
-
-    public Integer getSubjectEqId() {
-        return subject_eq_id;
-    }
-
-    public void setSubjectEqId(Integer subject_eq_id) {
-        this.subject_eq_id = subject_eq_id;
     }
 
     public Date getDeletedAt() {
@@ -48,5 +34,29 @@ public class Request extends BaseModel {
 
     public void setUpdatedAt(Date updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public Integer getOriginSubjectId() {
+        return origin_subject_id;
+    }
+
+    public void setOriginSubjectId(Integer originSubjectId) {
+        this.origin_subject_id = originSubjectId;
+    }
+
+    public Integer getMobilityId() {
+        return mobility_id;
+    }
+
+    public void setMobilityId(Integer mobilityId) {
+        this.mobility_id = mobilityId;
+    }
+
+    public List<RequestDestinationSubject> getDestinationSubjects() {
+        return destination_subjects;
+    }
+
+    public void setDestinationSubjects(List<RequestDestinationSubject> destinationSubjects) {
+        this.destination_subjects = destinationSubjects;
     }
 }

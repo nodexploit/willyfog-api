@@ -8,7 +8,7 @@ public class User extends BaseModel{
     private String surname;
     private String nif;
     private String email;
-    private String digest;
+    private transient String digest;
     private Date deleted_at;
     private Date updated_at;
 

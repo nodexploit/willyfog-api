@@ -1,1 +1,4 @@
-GET     /                                    controllers.Application.greet
+GET /api/v1/users/:id               controllers.v1.UserController.show(id: Int)
+GET /api/v1/users/:id/requests      controllers.v1.RequestController.showUserRequests(id: Int)
+
+GET /api/v1/requests/:id            controllers.v1.RequestController.show(id: Int)
