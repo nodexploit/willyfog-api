@@ -15,11 +15,11 @@ public class Role extends BaseModel {
         this.permission = permission;
     }
 
-    public Date getDeleted_at() {
+    public Date getDeletedAt() {
         return deleted_at;
     }
 
-    public void setDeleted_at(Date deleted_at) {
+    public void setDeletedAt(Date deleted_at) {
         this.deleted_at = deleted_at;
     }
 }
