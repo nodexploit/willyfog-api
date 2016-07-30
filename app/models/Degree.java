@@ -2,11 +2,20 @@ package models;
 
 import java.util.Date;
 
-public class Country extends BaseModel{
+public class Degree extends BaseModel {
 
+    private Integer centre_id;
     private String name;
     private Date deleted_at;
     private Date updated_at;
+
+    public Integer getCentreId() {
+        return centre_id;
+    }
+
+    public void setCentreId(Integer centre_id) {
+        this.centre_id = centre_id;
+    }
 
     public String getName() {
         return name;

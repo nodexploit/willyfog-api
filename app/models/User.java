@@ -52,19 +52,19 @@ public class User extends BaseModel{
         this.digest = digest;
     }
 
-    public Date getDeleted_at() {
+    public Date getDeletedAt() {
         return deleted_at;
     }
 
-    public void setDeleted_at(Date deleted_at) {
+    public void setDeletedAt(Date deleted_at) {
         this.deleted_at = deleted_at;
     }
 
-    public Date getUpdated_at() {
+    public Date getUpdatedAt() {
         return updated_at;
     }
 
-    public void setUpdated_at(Date updated_at) {
+    public void setUpdatedAt(Date updated_at) {
         this.updated_at = updated_at;
     }
 }
