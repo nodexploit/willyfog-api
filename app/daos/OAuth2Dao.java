@@ -1,21 +1,24 @@
 package daos;
 
+import models.OAuthAccessToken;
 import org.sql2o.Connection;
 
 public class OAuth2Dao extends BaseDao {
 
+    public static String tableName = "oauth_access_token";
+
     public boolean validateAccessToken(String accessToken) {
-        String sql = "SELECT COUNT(*) " +
-                "FROM oauth_access_token " +
+        String sql = "SELECT * " +
+                "FROM " + tableName + " " +
                 "WHERE access_token = :accessToken";
 
-        Integer count = 0;
+        OAuthAccessToken oAuthAccessToken;
         try(Connection con = this.db.open()) {
-            count = con.createQuery(sql)
+            oAuthAccessToken = con.createQuery(sql)
                     .addParameter("accessToken", accessToken)
-                    .executeScalar(Integer.class);
+                    .executeAndFetchFirst(OAuthAccessToken.class);
         }
 
-        return count > 0;
+        return oAuthAccessToken != null && !oAuthAccessToken.isExpired();
     }
 }

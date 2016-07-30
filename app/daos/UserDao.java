@@ -5,9 +5,11 @@ import org.sql2o.Connection;
 
 public class UserDao extends BaseDao {
 
+    public static String tableName = "user";
+
     public User find(int id) {
         String sql = "SELECT * " +
-                "FROM user " +
+                "FROM " + tableName + " " +
                 "WHERE id = :id";
 
         User user = null;
@@ -22,9 +24,9 @@ public class UserDao extends BaseDao {
 
     public User find(String accessToken) {
         String sql = "SELECT u.* " +
-                "FROM user u " +
-                "JOIN oauth_access_token oat ON oat.user_id = u.id " +
-                "WHERE access_token = :accessToken";
+                "FROM " + tableName + " u " +
+                "JOIN " + OAuth2Dao.tableName + " oat ON oat.user_id = u.id " +
+                "WHERE oat.access_token = :accessToken";
 
         User user = null;
         try(Connection con = this.db.open()) {

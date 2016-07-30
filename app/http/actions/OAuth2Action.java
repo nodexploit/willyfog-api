@@ -1,7 +1,9 @@
 package http.actions;
 
+import com.google.gson.Gson;
 import com.google.inject.Inject;
 import daos.OAuth2Dao;
+import http.ErrorResponse;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Results;
@@ -13,6 +15,8 @@ public class OAuth2Action extends play.mvc.Action.Simple {
 
     @Inject
     private OAuth2Dao oauth2dao;
+    @Inject
+    private Gson gson;
 
     @Override
     public CompletionStage<Result> call(Http.Context ctx) {
@@ -29,9 +33,10 @@ public class OAuth2Action extends play.mvc.Action.Simple {
         if (authorized) {
             result = delegate.call(ctx);
         } else {
-            result = CompletableFuture.completedFuture(Results.unauthorized());
+            result = CompletableFuture.completedFuture(
+                    Results.unauthorized(gson.toJson(new ErrorResponse("Not authorized", "")))
+            );
         }
-
 
         return result;
     }
