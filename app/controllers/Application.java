@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 import com.google.inject.Inject;
 import daos.UserDao;
 import models.User;
-import play.*;
-import play.mvc.*;
+import play.mvc.Controller;
+import play.mvc.Result;
 
 public class Application extends Controller {
 
