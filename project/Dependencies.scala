@@ -6,6 +6,7 @@ object Dependencies {
   val gson = "com.google.code.gson" % "gson" % "2.7"
   val mysql = "mysql" % "mysql-connector-java" % "5.1.39"
   val sql2o = "org.sql2o" % "sql2o" % "1.5.4"
+  val elastic = "org.elasticsearch" % "elasticsearch" % "2.3.4"
 
-  val backendDeps = Seq(guice, gson, mysql, sql2o)
+  val backendDeps = Seq(guice, gson, mysql, sql2o, elastic)
 }
