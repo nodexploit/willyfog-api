@@ -2,25 +2,15 @@ package models;
 
 import java.util.Date;
 
-public class User {
+public class User extends BaseModel{
 
-    private int id;
     private String name;
     private String surname;
     private String nif;
     private String email;
     private String digest;
     private Date deleted_at;
-    private Date created_at;
     private Date updated_at;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -68,14 +58,6 @@ public class User {
 
     public void setDeleted_at(Date deleted_at) {
         this.deleted_at = deleted_at;
-    }
-
-    public Date getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(Date created_at) {
-        this.created_at = created_at;
     }
 
     public Date getUpdated_at() {
