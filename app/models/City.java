@@ -2,9 +2,10 @@ package models;
 
 import java.util.Date;
 
-public class Country extends BaseModel{
+public class City extends BaseModel {
 
     private String name;
+    private Integer country_id;
     private Date deleted_at;
     private Date updated_at;
 
@@ -14,6 +15,14 @@ public class Country extends BaseModel{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getCountryId() {
+        return country_id;
+    }
+
+    public void setCountryId(Integer country_id) {
+        this.country_id = country_id;
     }
 
     public Date getDeletedAt() {
