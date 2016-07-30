@@ -3,10 +3,12 @@ package controllers;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 import daos.UserDao;
+import http.actions.OAuth2Action;
 import models.User;
 import play.*;
 import play.mvc.*;
 
+@With(OAuth2Action.class)
 public class Application extends Controller {
 
     @Inject
@@ -15,7 +17,10 @@ public class Application extends Controller {
     private Gson gson;
 
     public Result greet() {
-        User u = userDao.find(1);
+        String authorization = request().getHeader("Authorization");
+        String[] split = authorization.split(" ");
+        String accessToken = split[1];
+        User u = userDao.find(accessToken);
 
         return ok(gson.toJson(u));
     }

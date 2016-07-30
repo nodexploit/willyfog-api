@@ -1,14 +1,9 @@
 package daos;
 
-import com.google.inject.Inject;
 import models.User;
 import org.sql2o.Connection;
-import org.sql2o.Sql2o;
 
-public class UserDao {
-
-    @Inject
-    private Sql2o db;
+public class UserDao extends BaseDao {
 
     public User find(int id) {
         String sql = "SELECT * " +
@@ -20,6 +15,22 @@ public class UserDao {
              user = con.createQuery(sql)
                      .addParameter("id", id)
                      .executeAndFetchFirst(User.class);
+        }
+
+        return user;
+    }
+
+    public User find(String accessToken) {
+        String sql = "SELECT u.* " +
+                "FROM user u " +
+                "JOIN oauth_access_token oat ON oat.user_id = u.id " +
+                "WHERE access_token = :accessToken";
+
+        User user = null;
+        try(Connection con = this.db.open()) {
+            user = con.createQuery(sql)
+                    .addParameter("accessToken", accessToken)
+                    .executeAndFetchFirst(User.class);
         }
 
         return user;
