@@ -32,14 +32,4 @@ public class Notification extends BaseModel {
     public void setReadAt(Date readAt) {
         this.read_at = readAt;
     }
-
-    @Override
-    public Date getCreatedAt() {
-        return created_at;
-    }
-
-    @Override
-    public void setCreatedAt(Date createdAt) {
-        this.created_at = createdAt;
-    }
 }
