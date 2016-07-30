@@ -397,7 +397,7 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`notification` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `content` VARCHAR(45) NOT NULL,
   `user_id` INT NOT NULL,
-  `readed_at` TIMESTAMP NULL,
+  `read_at` TIMESTAMP NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   INDEX `fk_notification_user1_idx` (`user_id` ASC),

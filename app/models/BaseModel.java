@@ -15,11 +15,11 @@ public class BaseModel {
         this.id = id;
     }
 
-    public Date getCreated_at() {
+    public Date getCreatedAt() {
         return created_at;
     }
 
-    public void setCreated_at(Date created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(Date createdAt) {
+        this.created_at = createdAt;
     }
 }
