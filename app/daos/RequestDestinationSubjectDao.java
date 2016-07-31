@@ -1,7 +1,5 @@
 package daos;
 
-import models.Centre;
-import models.Subject;
 import org.sql2o.Connection;
 
 import java.util.List;
