@@ -83,7 +83,7 @@ DROP TABLE IF EXISTS `willyfog_db`.`centre` ;
 
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`centre` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(1000) NOT NULL,
   `code` VARCHAR(45) NULL,
   `deleted_at` TIMESTAMP NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
