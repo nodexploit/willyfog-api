@@ -63,3 +63,11 @@ INSERT INTO `subject` (code, degree_id, name, credits) VALUES ('fT4q', 10, 'Anat
 INSERT INTO `subject` (code, degree_id, name, credits) VALUES ('JZs8', 1, 'Dibujo Técnico', 6);
 INSERT INTO `subject` (code, degree_id, name, credits) VALUES ('mkQH', 2, 'Historia de Grecia', 6);
 INSERT INTO `subject` (code, degree_id, name, credits) VALUES ('1Dvw', 3, 'Lógica Computacional', 6);
+
+/**
+ * Equivalences
+ */
+INSERT INTO `equivalence` (subject_id, subject_eq_id) VALUES (1, 2);
+INSERT INTO `equivalence` (subject_id, subject_eq_id) VALUES (2, 3);
+INSERT INTO `equivalence` (subject_id, subject_eq_id) VALUES (3, 7);
+INSERT INTO `equivalence` (subject_id, subject_eq_id) VALUES (10, 12);
