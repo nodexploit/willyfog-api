@@ -7,7 +7,7 @@ public class UserDao extends BaseDao {
 
     public static String tableName = "user";
 
-    public User find(int id) {
+    public User find(Integer id) {
         String sql = "SELECT * " +
                 "FROM " + tableName + " " +
                 "WHERE id = :id";
