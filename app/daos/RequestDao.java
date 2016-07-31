@@ -4,6 +4,7 @@ import models.Request;
 import org.sql2o.Connection;
 
 import java.util.List;
+import java.util.Map;
 
 public class RequestDao extends BaseDao {
 
@@ -24,16 +25,17 @@ public class RequestDao extends BaseDao {
         return request;
     }
 
-    public List<Request> userRequests(Integer userId) {
+    public List<Map<String, Object>> userRequests(Integer userId) {
         String sql = "SELECT * " +
-                "FROM " + tableName + " " +
+                "FROM " + tableName + " r " +
+                "JOIN " + SubjectDao.tableName + " s ON r.origin_subject_id = s.id " +
                 "WHERE student_id = :userId";
 
-        List<Request> requests;
+        List<Map<String, Object>> requests;
         try(Connection con = this.db.open()) {
-            requests = con.createQuery(sql)
+            requests = toMapList(con.createQuery(sql)
                     .addParameter("userId", userId)
-                    .executeAndFetch(Request.class);
+                    .executeAndFetchTable());
         }
 
         return requests;

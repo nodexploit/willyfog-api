@@ -8,6 +8,7 @@ import models.RequestDestinationSubject;
 import play.mvc.Result;
 
 import java.util.List;
+import java.util.Map;
 
 public class RequestController extends BaseController {
 
@@ -25,7 +26,7 @@ public class RequestController extends BaseController {
     }
 
     public Result showUserRequests(Integer userId) {
-        List<Request> rs = requestDao.userRequests(userId);
+        List<Map<String, Object>>  rs = requestDao.userRequests(userId);
 
         return ok(gson.toJson(rs));
     }
