@@ -18,7 +18,7 @@ public class RequestController extends BaseController {
     public Result show(Integer id) {
         Map<String, Object> r = requestDao.find(id);
         List<Map<String, Object>> rds = requestDestinationDao.requestDestinations(id);
-        r.put("destination_subject", rds);
+        r.put("destination_subjects", rds);
 
         return ok(gson.toJson(r));
     }
