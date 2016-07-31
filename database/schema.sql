@@ -189,14 +189,14 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`request` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `student_id` INT NOT NULL,
   `origin_subject_id` INT NOT NULL,
-  `mobility_id` INT UNIQUE NOT NULL,
+  `mobility_type_id` INT NOT NULL,
   `deleted_at` TIMESTAMP NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   INDEX `fk_request_user1_idx` (`student_id` ASC),
   INDEX `fk_request_subject1_idx` (`origin_subject_id` ASC),
-  INDEX `fk_request_mobility1_idx` (`mobility_id` ASC),
+  INDEX `fk_request_mobility1_idx` (`mobility_type_id` ASC),
   CONSTRAINT `fk_request_user1`
   FOREIGN KEY (`student_id`)
   REFERENCES `willyfog_db`.`user` (`id`)
@@ -208,7 +208,7 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`request` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_request_mobility1`
-  FOREIGN KEY (`mobility_id`)
+  FOREIGN KEY (`mobility_type_id`)
   REFERENCES `willyfog_db`.`mobility_type` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -654,7 +654,7 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`request_destination_subject` (
   `centre_code` VARCHAR(45) NULL,
   `uri` VARCHAR(1000) NULL,
   `attachment` VARCHAR(1000) NULL,
-  `city_id` INT NULL DEFAULT 0,
+  `city_id` INT NULL,
   `deleted_at` TIMESTAMP NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
