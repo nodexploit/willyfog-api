@@ -20,15 +20,24 @@ public class OAuth2Action extends play.mvc.Action.Simple {
 
     @Override
     public CompletionStage<Result> call(Http.Context ctx) {
-        CompletionStage<Result> result = null;
+        CompletionStage<Result> result;
+        boolean authorized = false;
 
         Http.Request request = ctx.request();
-
         String authorization = request.getHeader("Authorization");
-        String[] split = authorization.split(" ");
-        String accessToken = split[1];
 
-        boolean authorized = oauth2dao.validateAccessToken(accessToken);
+        if (authorization != null) {
+            String[] split = authorization.split(" ");
+
+            String accessToken;
+            if (split.length > 1) {
+                accessToken = split[1];
+            } else {
+                accessToken = "";
+            }
+
+            authorized = oauth2dao.validateAccessToken(accessToken);
+        }
 
         if (authorized) {
             result = delegate.call(ctx);
