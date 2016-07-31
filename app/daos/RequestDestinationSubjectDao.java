@@ -4,21 +4,22 @@ import models.RequestDestinationSubject;
 import org.sql2o.Connection;
 
 import java.util.List;
+import java.util.Map;
 
 public class RequestDestinationSubjectDao extends BaseDao {
 
     public static String tableName = "request_destination_subject";
 
-    public List<RequestDestinationSubject> requestDestinations(Integer requestId) {
+    public List<Map<String, Object>> requestDestinations(Integer requestId) {
         String sql = "SELECT * " +
                 "FROM " + tableName + " " +
                 "WHERE request_id = :requestId";
 
-        List<RequestDestinationSubject> requestDestinationSubjects;
+        List<Map<String, Object>> requestDestinationSubjects;
         try(Connection con = this.db.open()) {
-            requestDestinationSubjects = con.createQuery(sql)
+            requestDestinationSubjects = toMapList(con.createQuery(sql)
                     .addParameter("requestId", requestId)
-                    .executeAndFetch(RequestDestinationSubject.class);
+                    .executeAndFetchTable());
         }
 
         return requestDestinationSubjects;
