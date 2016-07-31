@@ -26,7 +26,9 @@ public class RequestDao extends BaseDao {
     }
 
     public List<Map<String, Object>> userRequests(Integer userId) {
-        String sql = "SELECT * " +
+        String sql = "SELECT " +
+                "r.id, " +
+                "r.origin_subject_id AS subject_id, s.code AS subject_code, s.name AS subject_name " +
                 "FROM " + tableName + " r " +
                 "JOIN " + SubjectDao.tableName + " s ON r.origin_subject_id = s.id " +
                 "WHERE student_id = :userId";

@@ -32,11 +32,8 @@ public class OAuth2Action extends play.mvc.Action.Simple {
             String accessToken;
             if (split.length > 1) {
                 accessToken = split[1];
-            } else {
-                accessToken = "";
+                authorized = oauth2dao.validateAccessToken(accessToken);
             }
-
-            authorized = oauth2dao.validateAccessToken(accessToken);
         }
 
         if (authorized) {
