@@ -1,19 +1,17 @@
 import com.google.inject.AbstractModule;
-import com.google.inject.Inject;
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 import org.sql2o.Sql2o;
-import play.Configuration;
 
 public class Module extends AbstractModule {
 
-    @Inject
-    private Configuration configuration;
-
     @Override
     protected void configure() {
-        String host = configuration.getString("database.host");
-        String dbName = configuration.getString("database.name");
-        String dbUsername = configuration.getString("database.username");
-        String dbPassword = configuration.getString("database.password");
+        Config conf = ConfigFactory.load();
+        String host = conf.getString("database.host");
+        String dbName = conf.getString("database.name");
+        String dbUsername = conf.getString("database.username");
+        String dbPassword = conf.getString("database.password");
         String dsn = "jdbc:mysql://" + host + ":3306/" + dbName;
 
         bind(Sql2o.class)
