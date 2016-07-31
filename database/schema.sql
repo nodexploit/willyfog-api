@@ -17,6 +17,8 @@ USE `willyfog_db` ;
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`country`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `willyfog_db`.`country` ;
+
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`country` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
@@ -32,6 +34,8 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`country` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`city`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `willyfog_db`.`city` ;
+
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`city` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
@@ -50,19 +54,21 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`city` (
 
 
 -- -----------------------------------------------------
--- Table `willyfog_db`.`centre`
+-- Table `willyfog_db`.`university`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `willyfog_db`.`centre` (
+DROP TABLE IF EXISTS `willyfog_db`.`university` ;
+
+CREATE TABLE IF NOT EXISTS `willyfog_db`.`university` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(200) NOT NULL,
   `code` VARCHAR(45) NULL,
-  `city_id` INT NOT NULL,
-  `deleted_at` TIMESTAMP NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `deleted_at` TIMESTAMP NULL,
+  `city_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_centre_city1_idx` (`city_id` ASC),
-  CONSTRAINT `fk_centre_city1`
+  INDEX `fk_university_city1_idx` (`city_id` ASC),
+  CONSTRAINT `fk_university_city1`
   FOREIGN KEY (`city_id`)
   REFERENCES `willyfog_db`.`city` (`id`)
     ON DELETE NO ACTION
@@ -71,8 +77,33 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`centre` (
 
 
 -- -----------------------------------------------------
+-- Table `willyfog_db`.`centre`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `willyfog_db`.`centre` ;
+
+CREATE TABLE IF NOT EXISTS `willyfog_db`.`centre` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `code` VARCHAR(45) NULL,
+  `deleted_at` TIMESTAMP NULL,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `university_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_centre_university1_idx` (`university_id` ASC),
+  CONSTRAINT `fk_centre_university1`
+  FOREIGN KEY (`university_id`)
+  REFERENCES `willyfog_db`.`university` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+  ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `willyfog_db`.`degree`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `willyfog_db`.`degree` ;
+
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`degree` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `centre_id` INT NOT NULL,
@@ -93,6 +124,8 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`degree` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`subject`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `willyfog_db`.`subject` ;
+
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`subject` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `code` VARCHAR(45) NOT NULL,
@@ -115,6 +148,8 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`subject` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`user`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `willyfog_db`.`user` ;
+
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`user` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
@@ -130,9 +165,11 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`user` (
 
 
 -- -----------------------------------------------------
--- Table `willyfog_db`.`mobility`
+-- Table `willyfog_db`.`mobility_type`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `willyfog_db`.`mobility` (
+DROP TABLE IF EXISTS `willyfog_db`.`mobility_type` ;
+
+CREATE TABLE IF NOT EXISTS `willyfog_db`.`mobility_type` (
   `id` INT UNIQUE NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `min_credits` INT NULL,
@@ -146,6 +183,8 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`mobility` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`request`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `willyfog_db`.`request` ;
+
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`request` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `student_id` INT NOT NULL,
@@ -170,7 +209,7 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`request` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_request_mobility1`
   FOREIGN KEY (`mobility_id`)
-  REFERENCES `willyfog_db`.`mobility` (`id`)
+  REFERENCES `willyfog_db`.`mobility_type` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;
@@ -179,6 +218,8 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`request` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`likely_subject`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `willyfog_db`.`likely_subject` ;
+
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`likely_subject` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `subject_id` INT NOT NULL,
@@ -205,6 +246,8 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`likely_subject` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`equivalence`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `willyfog_db`.`equivalence` ;
+
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`equivalence` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `subject_id` INT NOT NULL,
@@ -232,6 +275,8 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`equivalence` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`role`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `willyfog_db`.`role` ;
+
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`role` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `permission` INT NOT NULL,
@@ -244,6 +289,8 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`role` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`user_enrolled_degree`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `willyfog_db`.`user_enrolled_degree` ;
+
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`user_enrolled_degree` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
@@ -270,6 +317,8 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`user_enrolled_degree` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`user_has_role`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `willyfog_db`.`user_has_role` ;
+
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`user_has_role` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
@@ -296,6 +345,8 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`user_has_role` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`permission`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `willyfog_db`.`permission` ;
+
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`permission` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `bit` INT NOT NULL,
@@ -309,6 +360,8 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`permission` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`user_recognize_subject`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `willyfog_db`.`user_recognize_subject` ;
+
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`user_recognize_subject` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
@@ -335,6 +388,8 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`user_recognize_subject` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`comment`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `willyfog_db`.`comment` ;
+
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`comment` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `content` VARCHAR(45) NOT NULL,
@@ -362,6 +417,8 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`comment` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`accepted_request`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `willyfog_db`.`accepted_request` ;
+
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`accepted_request` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `request_id` INT NOT NULL,
@@ -387,6 +444,8 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`accepted_request` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`rejected_request`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `willyfog_db`.`rejected_request` ;
+
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`rejected_request` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `request_id` INT NOT NULL,
@@ -412,6 +471,8 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`rejected_request` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`notification`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `willyfog_db`.`notification` ;
+
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`notification` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `content` VARCHAR(45) NOT NULL,
@@ -431,6 +492,8 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`notification` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`oauth_client`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `willyfog_db`.`oauth_client` ;
+
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`oauth_client` (
   `client_id` VARCHAR(80) NOT NULL,
   `client_secret` VARCHAR(80) NULL,
@@ -456,6 +519,8 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`oauth_client` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`oauth_access_token`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `willyfog_db`.`oauth_access_token` ;
+
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`oauth_access_token` (
   `access_token` VARCHAR(40) NOT NULL,
   `user_id` INT NULL,
@@ -482,6 +547,8 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`oauth_access_token` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`oauth_authorization_code`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `willyfog_db`.`oauth_authorization_code` ;
+
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`oauth_authorization_code` (
   `authorization_code` VARCHAR(40) NOT NULL,
   `user_id` INT NULL,
@@ -512,6 +579,8 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`oauth_authorization_code` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`oauth_jwt`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `willyfog_db`.`oauth_jwt` ;
+
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`oauth_jwt` (
   `client_id` VARCHAR(80) NOT NULL,
   `subject` VARCHAR(80) NULL,
@@ -529,6 +598,8 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`oauth_jwt` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`oauth_scope`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `willyfog_db`.`oauth_scope` ;
+
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`oauth_scope` (
   `scope` VARCHAR(50) NOT NULL,
   `is_default` TINYINT(1) NULL,
@@ -542,6 +613,8 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`oauth_scope` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`oauth_refresh_token`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `willyfog_db`.`oauth_refresh_token` ;
+
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`oauth_refresh_token` (
   `refresh_token` VARCHAR(40) NOT NULL,
   `user_id` INT NULL,
@@ -568,7 +641,10 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`oauth_refresh_token` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`request_destination_subject`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `willyfog_db`.`request_destination_subject` ;
+
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`request_destination_subject` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `request_id` INT NOT NULL,
   `subject_id` INT NULL,
   `subject_name` VARCHAR(200) NULL,
@@ -582,7 +658,7 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`request_destination_subject` (
   `deleted_at` TIMESTAMP NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`request_id`),
+  PRIMARY KEY (`id`, `request_id`),
   INDEX `fk_request_has_subject_subject1_idx` (`subject_id` ASC),
   INDEX `fk_request_has_subject_request1_idx` (`request_id` ASC),
   INDEX `fk_request_destination_subject_city1_idx` (`city_id` ASC),
@@ -620,13 +696,13 @@ COMMIT;
 
 
 -- -----------------------------------------------------
--- Data for table `willyfog_db`.`mobility`
+-- Data for table `willyfog_db`.`mobility_type`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `willyfog_db`;
-INSERT INTO `willyfog_db`.`mobility` (`id`, `name`, `min_credits`, `deleted_at`, `created_at`, `updated_at`) VALUES (2, 'SICUE', NULL, NULL, DEFAULT, DEFAULT);
-INSERT INTO `willyfog_db`.`mobility` (`id`, `name`, `min_credits`, `deleted_at`, `created_at`, `updated_at`) VALUES (3, 'Única', NULL, NULL, DEFAULT, DEFAULT);
-INSERT INTO `willyfog_db`.`mobility` (`id`, `name`, `min_credits`, `deleted_at`, `created_at`, `updated_at`) VALUES (1, 'Erasmus', NULL, NULL, DEFAULT, DEFAULT);
+INSERT INTO `willyfog_db`.`mobility_type` (`id`, `name`, `min_credits`, `deleted_at`, `created_at`, `updated_at`) VALUES (2, 'SICUE', NULL, NULL, DEFAULT, DEFAULT);
+INSERT INTO `willyfog_db`.`mobility_type` (`id`, `name`, `min_credits`, `deleted_at`, `created_at`, `updated_at`) VALUES (3, 'Única', NULL, NULL, DEFAULT, DEFAULT);
+INSERT INTO `willyfog_db`.`mobility_type` (`id`, `name`, `min_credits`, `deleted_at`, `created_at`, `updated_at`) VALUES (1, 'Erasmus', NULL, NULL, DEFAULT, DEFAULT);
 
 COMMIT;
 
@@ -640,3 +716,4 @@ INSERT INTO `willyfog_db`.`oauth_client` (`client_id`, `client_secret`, `redirec
 INSERT INTO `willyfog_db`.`oauth_client` (`client_id`, `client_secret`, `redirect_uri`, `grant_types`, `scope`, `user_id`, `deleted_at`, `created_at`, `updated_at`) VALUES ('mobileclient', 'mobilesecret', 'willyfog://login/callback', 'authorization_code', NULL, NULL, NULL, DEFAULT, DEFAULT);
 
 COMMIT;
+
