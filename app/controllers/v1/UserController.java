@@ -28,6 +28,6 @@ public class UserController extends BaseController {
     public Result userInfo(Integer id) {
         List<Map<String, Object>> result = userDao.getUserInfo(id);
 
-        return ok(gson.toJson(result));
+        return ok(gson.toJson(result.get(0)));
     }
 }
