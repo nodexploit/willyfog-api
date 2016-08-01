@@ -71,3 +71,9 @@ INSERT INTO `equivalence` (subject_id, subject_eq_id) VALUES (1, 2);
 INSERT INTO `equivalence` (subject_id, subject_eq_id) VALUES (2, 3);
 INSERT INTO `equivalence` (subject_id, subject_eq_id) VALUES (3, 7);
 INSERT INTO `equivalence` (subject_id, subject_eq_id) VALUES (10, 12);
+
+/**
+ * User enrolled degree
+ */
+
+INSERT INTO `user_enrolled_degree` (user_id, degree_id) VALUES (1, 3);
