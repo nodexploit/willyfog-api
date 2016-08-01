@@ -2,9 +2,8 @@ package controllers.v1;
 
 import com.google.inject.Inject;
 import daos.UniversityDao;
-import daos.UserDao;
+import models.Centre;
 import models.University;
-import models.User;
 import play.mvc.Result;
 
 import java.util.List;
@@ -18,5 +17,11 @@ public class UniversityController extends BaseController {
         List<University> us = universityDao.all();
 
         return ok(gson.toJson(us));
+    }
+
+    public Result centres(Integer universityId) {
+        List<Centre> cs = universityDao.centres(universityId);
+
+        return ok(gson.toJson(cs));
     }
 }

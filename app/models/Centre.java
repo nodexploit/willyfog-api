@@ -5,7 +5,8 @@ import java.util.Date;
 public class Centre extends BaseModel {
 
     private String name;
-    private Integer city_id;
+    private String code;
+    private Integer university_id;
     private Date deleted_at;
     private Date updated_at;
 
@@ -17,12 +18,20 @@ public class Centre extends BaseModel {
         this.name = name;
     }
 
-    public Integer getCityId() {
-        return city_id;
+    public String getCode() {
+        return code;
     }
 
-    public void setCityId(Integer city_id) {
-        this.city_id = city_id;
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Integer getUniversityId() {
+        return university_id;
+    }
+
+    public void setUniversityId(Integer universityId) {
+        this.university_id = universityId;
     }
 
     public Date getDeletedAt() {

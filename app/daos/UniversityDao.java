@@ -1,10 +1,10 @@
 package daos;
 
+import models.Centre;
 import models.University;
 import org.sql2o.Connection;
 
 import java.util.List;
-import java.util.Map;
 
 public class UniversityDao extends BaseDao {
 
@@ -27,5 +27,21 @@ public class UniversityDao extends BaseDao {
         }
 
         return universities;
+    }
+
+    public List<Centre> centres(Integer universityId) {
+        String sql = "SELECT " +
+                "c.id, c.name, c.code " +
+                "FROM " + CentreDao.tableName + " c " +
+                "WHERE c.university_id = :universityId";
+
+        List<Centre> centres;
+        try(Connection con = this.db.open()) {
+            centres = con.createQuery(sql)
+                    .addParameter("universityId", universityId)
+                    .executeAndFetch(Centre.class);
+        }
+
+        return centres;
     }
 }
