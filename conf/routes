@@ -6,3 +6,5 @@ GET /api/v1/requests/:id            controllers.v1.RequestController.show(id: In
 GET /api/v1/subjects/:id            controllers.v1.SubjectController.show(id: Int)
 
 GET /api/v1/equivalences            controllers.v1.EquivalenceController.search(subjectName: String)
+
+GET /api/v1/universities            controllers.v1.UniversityController.index
