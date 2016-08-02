@@ -1,5 +1,4 @@
 import sbt._
-import play.sbt.Play.autoImport._
 
 object Dependencies {
 
@@ -9,5 +8,5 @@ object Dependencies {
   val sql2o = "org.sql2o" % "sql2o" % "1.5.4"
   val typeSafeConfig = "com.typesafe" % "config" % "1.3.0"
 
-  val backendDeps = Seq(guice, gson, mysql, sql2o, typeSafeConfig, filters)
+  val backendDeps = Seq(guice, gson, mysql, sql2o, typeSafeConfig)
 }
