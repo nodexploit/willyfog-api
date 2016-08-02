@@ -2,6 +2,7 @@ GET /api/v1/users/:id                   controllers.v1.UserController.show(id: I
 GET /api/v1/users/:id/requests          controllers.v1.RequestController.showUserRequests(id: Int)
 GET /api/v1/users/:id/info              controllers.v1.UserController.userInfo(id: Int)
 GET /api/v1/users/info/u                controllers.v1.UserController.userByToken(accessToken: String)
+POST /api/v1/users/register             controllers.v1.UserController.register
 
 GET /api/v1/requests/:id                controllers.v1.RequestController.show(id: Int)
 
@@ -11,3 +12,5 @@ GET /api/v1/equivalences                controllers.v1.EquivalenceController.sea
 
 GET /api/v1/universities                controllers.v1.UniversityController.index
 GET /api/v1/universities/:id/centres    controllers.v1.UniversityController.centres(id: Int)
+
+GET /api/v1/centres/:id/degrees         controllers.v1.CentreController.degrees(id: Int)

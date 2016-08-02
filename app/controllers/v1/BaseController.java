@@ -8,6 +8,10 @@ import play.mvc.Result;
 import play.mvc.Results;
 import play.mvc.With;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 @With(OAuth2Action.class)
 public class BaseController extends Controller {
 
@@ -16,5 +20,18 @@ public class BaseController extends Controller {
 
     public static Result ok(String content) {
         return Results.ok(content).as("application/json");
+    }
+
+    public List<String> checkRequiredParams(String[] fields) {
+        List<String> requiredPostFields = new ArrayList<>();
+        Map<String, String[]> params = request().body().asFormUrlEncoded();
+
+        for (String key: fields) {
+            if (params.get(key) == null) {
+                requiredPostFields.add(key);
+            }
+        }
+
+        return requiredPostFields;
     }
 }

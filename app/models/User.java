@@ -1,6 +1,8 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class User extends BaseModel{
 
@@ -11,6 +13,8 @@ public class User extends BaseModel{
     private transient String digest;
     private Date deleted_at;
     private Date updated_at;
+
+    private List<String> errors = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -66,5 +70,15 @@ public class User extends BaseModel{
 
     public void setUpdatedAt(Date updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public List<String> getErrors() {
+        return errors;
+    }
+
+    public boolean isValid() {
+        return name != null && surname != null &&
+                nif != null && email != null &&
+                digest != null;
     }
 }
