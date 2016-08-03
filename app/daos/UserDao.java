@@ -42,7 +42,9 @@ public class UserDao extends BaseDao {
     }
 
     public List<Map<String, Object>> getUserInfo(Integer userId) {
-        String sql = "SELECT u.name, u.surname, u.nif, " +
+        String sql = "SELECT " +
+                "d.id AS degree_id, " +
+                "u.name, u.surname, u.nif, " +
                 "u.email, d.name AS degree_name, " +
                 "c.name AS centre_name, un.name AS university_name " +
                 "FROM " + tableName + " u " +

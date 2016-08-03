@@ -42,7 +42,6 @@ public class UserController extends BaseController {
      * @return
      */
     public Result register() {
-
         String[] requiredParams = {"name", "surname", "nif", "email", "digest", "degree_id"};
         List<String> missingFields = checkRequiredParams(requiredParams);
 

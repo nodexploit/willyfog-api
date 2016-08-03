@@ -14,7 +14,7 @@ public class User extends BaseModel{
     private Date deleted_at;
     private Date updated_at;
 
-    private List<String> errors = new ArrayList<>();
+    private transient List<String> errors = new ArrayList<>();
 
     public String getName() {
         return name;
