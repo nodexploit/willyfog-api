@@ -16,4 +16,8 @@ public class ErrorResponse {
     public ErrorResponse(String status, String messages) {
         this(status, new ArrayList<String>() {{ add(messages); }});
     }
+
+    public ErrorResponse(String status) {
+        this(status, new ArrayList<String>());
+    }
 }

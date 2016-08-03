@@ -74,7 +74,7 @@ public class UserController extends BaseController {
 
         if (enrollId == null) {
             return ok(gson.toJson(
-                    new ErrorResponse("Degree not valid", "")
+                    new ErrorResponse("Degree not valid")
             ));
         }
 

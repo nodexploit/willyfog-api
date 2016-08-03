@@ -77,8 +77,20 @@ public class User extends BaseModel{
     }
 
     public boolean isValid() {
-        return name != null && surname != null &&
-                nif != null && email != null &&
-                digest != null;
+        return isSet("name", name) &&
+                isSet("surname", surname) &&
+                isSet("nif", nif) &&
+                isSet("email", email) &&
+                isSet("digest", digest);
+    }
+
+    private boolean isSet(String key, String value) {
+        boolean valid = value != null && value.length() > 0;
+
+        if (!valid) {
+            errors.add(key + " field is not set");
+        }
+
+        return valid;
     }
 }
