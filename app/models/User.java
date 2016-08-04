@@ -14,8 +14,6 @@ public class User extends BaseModel{
     private Date deleted_at;
     private Date updated_at;
 
-    private transient List<String> errors = new ArrayList<>();
-
     public String getName() {
         return name;
     }
@@ -72,25 +70,11 @@ public class User extends BaseModel{
         this.updated_at = updated_at;
     }
 
-    public List<String> getErrors() {
-        return errors;
-    }
-
     public boolean isValid() {
         return isSet("name", name) &&
                 isSet("surname", surname) &&
                 isSet("nif", nif) &&
                 isSet("email", email) &&
                 isSet("digest", digest);
-    }
-
-    private boolean isSet(String key, String value) {
-        boolean valid = value != null && value.length() > 0;
-
-        if (!valid) {
-            errors.add(key + " field is not set");
-        }
-
-        return valid;
     }
 }

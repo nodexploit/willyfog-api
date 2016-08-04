@@ -49,4 +49,8 @@ public class Comment extends BaseModel {
     public void setUpdatedAt(Date updatedAt) {
         this.updated_at = updatedAt;
     }
+
+    public boolean isValid() {
+        return isSet("content", content);
+    }
 }
