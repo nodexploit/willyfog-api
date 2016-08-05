@@ -29,7 +29,7 @@ public class CommentDao extends BaseDao {
     public List<Map<String, Object>> requestComments(Integer requestId) {
         String sql = "SELECT " +
                 "c.id, c.user_id, c.content, c.created_at, " +
-                "u.name AS user_name " +
+                "u.name AS user_name, u.surname AS user_surname " +
                 "FROM " + tableName + " c " +
                 "JOIN " + UserDao.tableName + " u ON c.user_id = u.id " +
                 "WHERE request_id = :requestId " +
