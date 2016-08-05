@@ -5,6 +5,7 @@ import daos.CommentDao;
 import daos.RequestDao;
 import daos.RequestDestinationSubjectDao;
 import http.ErrorResponse;
+import http.SuccessReponse;
 import models.Comment;
 import play.mvc.Result;
 
@@ -65,6 +66,14 @@ public class RequestController extends BaseController {
             ));
         }
 
-        return ok(gson.toJson(commentId));
+        return ok(gson.toJson(
+                new SuccessReponse("Success", commentId)
+        ));
+    }
+
+    public Result comments(Integer requestId) {
+        List<Map<String, Object>> cs = commentDao.requestComments(requestId);
+
+        return ok(gson.toJson(cs));
     }
 }
