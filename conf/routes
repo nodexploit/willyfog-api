@@ -17,4 +17,4 @@ GET /api/v1/universities/:id/centres    controllers.v1.UniversityController.cent
 
 GET /api/v1/centres/:id/degrees         controllers.v1.CentreController.degrees(id: Int)
 
-GET /api/v1/degrees/:id/subjects         controllers.v1.DegreeController.subjects(id: Int)
+GET /api/v1/degrees/:id/subjects        controllers.v1.DegreeController.subjects(id: Int)
