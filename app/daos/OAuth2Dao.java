@@ -7,7 +7,7 @@ public class OAuth2Dao extends BaseDao {
 
     public static String tableName = "oauth_access_token";
 
-    public boolean validateAccessToken(String accessToken) {
+    public OAuthAccessToken accessToken(String accessToken) {
         String sql = "SELECT * " +
                 "FROM " + tableName + " " +
                 "WHERE access_token = :accessToken";
@@ -19,6 +19,6 @@ public class OAuth2Dao extends BaseDao {
                     .executeAndFetchFirst(OAuthAccessToken.class);
         }
 
-        return oAuthAccessToken != null && !oAuthAccessToken.isExpired();
+        return oAuthAccessToken;
     }
 }

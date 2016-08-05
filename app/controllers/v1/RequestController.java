@@ -50,7 +50,7 @@ public class RequestController extends BaseController {
         Comment comment = new Comment();
         comment.setRequestId(requestId);
         comment.setContent(params.get("content")[0]);
-        comment.setUserId(1);
+        comment.setUserId((Integer) ctx().args.get("user_id"));
 
         if (!comment.isValid()) {
             return ok(gson.toJson(

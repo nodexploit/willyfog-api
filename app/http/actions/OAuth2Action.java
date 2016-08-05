@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.inject.Inject;
 import daos.OAuth2Dao;
 import http.ErrorResponse;
+import models.OAuthAccessToken;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Results;
@@ -32,7 +33,9 @@ public class OAuth2Action extends play.mvc.Action.Simple {
             String accessToken;
             if (split.length > 1) {
                 accessToken = split[1];
-                authorized = oauth2dao.validateAccessToken(accessToken);
+                OAuthAccessToken oAuthAccessToken = oauth2dao.accessToken(accessToken);
+                authorized = validateAccessToken(oAuthAccessToken);
+                ctx.args.put("user_id", oAuthAccessToken.getUserId());
             }
         }
 
@@ -45,5 +48,10 @@ public class OAuth2Action extends play.mvc.Action.Simple {
         }
 
         return result;
+    }
+
+    private boolean validateAccessToken(OAuthAccessToken oAuthAccessToken) {
+        return oAuthAccessToken != null &&
+                !oAuthAccessToken.isExpired();
     }
 }
