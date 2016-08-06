@@ -44,4 +44,20 @@ public class UniversityDao extends BaseDao {
 
         return centres;
     }
+
+    public List<University> cityUniversities(Integer cityId) {
+        String sql = "SELECT " +
+                "u.id, u.name, u.code " +
+                "FROM " + tableName + " u " +
+                "WHERE u.city_id = :cityId";
+
+        List<University> universities;
+        try(Connection con = this.db.open()) {
+            universities = con.createQuery(sql)
+                    .addParameter("cityId", cityId)
+                    .executeAndFetch(University.class);
+        }
+
+        return universities;
+    }
 }

@@ -5,6 +5,7 @@ import java.util.Date;
 public class Country extends BaseModel{
 
     private String name;
+    private String code;
     private Date deleted_at;
     private Date updated_at;
 
@@ -14,6 +15,14 @@ public class Country extends BaseModel{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public Date getDeletedAt() {
