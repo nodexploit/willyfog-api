@@ -11,7 +11,7 @@ public class CityDao extends BaseDao {
 
     public List<City> countryCities(Integer countryId) {
         String sql = "SELECT " +
-                "id, name, code " +
+                "id, name " +
                 "FROM " + tableName + " " +
                 "WHERE country_id = :countryId";
 
