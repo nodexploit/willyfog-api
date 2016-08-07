@@ -1,12 +1,11 @@
 package controllers.v1;
 
 import com.google.inject.Inject;
-import daos.CommentDao;
-import daos.RequestDao;
-import daos.RequestDestinationSubjectDao;
+import daos.*;
 import http.ErrorResponse;
 import http.SuccessReponse;
 import models.Comment;
+import models.Notification;
 import models.Request;
 import models.RequestDestinationSubject;
 import play.mvc.Result;
@@ -23,6 +22,10 @@ public class RequestController extends BaseController {
     private CommentDao commentDao;
     @Inject
     private RequestDestinationSubjectDao requestDestinationDao;
+    @Inject
+    private UserRecognizeSubjectDao userRecognizeSubjectDao;
+    @Inject
+    private NotificationDao notificationDao;
 
     public Result show(Integer id) {
         Map<String, Object> r = requestDao.find(id);
@@ -98,13 +101,16 @@ public class RequestController extends BaseController {
         Request req = new Request();
         req.setMobilityTypeId(requestContent.mobility_type_id);
         req.setOriginSubjectId(requestContent.origin_subject_id);
-        req.setStudentId((Integer) ctx().args.get("user_id"));
+        req.setStudentId((Long) ctx().args.get("user_id"));
 
         Long reqId = requestDao.create(req);
 
         List<RequestDestinationSubject> destinations = destinationToModel(requestContent.destinations, reqId);
 
         requestDestinationDao.create(destinations);
+
+        // Notify recognizers
+        notifyRecognizers(req.getOriginSubjectId());
 
         return ok(
                 gson.toJson(new SuccessReponse("Success", reqId))
@@ -131,16 +137,28 @@ public class RequestController extends BaseController {
                 }).collect(Collectors.toList());
     }
 
+    private void notifyRecognizers(Long subjectId) {
+        List<Long> recognizerIds = userRecognizeSubjectDao.subjectRecognizers(subjectId);
+
+        for (Long recognizerId: recognizerIds) {
+            Notification notification = new Notification();
+            notification.setUserId(recognizerId);
+            notification.setContent("Subject " + subjectId + " has a new request.");
+
+            notificationDao.create(notification);
+        }
+    }
+
     private class RequestContent {
 
-        private Integer origin_subject_id;
-        private Integer mobility_type_id;
+        private Long origin_subject_id;
+        private Long mobility_type_id;
         private List<Destination> destinations;
     }
 
     private class Destination {
 
-        private Integer destination_subject_id;
+        private Long destination_subject_id;
         private String destination_url;
         private String destination_country;
         private String destination_city;

@@ -5,7 +5,7 @@ import java.util.Date;
 public class RequestDestinationSubject extends BaseModel {
 
     private Long request_id;
-    private Integer subject_id;
+    private Long subject_id;
     private String subject_name;
     private String subject_code;
     private Integer subject_credits;
@@ -27,11 +27,11 @@ public class RequestDestinationSubject extends BaseModel {
         this.request_id = requestId;
     }
 
-    public Integer getSubjectId() {
+    public Long getSubjectId() {
         return subject_id;
     }
 
-    public void setSubjectId(Integer subjectId) {
+    public void setSubjectId(Long subjectId) {
         this.subject_id = subjectId;
     }
 

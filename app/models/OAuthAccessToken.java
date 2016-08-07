@@ -7,7 +7,7 @@ import java.util.Date;
 public class OAuthAccessToken {
 
     private String access_token;
-    private Integer user_id;
+    private Long user_id;
     private String client_id;
     private Date expires;
     private String scope;
@@ -21,11 +21,11 @@ public class OAuthAccessToken {
         this.access_token = accessToken;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return user_id;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.user_id = userId;
     }
 

@@ -4,16 +4,15 @@ import java.util.Date;
 
 public class Notification extends BaseModel {
 
-    private Integer user_id;
+    private Long user_id;
     private String content;
     private Date read_at;
-    private Date created_at;
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return user_id;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.user_id = userId;
     }
 

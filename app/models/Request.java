@@ -5,18 +5,18 @@ import java.util.List;
 
 public class Request extends BaseModel {
 
-    private Integer student_id;
-    private Integer origin_subject_id;
-    private Integer mobility_type_id;
+    private Long student_id;
+    private Long origin_subject_id;
+    private Long mobility_type_id;
     private List<RequestDestinationSubject> destination_subjects;
     private Date deleted_at;
     private Date updated_at;
 
-    public Integer getStudentId() {
+    public Long getStudentId() {
         return student_id;
     }
 
-    public void setStudentId(Integer student_id) {
+    public void setStudentId(Long student_id) {
         this.student_id = student_id;
     }
 
@@ -36,19 +36,19 @@ public class Request extends BaseModel {
         this.updated_at = updated_at;
     }
 
-    public Integer getOriginSubjectId() {
+    public Long getOriginSubjectId() {
         return origin_subject_id;
     }
 
-    public void setOriginSubjectId(Integer originSubjectId) {
+    public void setOriginSubjectId(Long originSubjectId) {
         this.origin_subject_id = originSubjectId;
     }
 
-    public Integer getMobilityTypeId() {
+    public Long getMobilityTypeId() {
         return mobility_type_id;
     }
 
-    public void setMobilityTypeId(Integer mobilityTypeId) {
+    public void setMobilityTypeId(Long mobilityTypeId) {
         this.mobility_type_id = mobilityTypeId;
     }
 

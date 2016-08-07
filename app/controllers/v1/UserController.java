@@ -1,10 +1,12 @@
 package controllers.v1;
 
 import com.google.inject.Inject;
+import daos.NotificationDao;
 import daos.UserDao;
 import daos.UserEnrolledDegreeDao;
 import http.ErrorResponse;
 import http.SuccessReponse;
+import models.Notification;
 import models.User;
 import play.mvc.Result;
 
@@ -17,6 +19,8 @@ public class UserController extends BaseController {
     private UserDao userDao;
     @Inject
     private UserEnrolledDegreeDao userEnrolledDegreeDao;
+    @Inject
+    private NotificationDao notificationDao;
 
     public Result show(Integer id) {
         User u = userDao.find(id);
@@ -80,5 +84,11 @@ public class UserController extends BaseController {
         return ok(gson.toJson(
                 new SuccessReponse("Success", null)
         ));
+    }
+
+    public Result notifications(Integer userId) {
+        List<Notification> ns = notificationDao.userNotifications(userId);
+
+        return ok(gson.toJson(ns));
     }
 }
