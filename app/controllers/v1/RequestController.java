@@ -11,7 +11,6 @@ import models.Request;
 import models.RequestDestinationSubject;
 import play.mvc.Result;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
