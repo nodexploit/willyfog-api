@@ -1,9 +1,12 @@
 package daos;
 
+import models.RequestDestinationSubject;
 import org.sql2o.Connection;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class RequestDestinationSubjectDao extends BaseDao {
 
@@ -29,5 +32,18 @@ public class RequestDestinationSubjectDao extends BaseDao {
         }
 
         return requestDestinationSubjects;
+    }
+
+    public List<Long> create(List<RequestDestinationSubject> rdss) {
+        List<Long> ids = new ArrayList<>();
+        String sql = "INSERT INTO " + tableName + " " +
+                "(request_id, subject_id, subject_name, subject_credits, subject_code, country_name, centre_name, " +
+                "city_name, university_name, degree_name, uri) " +
+                "VALUES (:requestId, :subjectId, :subjectName, :subjectCredits, :subjectCode, :countryName, " +
+                ":centreName, :cityName, :universityName, :degreeName, :uri)";
+
+        ids.addAll(rdss.stream().map(rds -> insertModel(sql, rds)).collect(Collectors.toList()));
+
+        return ids;
     }
 }

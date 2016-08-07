@@ -6,7 +6,7 @@ public class UserEnrolledDegreeDao extends BaseDao {
 
     public static String tableName = "user_enrolled_degree";
 
-    public Object enrollUser(Long userId, Integer degreeId) {
+    public Long enrollUser(Long userId, Integer degreeId) {
         String sql = "INSERT INTO " + tableName + " " +
                 "(user_id, degree_id) " +
                 "VALUES (:userId, :degreeId)";
@@ -20,6 +20,6 @@ public class UserEnrolledDegreeDao extends BaseDao {
                     .getKey();
         }
 
-        return lastInsertedId;
+        return (Long) lastInsertedId;
     }
 }

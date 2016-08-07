@@ -66,10 +66,10 @@ public class UserController extends BaseController {
             ));
         }
 
-        Object userId = userDao.create(user);
+        Long userId = userDao.create(user);
         Integer degreeId = Integer.valueOf(params.get("degree_id")[0]);
 
-        Object enrollId = userEnrolledDegreeDao.enrollUser((Long) userId, degreeId);
+        Object enrollId = userEnrolledDegreeDao.enrollUser(userId, degreeId);
 
         if (enrollId == null) {
             return ok(gson.toJson(

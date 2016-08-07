@@ -65,19 +65,11 @@ public class UserDao extends BaseDao {
         return result;
     }
 
-    public Object create(User user) {
+    public Long create(User user) {
         String sql = "INSERT INTO " + tableName + " " +
                 "(name, surname, nif, email, digest) " +
                 "VALUES (:name, :surname, :nif, :email, :digest)";
 
-        Object lastInsertedId;
-        try(Connection con = this.db.open()) {
-            lastInsertedId = con.createQuery(sql)
-                    .bind(user)
-                    .executeUpdate()
-                    .getKey();
-        }
-
-        return lastInsertedId;
+        return insertModel(sql, user);
     }
 }

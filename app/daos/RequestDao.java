@@ -1,5 +1,6 @@
 package daos;
 
+import models.Request;
 import org.sql2o.Connection;
 
 import java.util.HashMap;
@@ -59,5 +60,13 @@ public class RequestDao extends BaseDao {
         }
 
         return requests;
+    }
+
+    public Long create(Request request) {
+        String sql = "INSERT INTO " + tableName + " " +
+                "(student_id, origin_subject_id, mobility_type_id) " +
+                "VALUES (:studentId, :originSubjectId, :mobilityTypeId)";
+
+        return insertModel(sql, request);
     }
 }

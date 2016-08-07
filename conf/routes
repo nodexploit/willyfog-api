@@ -5,6 +5,7 @@ GET /api/v1/users/info/u                controllers.v1.UserController.userByToke
 POST /api/v1/users/register             controllers.v1.UserController.register
 
 GET /api/v1/requests/:id                controllers.v1.RequestController.show(id: Int)
+POST /api/v1/requests                   controllers.v1.RequestController.create
 POST /api/v1/requests/:id/comment       controllers.v1.RequestController.comment(id: Int)
 GET /api/v1/requests/:id/comments       controllers.v1.RequestController.comments(id: Int)
 

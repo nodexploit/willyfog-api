@@ -4,25 +4,26 @@ import java.util.Date;
 
 public class RequestDestinationSubject extends BaseModel {
 
-    private Integer request_id;
+    private Long request_id;
     private Integer subject_id;
-    private Integer city_id;
     private String subject_name;
     private String subject_code;
     private Integer subject_credits;
-    private String code;
     private String centre_name;
-    private String centre_code;
+    private String country_name;
+    private String city_name;
+    private String university_name;
+    private String degree_name;
     private String uri;
     private String attachment;
     private Date deleted_at;
     private Date updated_at;
 
-    public Integer getRequestId() {
+    public Long getRequestId() {
         return request_id;
     }
 
-    public void setRequestId(Integer requestId) {
+    public void setRequestId(Long requestId) {
         this.request_id = requestId;
     }
 
@@ -32,14 +33,6 @@ public class RequestDestinationSubject extends BaseModel {
 
     public void setSubjectId(Integer subjectId) {
         this.subject_id = subjectId;
-    }
-
-    public Integer getCityId() {
-        return city_id;
-    }
-
-    public void setCityId(Integer cityId) {
-        this.city_id = cityId;
     }
 
     public String getSubjectName() {
@@ -58,12 +51,36 @@ public class RequestDestinationSubject extends BaseModel {
         this.subject_credits = subjectCredits;
     }
 
-    public String getCode() {
-        return code;
+    public String getCountryName() {
+        return country_name;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setCountryName(String countryName) {
+        this.country_name = countryName;
+    }
+
+    public String getCityName() {
+        return city_name;
+    }
+
+    public void setCityName(String cityName) {
+        this.city_name = cityName;
+    }
+
+    public String getUniversityName() {
+        return university_name;
+    }
+
+    public void setUniversityName(String universityName) {
+        this.university_name = universityName;
+    }
+
+    public String getDegreeName() {
+        return degree_name;
+    }
+
+    public void setDegreeName(String degreeName) {
+        this.degree_name = degreeName;
     }
 
     public String getCentreName() {
@@ -72,14 +89,6 @@ public class RequestDestinationSubject extends BaseModel {
 
     public void setCentreName(String centreName) {
         this.centre_name = centreName;
-    }
-
-    public String getCentreCode() {
-        return centre_code;
-    }
-
-    public void setCentreCode(String centreCode) {
-        this.centre_code = centreCode;
     }
 
     public String getUri() {

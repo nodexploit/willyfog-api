@@ -7,7 +7,7 @@ public class Request extends BaseModel {
 
     private Integer student_id;
     private Integer origin_subject_id;
-    private Integer mobility_id;
+    private Integer mobility_type_id;
     private List<RequestDestinationSubject> destination_subjects;
     private Date deleted_at;
     private Date updated_at;
@@ -44,12 +44,12 @@ public class Request extends BaseModel {
         this.origin_subject_id = originSubjectId;
     }
 
-    public Integer getMobilityId() {
-        return mobility_id;
+    public Integer getMobilityTypeId() {
+        return mobility_type_id;
     }
 
-    public void setMobilityId(Integer mobilityId) {
-        this.mobility_id = mobilityId;
+    public void setMobilityTypeId(Integer mobilityTypeId) {
+        this.mobility_type_id = mobilityTypeId;
     }
 
     public List<RequestDestinationSubject> getDestinationSubjects() {

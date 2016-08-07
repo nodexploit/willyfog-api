@@ -1,6 +1,8 @@
 package daos;
 
 import com.google.inject.Inject;
+import models.BaseModel;
+import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.data.Column;
 import org.sql2o.data.Row;
@@ -15,6 +17,18 @@ public class BaseDao {
 
     @Inject
     protected Sql2o db;
+
+    protected Long insertModel(String sql, BaseModel model) {
+        Object lastInsertedId;
+        try(Connection con = this.db.open()) {
+            lastInsertedId = con.createQuery(sql)
+                    .bind(model)
+                    .executeUpdate()
+                    .getKey();
+        }
+
+        return (Long) lastInsertedId;
+    }
 
     /**
      * Converts Table object to a List<Map<String, Object> that is Gson-serializable.
