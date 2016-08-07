@@ -279,6 +279,7 @@ DROP TABLE IF EXISTS `willyfog_db`.`role` ;
 
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`role` (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
   `permission` INT NOT NULL,
   `deleted_at` TIMESTAMP NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
