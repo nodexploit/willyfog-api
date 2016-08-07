@@ -17,3 +17,13 @@ VALUES
 (3, 'Asignatura nueva', 4, '4fgh', 'Facultad nueva', 'Málaga', 'Universidad de Málaga', 'Grado de Química');
 INSERT INTO `request_destination_subject` (request_id, subject_id) VALUES (3, 5);
 
+-- Role 1 = admin
+INSERT INTO `role` (permission) VALUES (0);
+-- Role 2 = professor
+INSERT INTO `role` (permission) VALUES (0);
+-- Role 3 = student
+INSERT INTO `role` (permission) VALUES (0);
+
+INSERT INTO `user_has_role` (user_id, role_id) VALUES (1, 3);
+INSERT INTO `user_has_role` (user_id, role_id) VALUES (2, 2);
+INSERT INTO `user_has_role` (user_id, role_id) VALUES (3, 1);
