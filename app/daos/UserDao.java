@@ -46,12 +46,14 @@ public class UserDao extends BaseDao {
                 "d.id AS degree_id, " +
                 "u.name, u.surname, u.nif, " +
                 "u.email, d.name AS degree_name, " +
-                "c.name AS centre_name, un.name AS university_name " +
+                "c.name AS centre_name, un.name AS university_name, " +
+                "uhr.role_id " +
                 "FROM " + tableName + " u " +
                 "JOIN user_enrolled_degree AS ued ON u.id = ued.user_id " +
                 "JOIN degree AS d ON ued.degree_id = d.id " +
                 "JOIN centre AS c ON d.centre_id = c.id " +
                 "JOIN university AS un ON c.university_id = un.id " +
+                "JOIN user_has_role AS uhr ON u.id = uhr.user_id " +
                 "WHERE u.id = :userId";
 
         List<Map<String, Object>> result = null;
