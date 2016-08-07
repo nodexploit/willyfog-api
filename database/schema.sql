@@ -641,8 +641,6 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`oauth_refresh_token` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`request_destination_subject`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `willyfog_db`.`request_destination_subject` ;
-
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`request_destination_subject` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `request_id` INT NOT NULL,
@@ -650,18 +648,19 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`request_destination_subject` (
   `subject_name` VARCHAR(200) NULL,
   `subject_credits` INT NULL,
   `subject_code` VARCHAR(45) NULL,
+  `country_name` VARCHAR(45) NULL,
   `centre_name` VARCHAR(200) NULL,
-  `centre_code` VARCHAR(45) NULL,
+  `city_name` VARCHAR(45) NULL,
+  `university_name` VARCHAR(45) NULL,
+  `degree_name` VARCHAR(45) NULL,
   `uri` VARCHAR(1000) NULL,
   `attachment` VARCHAR(1000) NULL,
-  `city_id` INT NULL,
   `deleted_at` TIMESTAMP NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`, `request_id`),
   INDEX `fk_request_has_subject_subject1_idx` (`subject_id` ASC),
   INDEX `fk_request_has_subject_request1_idx` (`request_id` ASC),
-  INDEX `fk_request_destination_subject_city1_idx` (`city_id` ASC),
   CONSTRAINT `fk_request_has_subject_request1`
   FOREIGN KEY (`request_id`)
   REFERENCES `willyfog_db`.`request` (`id`)
@@ -670,11 +669,6 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`request_destination_subject` (
   CONSTRAINT `fk_request_has_subject_subject1`
   FOREIGN KEY (`subject_id`)
   REFERENCES `willyfog_db`.`subject` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_request_destination_subject_city1`
-  FOREIGN KEY (`city_id`)
-  REFERENCES `willyfog_db`.`city` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;
