@@ -2,9 +2,10 @@ package http.actions;
 
 import com.google.gson.Gson;
 import com.google.inject.Inject;
-import daos.OAuth2Dao;
+import daos.UserHasRoleDao;
 import http.ErrorResponse;
 import models.OAuthAccessToken;
+import models.Role;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Results;
@@ -12,32 +13,21 @@ import play.mvc.Results;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
-public class ProfessorAction extends play.mvc.Action.Simple {
+public class CoordinatorAction extends play.mvc.Action.Simple {
 
     @Inject
-    private OAuth2Dao oauth2dao;
+    private UserHasRoleDao userHasRoleDao;
     @Inject
     private Gson gson;
 
     @Override
     public CompletionStage<Result> call(Http.Context ctx) {
         CompletionStage<Result> result;
-        boolean authorized = false;
+        boolean authorized;
 
-        Http.Request request = ctx.request();
-        String authorization = request.getHeader("Authorization");
+        Long roleId = userHasRoleDao.userRole((Integer) ctx.args.get("user_id"));
 
-        if (authorization != null) {
-            String[] split = authorization.split(" ");
-
-            String accessToken;
-            if (split.length > 1) {
-                accessToken = split[1];
-                OAuthAccessToken oAuthAccessToken = oauth2dao.accessToken(accessToken);
-                authorized = validateAccessToken(oAuthAccessToken);
-                ctx.args.put("user_id", oAuthAccessToken.getUserId());
-            }
-        }
+        authorized = roleId == Role.COORD;
 
         if (authorized) {
             result = delegate.call(ctx);

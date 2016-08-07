@@ -13,7 +13,7 @@ import play.mvc.Results;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
-public class AdminAction extends play.mvc.Action.Simple {
+public class RecognizerAction extends play.mvc.Action.Simple {
 
     @Inject
     private UserHasRoleDao userHasRoleDao;
@@ -28,7 +28,7 @@ public class AdminAction extends play.mvc.Action.Simple {
 
         Long roleId = userHasRoleDao.userRole((Integer) ctx.args.get("user_id"));
 
-        authorized = roleId == Role.ADMIN;
+        authorized = roleId == Role.RECOG;
 
         if (authorized) {
             result = delegate.call(ctx);

@@ -18,7 +18,8 @@ VALUES
 INSERT INTO `request_destination_subject` (request_id, subject_id) VALUES (3, 5);
 
 INSERT INTO `role` (name, permission) VALUES ('admin', 0);
-INSERT INTO `role` (name, permission) VALUES ('professor', 0);
+INSERT INTO `role` (name, permission) VALUES ('coordinator', 0);
+INSERT INTO `role` (name, permission) VALUES ('recognizer', 0);
 INSERT INTO `role` (name, permission) VALUES ('student', 0);
 
 INSERT INTO `user_has_role` (user_id, role_id) VALUES (1, 3);

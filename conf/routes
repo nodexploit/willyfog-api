@@ -24,3 +24,5 @@ GET /api/v1/countries                   controllers.v1.CountryController.index
 GET /api/v1/countries/:id/cities        controllers.v1.CountryController.cities(id: Int)
 
 GET /api/v1/cities/:id/universities     controllers.v1.CityController.universities(id: Int)
+
+GET /hello                              controllers.v1.EquivalenceController.hello
