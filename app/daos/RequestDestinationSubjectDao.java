@@ -17,7 +17,7 @@ public class RequestDestinationSubjectDao extends BaseDao {
                 "rds.subject_id, " +
                 "IFNULL(rds.subject_name, s.name) AS subject_name, IFNULL(rds.subject_credits, s.credits) AS subject_credits, " +
                 "IFNULL(rds.subject_code, s.code) AS subject_code, " +
-                "IFNULL(rds.centre_name, c.name) AS centre_name, IFNULL(rds.centre_code, c.code) AS centre_code " +
+                "IFNULL(rds.centre_name, c.name) AS centre_name " +
                 "FROM " + tableName + " rds " +
                 "LEFT JOIN " + SubjectDao.tableName + " s ON rds.subject_id = s.id " +
                 "LEFT JOIN " + DegreeDao.tableName + " d ON s.degree_id = d.id " +
