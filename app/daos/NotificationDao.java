@@ -3,6 +3,7 @@ package daos;
 import models.Notification;
 import org.sql2o.Connection;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class NotificationDao extends BaseDao {
@@ -20,7 +21,8 @@ public class NotificationDao extends BaseDao {
         String sql = "SELECT " +
                 "n.content, n.created_at " +
                 "FROM " + tableName + " n " +
-                "WHERE user_id = :userId";
+                "WHERE user_id = :userId " +
+                "AND n.read_at IS NULL";
 
         List<Notification> notifications;
         try(Connection con = this.db.open()) {
@@ -30,5 +32,20 @@ public class NotificationDao extends BaseDao {
         }
 
         return notifications;
+    }
+
+    public void setRead(Integer userId) {
+        String sql = "UPDATE " +
+                tableName + " n " +
+                "SET read_at = :readAt " +
+                "WHERE user_id = :userId " +
+                "AND n.read_at IS NULL";
+
+        try(Connection con = this.db.open()) {
+            con.createQuery(sql)
+                    .addParameter("readAt", LocalDateTime.now())
+                    .addParameter("userId", userId)
+                    .executeUpdate();
+        }
     }
 }

@@ -88,6 +88,7 @@ public class UserController extends BaseController {
 
     public Result notifications(Integer userId) {
         List<Notification> ns = notificationDao.userNotifications(userId);
+        notificationDao.setRead(userId);
 
         return ok(gson.toJson(ns));
     }
