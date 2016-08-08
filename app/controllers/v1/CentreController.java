@@ -12,7 +12,7 @@ public class CentreController extends BaseController {
     @Inject
     private CentreDao centreDao;
 
-    public Result degrees(Integer centreId) {
+    public Result degrees(Long centreId) {
         List<Degree> ds = centreDao.degrees(centreId);
 
         return ok(gson.toJson(ds));

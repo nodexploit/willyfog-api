@@ -26,7 +26,7 @@ public class AdminAction extends play.mvc.Action.Simple {
         CompletionStage<Result> result;
         boolean authorized;
 
-        Long roleId = userHasRoleDao.userRole((Integer) ctx.args.get("user_id"));
+        Long roleId = userHasRoleDao.userRole((Long) ctx.args.get("user_id"));
 
         authorized = roleId == Role.ADMIN;
 

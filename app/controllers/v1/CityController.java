@@ -12,7 +12,7 @@ public class CityController extends BaseController {
     @Inject
     private UniversityDao universityDao;
 
-    public Result universities(Integer cityId) {
+    public Result universities(Long cityId) {
         List<University> us = universityDao.cityUniversities(cityId);
 
         return ok(gson.toJson(us));

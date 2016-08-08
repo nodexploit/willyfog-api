@@ -19,7 +19,7 @@ public class UniversityController extends BaseController {
         return ok(gson.toJson(us));
     }
 
-    public Result centres(Integer universityId) {
+    public Result centres(Long universityId) {
         List<Centre> cs = universityDao.centres(universityId);
 
         return ok(gson.toJson(cs));

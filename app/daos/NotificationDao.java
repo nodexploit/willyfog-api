@@ -17,7 +17,7 @@ public class NotificationDao extends BaseDao {
         return insertModel(sql, notification);
     }
 
-    public List<Notification> userNotifications(Integer userId) {
+    public List<Notification> userNotifications(Long userId) {
         String sql = "SELECT " +
                 "n.content, n.created_at " +
                 "FROM " + tableName + " n " +
@@ -34,7 +34,7 @@ public class NotificationDao extends BaseDao {
         return notifications;
     }
 
-    public void setRead(Integer userId) {
+    public void setRead(Long userId) {
         String sql = "UPDATE " +
                 tableName + " n " +
                 "SET read_at = :readAt " +

@@ -26,7 +26,7 @@ public class CommentDao extends BaseDao {
         return lastInsertedId;
     }
 
-    public List<Map<String, Object>> requestComments(Integer requestId) {
+    public List<Map<String, Object>> requestComments(Long requestId) {
         String sql = "SELECT " +
                 "c.id, c.user_id, c.content, c.created_at, " +
                 "u.name AS user_name, u.surname AS user_surname " +

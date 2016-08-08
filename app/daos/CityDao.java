@@ -9,7 +9,7 @@ public class CityDao extends BaseDao {
 
     public static String tableName = "city";
 
-    public List<City> countryCities(Integer countryId) {
+    public List<City> countryCities(Long countryId) {
         String sql = "SELECT " +
                 "id, name " +
                 "FROM " + tableName + " " +

@@ -4,18 +4,18 @@ import java.util.Date;
 
 public class Subject extends BaseModel{
 
-    private Integer degree_id;
+    private Long degree_id;
     private String name;
     private String code;
     private Integer credits;
     private Date deleted_at;
     private Date updated_at;
 
-    public Integer getDegreeId() {
+    public Long getDegreeId() {
         return degree_id;
     }
 
-    public void setDegreeId(Integer degree_id) {
+    public void setDegreeId(Long degree_id) {
         this.degree_id = degree_id;
     }
 

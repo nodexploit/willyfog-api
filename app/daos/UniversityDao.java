@@ -29,7 +29,7 @@ public class UniversityDao extends BaseDao {
         return universities;
     }
 
-    public List<Centre> centres(Integer universityId) {
+    public List<Centre> centres(Long universityId) {
         String sql = "SELECT " +
                 "c.id, c.name, c.code " +
                 "FROM " + CentreDao.tableName + " c " +
@@ -45,7 +45,7 @@ public class UniversityDao extends BaseDao {
         return centres;
     }
 
-    public List<University> cityUniversities(Integer cityId) {
+    public List<University> cityUniversities(Long cityId) {
         String sql = "SELECT " +
                 "u.id, u.name, u.code " +
                 "FROM " + tableName + " u " +

@@ -8,7 +8,7 @@ public class University extends BaseModel {
     private String code;
     private Date deleted_at;
     private Date updated_at;
-    private Integer city_id;
+    private Long city_id;
 
     public String getName() {
         return name;
@@ -42,11 +42,11 @@ public class University extends BaseModel {
         this.updated_at = updatedAt;
     }
 
-    public Integer getCityId() {
+    public Long getCityId() {
         return city_id;
     }
 
-    public void setCityId(Integer cityId) {
+    public void setCityId(Long cityId) {
         this.city_id = cityId;
     }
 }

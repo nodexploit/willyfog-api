@@ -10,7 +10,7 @@ public class UserDao extends BaseDao {
 
     public static String tableName = "user";
 
-    public User find(Integer id) {
+    public User find(Long id) {
         String sql = "SELECT * " +
                 "FROM " + tableName + " " +
                 "WHERE id = :id";
@@ -41,7 +41,7 @@ public class UserDao extends BaseDao {
         return user;
     }
 
-    public List<Map<String, Object>> getUserInfo(Integer userId) {
+    public List<Map<String, Object>> getUserInfo(Long userId) {
         String sql = "SELECT " +
                 "d.id AS degree_id, " +
                 "u.name, u.surname, u.nif, " +

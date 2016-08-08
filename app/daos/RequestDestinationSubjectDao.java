@@ -12,7 +12,7 @@ public class RequestDestinationSubjectDao extends BaseDao {
 
     public static String tableName = "request_destination_subject";
 
-    public List<Map<String, Object>> requestDestinations(Integer requestId) {
+    public List<Map<String, Object>> requestDestinations(Long requestId) {
         String sql = "SELECT " +
                 "rds.subject_id, " +
                 "IFNULL(rds.subject_name, s.name) AS subject_name, IFNULL(rds.subject_credits, s.credits) AS subject_credits, " +

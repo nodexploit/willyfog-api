@@ -9,7 +9,7 @@ public class CentreDao extends BaseDao {
 
     public static String tableName = "centre";
 
-    public List<Degree> degrees(Integer centreId) {
+    public List<Degree> degrees(Long centreId) {
         String sql = "SELECT " +
                 "d.id, d.name " +
                 "FROM " + DegreeDao.tableName + " d " +

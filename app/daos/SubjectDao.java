@@ -7,7 +7,7 @@ public class SubjectDao extends BaseDao {
 
     public static String tableName = "subject";
 
-    public Subject find(Integer id) {
+    public Subject find(Long id) {
         String sql = "SELECT * " +
                 "FROM " + tableName + " " +
                 "WHERE id = :id";

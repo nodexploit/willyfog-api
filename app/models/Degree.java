@@ -4,16 +4,16 @@ import java.util.Date;
 
 public class Degree extends BaseModel {
 
-    private Integer centre_id;
+    private Long centre_id;
     private String name;
     private Date deleted_at;
     private Date updated_at;
 
-    public Integer getCentreId() {
+    public Long getCentreId() {
         return centre_id;
     }
 
-    public void setCentreId(Integer centre_id) {
+    public void setCentreId(Long centre_id) {
         this.centre_id = centre_id;
     }
 

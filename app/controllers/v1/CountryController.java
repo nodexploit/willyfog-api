@@ -22,7 +22,7 @@ public class CountryController extends BaseController {
         return ok(gson.toJson(cs));
     }
 
-    public Result cities(Integer countryId) {
+    public Result cities(Long countryId) {
         List<City> cs = cityDao.countryCities(countryId);
 
         return ok(gson.toJson(cs));

@@ -6,7 +6,7 @@ public class UserHasRoleDao extends BaseDao {
 
     public static String tableName = "user_has_role";
 
-    public Long userRole(Integer userId) {
+    public Long userRole(Long userId) {
         String sql = "SELECT role_id " +
                 "FROM " + tableName + " " +
                 "WHERE user_id = :userId";

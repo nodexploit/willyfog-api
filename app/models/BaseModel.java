@@ -6,16 +6,16 @@ import java.util.List;
 
 public class BaseModel {
 
-    private Integer id;
+    private Long id;
     private Date created_at;
 
     protected transient List<String> errors = new ArrayList<>();
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

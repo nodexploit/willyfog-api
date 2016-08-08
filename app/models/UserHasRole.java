@@ -4,23 +4,23 @@ import java.util.Date;
 
 public class UserHasRole extends BaseModel {
 
-    private Integer user_id;
-    private Integer role_id;
+    private Long user_id;
+    private Long role_id;
     private Date deleted_at;
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return user_id;
     }
 
-    public void setUserId(Integer user_id) {
+    public void setUserId(Long user_id) {
         this.user_id = user_id;
     }
 
-    public Integer getRoleId() {
+    public Long getRoleId() {
         return role_id;
     }
 
-    public void setRoleId(Integer role_id) {
+    public void setRoleId(Long role_id) {
         this.role_id = role_id;
     }
 

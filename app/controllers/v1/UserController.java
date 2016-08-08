@@ -22,7 +22,7 @@ public class UserController extends BaseController {
     @Inject
     private NotificationDao notificationDao;
 
-    public Result show(Integer id) {
+    public Result show(Long id) {
         User u = userDao.find(id);
 
         return ok(gson.toJson(u));
@@ -34,7 +34,7 @@ public class UserController extends BaseController {
         return ok(gson.toJson(u));
     }
 
-    public Result userInfo(Integer id) {
+    public Result userInfo(Long id) {
         List<Map<String, Object>> result = userDao.getUserInfo(id);
 
         return ok(gson.toJson(result.get(0)));
@@ -71,7 +71,7 @@ public class UserController extends BaseController {
         }
 
         Long userId = userDao.create(user);
-        Integer degreeId = Integer.valueOf(params.get("degree_id")[0]);
+        Long degreeId = Long.valueOf(params.get("degree_id")[0]);
 
         Object enrollId = userEnrolledDegreeDao.enrollUser(userId, degreeId);
 
@@ -86,7 +86,7 @@ public class UserController extends BaseController {
         ));
     }
 
-    public Result notifications(Integer userId) {
+    public Result notifications(Long userId) {
         List<Notification> ns = notificationDao.userNotifications(userId);
         notificationDao.setRead(userId);
 

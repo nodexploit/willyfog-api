@@ -4,25 +4,25 @@ import java.util.Date;
 
 public class Comment extends BaseModel {
 
-    private Integer user_id;
-    private Integer request_id;
+    private Long user_id;
+    private Long request_id;
     private String content;
     private Date deleted_at;
     private Date updated_at;
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return user_id;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.user_id = userId;
     }
 
-    public Integer getRequestId() {
+    public Long getRequestId() {
         return request_id;
     }
 
-    public void setRequestId(Integer requestId) {
+    public void setRequestId(Long requestId) {
         this.request_id = requestId;
     }
 

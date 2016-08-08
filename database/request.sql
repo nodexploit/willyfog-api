@@ -22,6 +22,6 @@ INSERT INTO `role` (name, permission) VALUES ('coordinator', 0);
 INSERT INTO `role` (name, permission) VALUES ('recognizer', 0);
 INSERT INTO `role` (name, permission) VALUES ('student', 0);
 
-INSERT INTO `user_has_role` (user_id, role_id) VALUES (1, 3);
-INSERT INTO `user_has_role` (user_id, role_id) VALUES (2, 2);
-INSERT INTO `user_has_role` (user_id, role_id) VALUES (3, 1);
+INSERT INTO `user_has_role` (user_id, role_id) VALUES (1, 4);
+INSERT INTO `user_has_role` (user_id, role_id) VALUES (2, 3);
+INSERT INTO `user_has_role` (user_id, role_id) VALUES (3, 2);

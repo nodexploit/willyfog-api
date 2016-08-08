@@ -4,12 +4,10 @@ import com.google.inject.Inject;
 import daos.*;
 import http.ErrorResponse;
 import http.SuccessReponse;
-import models.Comment;
-import models.Notification;
-import models.Request;
-import models.RequestDestinationSubject;
+import models.*;
 import play.mvc.Result;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -26,8 +24,10 @@ public class RequestController extends BaseController {
     private UserRecognizeSubjectDao userRecognizeSubjectDao;
     @Inject
     private NotificationDao notificationDao;
+    @Inject
+    private UserDao userDao;
 
-    public Result show(Integer id) {
+    public Result show(Long id) {
         Map<String, Object> r = requestDao.find(id);
         List<Map<String, Object>> rds = requestDestinationDao.requestDestinations(id);
         r.put("destination_subjects", rds);
@@ -35,13 +35,30 @@ public class RequestController extends BaseController {
         return ok(gson.toJson(r));
     }
 
-    public Result showUserRequests(Integer userId) {
-        List<Map<String, Object>>  rs = requestDao.userRequests(userId);
+    public Result showUserRequests(Long userId) {
+        List<Map<String, Object>> userInfo = userDao.getUserInfo(userId);
+        Integer roleId = (Integer) userInfo.get(0).get("role_id");
+
+        List<Map<String, Object>>  rs = new ArrayList<>();
+        switch (roleId) {
+            case Role.ADMIN:
+                rs = requestDao.index();
+                break;
+            case Role.COORD:
+                rs = requestDao.index();
+                break;
+            case Role.RECOG:
+                rs = requestDao.recognizerRequests(userId);
+                break;
+            case Role.STUDENT:
+                rs = requestDao.studentRequests(userId);
+                break;
+        }
 
         return ok(gson.toJson(rs));
     }
 
-    public Result comment(Integer requestId) {
+    public Result comment(Long requestId) {
         String[] requiredParams = {"content"};
         List<String> missingFields = checkRequiredParams(requiredParams);
 
@@ -56,7 +73,7 @@ public class RequestController extends BaseController {
         Comment comment = new Comment();
         comment.setRequestId(requestId);
         comment.setContent(params.get("content")[0]);
-        comment.setUserId((Integer) ctx().args.get("user_id"));
+        comment.setUserId((Long) ctx().args.get("user_id"));
 
         if (!comment.isValid()) {
             return ok(gson.toJson(
@@ -77,7 +94,7 @@ public class RequestController extends BaseController {
         ));
     }
 
-    public Result comments(Integer requestId) {
+    public Result comments(Long requestId) {
         List<Map<String, Object>> cs = commentDao.requestComments(requestId);
 
         return ok(gson.toJson(cs));

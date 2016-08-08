@@ -12,7 +12,7 @@ public class DegreeController extends BaseController {
     @Inject
     private DegreeDao degreeDao;
 
-    public Result subjects(Integer degreeId) {
+    public Result subjects(Long degreeId) {
         List<Subject> ss = degreeDao.subjects(degreeId);
 
         return ok(gson.toJson(ss));
