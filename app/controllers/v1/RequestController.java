@@ -89,6 +89,18 @@ public class RequestController extends BaseController {
             ));
         }
 
+        Map<String, Object> subjectRequest = requestDao.find(requestId);
+        // If another user comment my request, notify me
+        Long commentUserId = comment.getUserId();
+        Integer requestStudentId = (Integer) subjectRequest.get("student_id");
+        if (!commentUserId.equals(requestStudentId.longValue())) {
+            Notification notification = new Notification();
+            notification.setUserId(requestStudentId.longValue());
+            notification.setContent("User " + commentUserId + " commented your request.");
+
+            notificationDao.create(notification);
+        }
+
         return ok(gson.toJson(
                 new SuccessReponse("Success", commentId)
         ));

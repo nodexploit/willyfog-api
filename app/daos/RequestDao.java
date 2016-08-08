@@ -13,7 +13,7 @@ public class RequestDao extends BaseDao {
 
     public Map<String, Object> find(Long id) {
         String sql = "SELECT " +
-                "r.id, " +
+                "r.id, r.student_id, " +
                 "s.id AS subject_id, s.code AS subject_code, s.name AS subject_name, " +
                 "mt.id AS mobility_type_id, mt.name AS mobility_type, " +
                 "d.id AS degree_id, d.name AS degree_name, " +
