@@ -7,8 +7,10 @@ POST /api/v1/users/register             controllers.v1.UserController.register
 
 GET /api/v1/requests/:id                controllers.v1.RequestController.show(id: Long)
 POST /api/v1/requests                   controllers.v1.RequestController.create
-POST /api/v1/requests/:id/comment       controllers.v1.RequestController.comment(id: Long)
 GET /api/v1/requests/:id/comments       controllers.v1.RequestController.comments(id: Long)
+POST /api/v1/requests/:id/comment       controllers.v1.RequestController.comment(id: Long)
+POST /api/v1/requests/:id/accept        controllers.v1.RequestController.accept(id: Long)
+POST /api/v1/requests/:id/reject        controllers.v1.RequestController.reject(id: Long)
 
 GET /api/v1/subjects/:id                controllers.v1.SubjectController.show(id: Long)
 

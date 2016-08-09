@@ -14,17 +14,14 @@ public class RequestDao extends BaseDao {
     public Map<String, Object> find(Long id) {
         String sql = "SELECT " +
                 "r.id, r.student_id, " +
-                "s.id AS subject_id, s.code AS subject_code, s.name AS subject_name, " +
+                "s.id AS subject_id, s.code AS subject_code, s.name AS subject_name, s.credits as subject_credits, " +
                 "mt.id AS mobility_type_id, mt.name AS mobility_type, " +
-                "d.id AS degree_id, d.name AS degree_name, " +
-                "c.id AS centre_id, c.name AS centre_name, " +
-                "u.id AS university_id, u.name AS university_name " +
+                "IFNULL(ar.id, false) AS accepted, IFNULL(rr.id, false) AS rejected " +
                 "FROM " + tableName + " r " +
                 "JOIN " + SubjectDao.tableName + " s ON r.origin_subject_id = s.id " +
                 "JOIN " + MobilityTypeDao.tableName + " mt ON r.mobility_type_id = mt.id " +
-                "JOIN " + DegreeDao.tableName + " d ON s.degree_id = d.id " +
-                "JOIN " + CentreDao.tableName + " c ON d.centre_id = c.id " +
-                "JOIN " + UniversityDao.tableName + " u ON c.university_id = u.id " +
+                "LEFT JOIN " + AcceptedRequestDao.tableName + " ar ON ar.request_id = r.id " +
+                "LEFT JOIN " + RejectedRequestDao.tableName + " rr ON rr.request_id = r.id " +
                 "WHERE r.id = :id";
 
         List<Map<String, Object>> requests;

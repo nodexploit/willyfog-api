@@ -429,6 +429,7 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`accepted_request` (
   PRIMARY KEY (`id`),
   INDEX `fk_accepted_request_request1_idx` (`request_id` ASC),
   INDEX `fk_accepted_request_user1_idx` (`recognizer_id` ASC),
+  UNIQUE INDEX `unique_accepted_request` (`request_id` ASC, `recognizer_id` ASC),
   CONSTRAINT `fk_accepted_request_request1`
   FOREIGN KEY (`request_id`)
   REFERENCES `willyfog_db`.`request` (`id`)
@@ -456,6 +457,7 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`rejected_request` (
   PRIMARY KEY (`id`),
   INDEX `fk_rejected_request_request1_idx` (`request_id` ASC),
   INDEX `fk_rejected_request_user1_idx` (`recognizer_id` ASC),
+  UNIQUE INDEX `unique_rejected_request` (`request_id` ASC, `recognizer_id` ASC)
   CONSTRAINT `fk_rejected_request_request1`
   FOREIGN KEY (`request_id`)
   REFERENCES `willyfog_db`.`request` (`id`)
@@ -476,7 +478,7 @@ DROP TABLE IF EXISTS `willyfog_db`.`notification` ;
 
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`notification` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `content` VARCHAR(45) NOT NULL,
+  `content` VARCHAR(250) NOT NULL,
   `user_id` INT NOT NULL,
   `read_at` TIMESTAMP NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

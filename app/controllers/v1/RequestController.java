@@ -4,8 +4,10 @@ import com.google.inject.Inject;
 import daos.*;
 import http.ErrorResponse;
 import http.SuccessReponse;
+import http.actions.RecognizerAction;
 import models.*;
 import play.mvc.Result;
+import play.mvc.With;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,10 @@ public class RequestController extends BaseController {
     private NotificationDao notificationDao;
     @Inject
     private UserDao userDao;
+    @Inject
+    private AcceptedRequestDao acceptedRequestDao;
+    @Inject
+    private RejectedRequestDao rejectedRequestDao;
 
     public Result show(Long id) {
         Map<String, Object> r = requestDao.find(id);
@@ -110,6 +116,63 @@ public class RequestController extends BaseController {
         List<Map<String, Object>> cs = commentDao.requestComments(requestId);
 
         return ok(gson.toJson(cs));
+    }
+
+    /**
+     * TODO: check if the user recognizer this subject
+     * @param requestId
+     * @return
+     */
+    @With(RecognizerAction.class)
+    public Result accept(Long requestId) {
+        Long recognizerId = (Long) ctx().args.get("user_id");
+
+        Long acceptedId = acceptedRequestDao.accept(requestId, recognizerId);
+
+        if (acceptedId != null) {
+            notifyRequestUpdate(requestId, "accepted");
+
+            return ok(
+                    gson.toJson(new SuccessReponse("Success", acceptedId))
+            );
+        } else {
+            return ok(
+                    gson.toJson(new ErrorResponse("Ups, something went wrong."))
+            );
+        }
+    }
+
+    /**
+     * TODO: check if the user recognizer this subject
+     * @param requestId
+     * @return
+     */
+    @With(RecognizerAction.class)
+    public Result reject(Long requestId) {
+        Long recognizerId = (Long) ctx().args.get("user_id");
+
+        Long rejectedId = rejectedRequestDao.reject(requestId, recognizerId);
+
+        if (rejectedId != null) {
+            notifyRequestUpdate(requestId, "rejected");
+
+            return ok(
+                    gson.toJson(new SuccessReponse("Success", rejectedId))
+            );
+        } else {
+            return ok(
+                    gson.toJson(new ErrorResponse("Ups, something went wrong."))
+            );
+        }
+    }
+
+    private void notifyRequestUpdate(Long requestId, String state) {
+        Map<String, Object> request = requestDao.find(requestId);
+        Notification notification = new Notification();
+        notification.setUserId(((Integer)request.get("student_id")).longValue());
+        notification.setContent("Your <a href=\"/requests/" + requestId +
+                "\">request</a> has been " + state + ".");
+        notificationDao.create(notification);
     }
 
     public Result create() {
