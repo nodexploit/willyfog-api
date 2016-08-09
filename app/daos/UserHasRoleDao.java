@@ -20,4 +20,21 @@ public class UserHasRoleDao extends BaseDao {
 
         return role;
     }
+
+    public Long create(Long userId, Long roleId) {
+        String sql = "INSERT INTO " + tableName + " " +
+                "(user_id, role_id) " +
+                "VALUES (:userId, :roleId)";
+
+        Object lastInsertedId;
+        try(Connection con = this.db.open()) {
+            lastInsertedId = con.createQuery(sql)
+                    .addParameter("userId", userId)
+                    .addParameter("roleId", roleId)
+                    .executeUpdate()
+                    .getKey();
+        }
+
+        return (Long) lastInsertedId;
+    }
 }
