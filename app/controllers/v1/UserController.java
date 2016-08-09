@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import daos.NotificationDao;
 import daos.UserDao;
 import daos.UserEnrolledDegreeDao;
+import daos.UserHasRoleDao;
 import http.ErrorResponse;
 import http.SuccessReponse;
 import models.Notification;
@@ -17,6 +18,8 @@ public class UserController extends BaseController {
 
     @Inject
     private UserDao userDao;
+    @Inject
+    private UserHasRoleDao userHasRoleDao;
     @Inject
     private UserEnrolledDegreeDao userEnrolledDegreeDao;
     @Inject
@@ -46,7 +49,7 @@ public class UserController extends BaseController {
      * @return
      */
     public Result register() {
-        String[] requiredParams = {"name", "surname", "nif", "email", "digest", "degree_id"};
+        String[] requiredParams = {"name", "surname", "nif", "email", "digest", "degree_id", "role_id"};
         List<String> missingFields = checkRequiredParams(requiredParams);
 
         if (missingFields.size() > 0) {
@@ -78,6 +81,16 @@ public class UserController extends BaseController {
         if (enrollId == null) {
             return ok(gson.toJson(
                     new ErrorResponse("Degree not valid")
+            ));
+        }
+
+        Long roleId = Long.valueOf(params.get("role_id")[0]);
+
+        Object userHasRoleId = userHasRoleDao.create(userId, roleId);
+
+        if (userHasRoleId == null) {
+            return ok(gson.toJson(
+                    new ErrorResponse("Role not vale")
             ));
         }
 
