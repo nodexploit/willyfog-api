@@ -457,7 +457,7 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`rejected_request` (
   PRIMARY KEY (`id`),
   INDEX `fk_rejected_request_request1_idx` (`request_id` ASC),
   INDEX `fk_rejected_request_user1_idx` (`recognizer_id` ASC),
-  UNIQUE INDEX `unique_rejected_request` (`request_id` ASC, `recognizer_id` ASC)
+  UNIQUE INDEX `unique_rejected_request` (`request_id` ASC, `recognizer_id` ASC),
   CONSTRAINT `fk_rejected_request_request1`
   FOREIGN KEY (`request_id`)
   REFERENCES `willyfog_db`.`request` (`id`)
