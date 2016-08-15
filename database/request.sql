@@ -25,3 +25,11 @@ INSERT INTO `role` (name, permission) VALUES ('student', 0);
 INSERT INTO `user_has_role` (user_id, role_id) VALUES (1, 4);
 INSERT INTO `user_has_role` (user_id, role_id) VALUES (2, 3);
 INSERT INTO `user_has_role` (user_id, role_id) VALUES (3, 2);
+
+/**
+ * User enrolled degree
+ */
+
+INSERT INTO `user_enrolled_degree` (user_id, degree_id) VALUES (1, 3);
+INSERT INTO `user_enrolled_degree` (user_id, degree_id) VALUES (2, 3);
+INSERT INTO `user_enrolled_degree` (user_id, degree_id) VALUES (3, 3);
