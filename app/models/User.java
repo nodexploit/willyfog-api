@@ -1,5 +1,8 @@
 package models;
 
+import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
 public class User extends BaseModel{
@@ -66,6 +69,25 @@ public class User extends BaseModel{
 
     public void setUpdatedAt(Date updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public String gravatar() {
+        MessageDigest md5 = null;
+
+        try {
+            md5 = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        if (md5 == null) {
+            throw new RuntimeException("MD5 digest not available.");
+        }
+
+        String emailHash = (new HexBinaryAdapter())
+                .marshal(md5.digest(email.getBytes()));
+
+        return "https://www.gravatar.com/avatar/" + emailHash;
     }
 
     public boolean isValid() {
