@@ -51,7 +51,7 @@ public class RequestController extends BaseController {
                 rs = requestDao.index();
                 break;
             case Role.COORD:
-                rs = requestDao.index();
+                rs = requestDao.coordinatorRequests(userId);
                 break;
             case Role.RECOG:
                 rs = requestDao.recognizerRequests(userId);

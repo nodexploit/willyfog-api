@@ -108,9 +108,8 @@ public class RequestDao extends BaseDao {
                 "JOIN " + SubjectDao.tableName + " s ON r.origin_subject_id = s.id " +
                 "JOIN " + DegreeDao.tableName + " d ON s.degree_id = d.id " +
                 "JOIN " + CentreDao.tableName + " c ON d.centre_id = c.id " +
-                "JOIN " + UniversityDao.tableName + " u ON c.university_id = u.id " +
-                "WHERE u.id = :universityId AND " +
-                " " +
+                "JOIN " + UserCoordinatesCentreDao.tableName + " ucc ON ucc.centre_id = c.id " +
+                "WHERE ucc.user_id = :userId AND " +
                 "ORDER BY r.updated_at";
 
         List<Map<String, Object>> requests;
