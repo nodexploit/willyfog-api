@@ -41,7 +41,7 @@ public class UserDao extends BaseDao {
         return user;
     }
 
-    public List<Map<String, Object>> getUserInfo(Long userId) {
+    public Map<String, Object> getUserInfo(Long userId) {
         String sql = "SELECT " +
                 "d.id AS degree_id, " +
                 "u.name, u.surname, u.nif, " +
@@ -54,9 +54,10 @@ public class UserDao extends BaseDao {
                 "JOIN centre AS c ON d.centre_id = c.id " +
                 "JOIN university AS un ON c.university_id = un.id " +
                 "JOIN user_has_role AS uhr ON u.id = uhr.user_id " +
-                "WHERE u.id = :userId";
+                "WHERE u.id = :userId " +
+                "LIMIT 1";
 
-        List<Map<String, Object>> result = null;
+        List<Map<String, Object>> result;
 
         try(Connection con = this.db.open()) {
             result = toMapList(con.createQuery(sql)
@@ -64,7 +65,11 @@ public class UserDao extends BaseDao {
                     .executeAndFetchTable());
         }
 
-        return result;
+        if (result.size() <= 0) {
+            throw new RuntimeException("User info not found for userId: " + userId);
+        }
+
+        return result.get(0);
     }
 
     public Long create(User user) {

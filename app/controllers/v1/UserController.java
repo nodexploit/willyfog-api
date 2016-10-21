@@ -38,9 +38,12 @@ public class UserController extends BaseController {
     }
 
     public Result userInfo(Long id) {
-        List<Map<String, Object>> result = userDao.getUserInfo(id);
+        User u = userDao.find(id);
+        Map<String, Object> result = userDao.getUserInfo(id);
 
-        return ok(gson.toJson(result.get(0)));
+        result.put("gravatar", u.gravatar());
+
+        return ok(gson.toJson(result));
     }
 
     /**

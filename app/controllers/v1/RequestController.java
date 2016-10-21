@@ -42,8 +42,8 @@ public class RequestController extends BaseController {
     }
 
     public Result showUserRequests(Long userId) {
-        List<Map<String, Object>> userInfo = userDao.getUserInfo(userId);
-        Integer roleId = (Integer) userInfo.get(0).get("role_id");
+        Map<String, Object> userInfo = userDao.getUserInfo(userId);
+        Integer roleId = (Integer) userInfo.get("role_id");
 
         List<Map<String, Object>>  rs = new ArrayList<>();
         switch (roleId) {
