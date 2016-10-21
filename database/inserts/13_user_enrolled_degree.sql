@@ -1,0 +1,1 @@
+INSERT INTO `willyfog_db`.`user_enrolled_degree` (user_id, degree_id) VALUES (1, 3);

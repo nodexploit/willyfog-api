@@ -1,0 +1,3 @@
+INSERT INTO `willyfog_db`.`mobility_type` (`id`, `name`, `min_credits`, `deleted_at`, `created_at`, `updated_at`) VALUES (2, 'SICUE', NULL, NULL, DEFAULT, DEFAULT);
+INSERT INTO `willyfog_db`.`mobility_type` (`id`, `name`, `min_credits`, `deleted_at`, `created_at`, `updated_at`) VALUES (3, 'Única', NULL, NULL, DEFAULT, DEFAULT);
+INSERT INTO `willyfog_db`.`mobility_type` (`id`, `name`, `min_credits`, `deleted_at`, `created_at`, `updated_at`) VALUES (1, 'Erasmus', NULL, NULL, DEFAULT, DEFAULT);

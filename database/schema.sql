@@ -216,34 +216,6 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`request` (
 
 
 -- -----------------------------------------------------
--- Table `willyfog_db`.`likely_subject`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `willyfog_db`.`likely_subject` ;
-
-CREATE TABLE IF NOT EXISTS `willyfog_db`.`likely_subject` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `subject_id` INT NOT NULL,
-  `subject_eq_id` INT NOT NULL,
-  `deleted_at` TIMESTAMP NULL,
-  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`, `subject_id`, `subject_eq_id`),
-  INDEX `fk_subject_has_subject_subject2_idx` (`subject_eq_id` ASC),
-  INDEX `fk_subject_has_subject_subject1_idx` (`subject_id` ASC),
-  UNIQUE INDEX `unique_subject_likely` (`subject_id` ASC, `subject_eq_id` ASC),
-  CONSTRAINT `fk_subject_has_subject_subject1`
-  FOREIGN KEY (`subject_id`)
-  REFERENCES `willyfog_db`.`subject` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_subject_has_subject_subject2`
-  FOREIGN KEY (`subject_eq_id`)
-  REFERENCES `willyfog_db`.`subject` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-  ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `willyfog_db`.`equivalence`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `willyfog_db`.`equivalence` ;
@@ -280,7 +252,6 @@ DROP TABLE IF EXISTS `willyfog_db`.`role` ;
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`role` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `permission` INT NOT NULL,
   `deleted_at` TIMESTAMP NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`))
@@ -342,22 +313,6 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`user_has_role` (
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `willyfog_db`.`permission`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `willyfog_db`.`permission` ;
-
-CREATE TABLE IF NOT EXISTS `willyfog_db`.`permission` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `bit` INT NOT NULL,
-  `name` VARCHAR(45) NOT NULL,
-  `deleted_at` TIMESTAMP NULL,
-  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`))
-  ENGINE = InnoDB;
-
-
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`user_recognize_subject`
 -- -----------------------------------------------------
@@ -381,6 +336,34 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`user_recognize_subject` (
   CONSTRAINT `fk_user_has_subject_subject1`
   FOREIGN KEY (`subject_id`)
   REFERENCES `willyfog_db`.`subject` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+  ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `willyfog_db`.`user_coordinates_centre`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `willyfog_db`.`user_coordinates_centre` ;
+
+CREATE TABLE IF NOT EXISTS `willyfog_db`.`user_coordinates_centre` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  `centre_id` INT NOT NULL,
+  `deleted_at` TIMESTAMP NULL,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`, `user_id`, `centre_id`),
+  INDEX `fk_user_coordinates_centre_centre1_idx` (`centre_id` ASC),
+  INDEX `fk_user_coordinates_centre_user1_idx` (`user_id` ASC),
+  UNIQUE INDEX `unique_user_centre` (`user_id` ASC, `centre_id` ASC),
+  CONSTRAINT `fk_user_coordinates_centre_user1`
+  FOREIGN KEY (`user_id`)
+  REFERENCES `willyfog_db`.`user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_coordinates_centre_centre1`
+  FOREIGN KEY (`centre_id`)
+  REFERENCES `willyfog_db`.`centre` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB;
@@ -680,38 +663,3 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`request_destination_subject` (
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
--- -----------------------------------------------------
--- Data for table `willyfog_db`.`user`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `willyfog_db`;
-INSERT INTO `willyfog_db`.`user` (`id`, `name`, `surname`, `nif`, `email`, `digest`, `deleted_at`, `created_at`, `updated_at`) VALUES (1, 'Willy', 'Fog', '1111111H', 'willy@example.com', '$2y$10$5uzVJxZAXMdqDMuSMPRB4.VH1MvYtrOlzJqHLTQyLURkSO0MLRMt.', NULL, DEFAULT, DEFAULT);
-INSERT INTO `willyfog_db`.`user` (`id`, `name`, `surname`, `nif`, `email`, `digest`, `deleted_at`, `created_at`, `updated_at`) VALUES (2, 'Morcilla', 'Reconocedor', '1111411H', 'a@a.a', '$2y$10$5uzVJxZAXMdqDMuSMPRB4.VH1MvYtrOlzJqHLTQyLURkSO0MLRMt.', NULL, DEFAULT, DEFAULT);
-INSERT INTO `willyfog_db`.`user` (`id`, `name`, `surname`, `nif`, `email`, `digest`, `deleted_at`, `created_at`, `updated_at`) VALUES (3, 'Juan', 'Administrador', '1234567H', 'aa@aa.aa', '$2y$10$5uzVJxZAXMdqDMuSMPRB4.VH1MvYtrOlzJqHLTQyLURkSO0MLRMt.', NULL, DEFAULT, DEFAULT);
-
-COMMIT;
-
-
--- -----------------------------------------------------
--- Data for table `willyfog_db`.`mobility_type`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `willyfog_db`;
-INSERT INTO `willyfog_db`.`mobility_type` (`id`, `name`, `min_credits`, `deleted_at`, `created_at`, `updated_at`) VALUES (2, 'SICUE', NULL, NULL, DEFAULT, DEFAULT);
-INSERT INTO `willyfog_db`.`mobility_type` (`id`, `name`, `min_credits`, `deleted_at`, `created_at`, `updated_at`) VALUES (3, 'Única', NULL, NULL, DEFAULT, DEFAULT);
-INSERT INTO `willyfog_db`.`mobility_type` (`id`, `name`, `min_credits`, `deleted_at`, `created_at`, `updated_at`) VALUES (1, 'Erasmus', NULL, NULL, DEFAULT, DEFAULT);
-
-COMMIT;
-
-
--- -----------------------------------------------------
--- Data for table `willyfog_db`.`oauth_client`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `willyfog_db`;
-INSERT INTO `willyfog_db`.`oauth_client` (`client_id`, `client_secret`, `redirect_uri`, `grant_types`, `scope`, `user_id`, `deleted_at`, `created_at`, `updated_at`) VALUES ('webclient', 'websecret', 'http://willyfog.com/login/callback', 'authorization_code client_credentials', NULL, NULL, NULL, DEFAULT, DEFAULT);
-INSERT INTO `willyfog_db`.`oauth_client` (`client_id`, `client_secret`, `redirect_uri`, `grant_types`, `scope`, `user_id`, `deleted_at`, `created_at`, `updated_at`) VALUES ('mobileclient', 'mobilesecret', 'willyfog://login/callback', 'authorization_code client_credentials', NULL, NULL, NULL, DEFAULT, DEFAULT);
-
-COMMIT;
-

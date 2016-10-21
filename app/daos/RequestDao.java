@@ -100,6 +100,29 @@ public class RequestDao extends BaseDao {
         return requests;
     }
 
+    public List<Map<String, Object>> coordinatorRequests(Long userId) {
+        String sql = "SELECT " +
+                "r.id, " +
+                "r.origin_subject_id AS subject_id, s.code AS subject_code, s.name AS subject_name " +
+                "FROM " + tableName + " r " +
+                "JOIN " + SubjectDao.tableName + " s ON r.origin_subject_id = s.id " +
+                "JOIN " + DegreeDao.tableName + " d ON s.degree_id = d.id " +
+                "JOIN " + CentreDao.tableName + " c ON d.centre_id = c.id " +
+                "JOIN " + UniversityDao.tableName + " u ON c.university_id = u.id " +
+                "WHERE u.id = :universityId AND " +
+                " " +
+                "ORDER BY r.updated_at";
+
+        List<Map<String, Object>> requests;
+        try(Connection con = this.db.open()) {
+            requests = toMapList(con.createQuery(sql)
+                    .addParameter("universityId", userId)
+                    .executeAndFetchTable());
+        }
+
+        return requests;
+    }
+
     public Long create(Request request) {
         String sql = "INSERT INTO " + tableName + " " +
                 "(student_id, origin_subject_id, mobility_type_id) " +
