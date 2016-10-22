@@ -46,62 +46,6 @@ public class UserController extends BaseController {
         return ok(gson.toJson(result));
     }
 
-    /**
-     * TODO: handle values like degree_id = ""
-     *
-     * @return
-     */
-    public Result register() {
-        String[] requiredParams = {"name", "surname", "nif", "email", "digest", "degree_id", "role_id"};
-        List<String> missingFields = checkRequiredParams(requiredParams);
-
-        if (missingFields.size() > 0) {
-            return ok(gson.toJson(
-                    new ErrorResponse("Missing required fields", missingFields)
-            ));
-        }
-
-        Map<String, String[]> params = request().body().asFormUrlEncoded();
-
-        User user = new User();
-        user.setName(params.get("name")[0]);
-        user.setSurname(params.get("surname")[0]);
-        user.setNif(params.get("nif")[0]);
-        user.setEmail(params.get("email")[0]);
-        user.setDigest(params.get("digest")[0]);
-
-        if (!user.isValid()) {
-            return ok(gson.toJson(
-                    new ErrorResponse("User not valid", user.getErrors())
-            ));
-        }
-
-        Long userId = userDao.create(user);
-        Long degreeId = Long.valueOf(params.get("degree_id")[0]);
-
-        Object enrollId = userEnrolledDegreeDao.enrollUser(userId, degreeId);
-
-        if (enrollId == null) {
-            return ok(gson.toJson(
-                    new ErrorResponse("Degree not valid")
-            ));
-        }
-
-        Long roleId = Long.valueOf(params.get("role_id")[0]);
-
-        Object userHasRoleId = userHasRoleDao.create(userId, roleId);
-
-        if (userHasRoleId == null) {
-            return ok(gson.toJson(
-                    new ErrorResponse("Role not vale")
-            ));
-        }
-
-        return ok(gson.toJson(
-                new SuccessReponse("Success", null)
-        ));
-    }
-
     public Result notifications(Long userId) {
         List<Notification> ns = notificationDao.userNotifications(userId);
         notificationDao.setRead(userId);

@@ -5,6 +5,13 @@ import java.util.List;
 
 public class Request extends BaseModel {
 
+    // Category of requests
+    public static final String PENDING = "pending";
+    public static final String CLOSED = "closed";
+    // Status of requests
+    public static final String ACCEPTED = "accepted";
+    public static final String REJECTED = "rejected";
+
     private Long student_id;
     private Long origin_subject_id;
     private Long mobility_type_id;

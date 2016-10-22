@@ -61,7 +61,12 @@ public class RequestController extends BaseController {
                 break;
         }
 
-        return ok(gson.toJson(rs));
+        Map<Object, List<Map<String, Object>>> groupByCategory =
+                rs.stream().collect(
+                        Collectors.groupingBy(row -> row.get("category"))
+                );
+
+        return ok(gson.toJson(groupByCategory));
     }
 
     public Result comment(Long requestId) {
