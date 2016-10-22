@@ -145,13 +145,13 @@ public class RequestDao extends BaseDao {
                 "JOIN " + MobilityTypeDao.tableName + " mt ON r.mobility_type_id = mt.id " +
                 "LEFT JOIN " + AcceptedRequestDao.tableName + " ar ON ar.request_id = r.id " +
                 "LEFT JOIN " + RejectedRequestDao.tableName + " rr ON rr.request_id = r.id " +
-                "WHERE ucc.user_id = :userId AND " +
+                "WHERE ucc.user_id = :userId " +
                 "ORDER BY r.updated_at";
 
         List<Map<String, Object>> requests;
         try(Connection con = this.db.open()) {
             requests = toMapList(con.createQuery(sql)
-                    .addParameter("universityId", userId)
+                    .addParameter("userId", userId)
                     .executeAndFetchTable());
         }
 
