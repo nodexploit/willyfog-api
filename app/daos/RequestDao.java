@@ -29,7 +29,9 @@ public class RequestDao extends BaseDao {
 
     public Map<String, Object> find(Long id) {
         String sql = "SELECT " +
-                "r.id, r.student_id, " +
+                "u.name AS student_name, u.surname AS student_surname, " +
+                "u.email AS student_email, " +
+                "r.id, r.student_id, r.created_at, " +
                 "s.id AS subject_id, " +
                 "s.code AS subject_code, " +
                 "s.name AS subject_name, " +
@@ -48,6 +50,7 @@ public class RequestDao extends BaseDao {
                 "FROM " + tableName + " r " +
                 "JOIN " + SubjectDao.tableName + " s ON r.origin_subject_id = s.id " +
                 "JOIN " + MobilityTypeDao.tableName + " mt ON r.mobility_type_id = mt.id " +
+                "JOIN " + UserDao.tableName + " u ON r.student_id = u.id " +
                 "LEFT JOIN " + AcceptedRequestDao.tableName + " ar ON ar.request_id = r.id " +
                 "LEFT JOIN " + RejectedRequestDao.tableName + " rr ON rr.request_id = r.id " +
                 "WHERE r.id = :id";
