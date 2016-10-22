@@ -199,7 +199,7 @@
 -- INSERT INTO `willyfog_db`.`country` (code, name) VALUES ('SO', 'Somalia');
 -- INSERT INTO `willyfog_db`.`country` (code, name) VALUES ('ZA', 'South Africa');
 -- INSERT INTO `willyfog_db`.`country` (code, name) VALUES ('GS', 'South Georgia South Sandwich Islands');
-INSERT INTO `willyfog_db`.`country` (code, name) VALUES ('ES', 'Spain');
+INSERT INTO `willyfog_db`.`country` (id, code, name) VALUES (202, 'ES', 'Spain');
 -- INSERT INTO `willyfog_db`.`country` (code, name) VALUES ('LK', 'Sri Lanka');
 -- INSERT INTO `willyfog_db`.`country` (code, name) VALUES ('SH', 'St. Helena');
 -- INSERT INTO `willyfog_db`.`country` (code, name) VALUES ('PM', 'St. Pierre and Miquelon');

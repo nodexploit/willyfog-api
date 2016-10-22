@@ -11,13 +11,15 @@ done
 
 DB_SCHEMA=willyfog_db
 
+export MYSQL_PWD=root
+
 echo "Dumping schema ..."
-mysql -h 0.0.0.0 -P 3306 -uroot -proot < database/schema.sql
+mysql -h 0.0.0.0 -P 3306 -uroot < database/schema.sql
 
 for i in database/inserts/* ; do
   if [ -f "$i" ]; then
     echo "Dumping script ${i} ..."
-    mysql -h 0.0.0.0 -P 3306 -uroot -proot < ${i}
+    mysql -h 0.0.0.0 -P 3306 -uroot ${DB_SCHEMA} < ${i}
   fi
 done
 

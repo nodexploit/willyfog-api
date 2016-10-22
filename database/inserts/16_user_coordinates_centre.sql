@@ -1,1 +1,1 @@
-INSERT INTO `willyfog_db`.user_coordinates_centre (user_id, centre_id) VALUES (3, 1);
+INSERT INTO `willyfog_db`.`user_coordinates_centre` (user_id, centre_id) VALUES (3, 1);

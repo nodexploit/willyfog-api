@@ -627,6 +627,8 @@ CREATE TABLE IF NOT EXISTS `willyfog_db`.`oauth_refresh_token` (
 -- -----------------------------------------------------
 -- Table `willyfog_db`.`request_destination_subject`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `willyfog_db`.`request_destination_subject` ;
+
 CREATE TABLE IF NOT EXISTS `willyfog_db`.`request_destination_subject` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `request_id` INT NOT NULL,

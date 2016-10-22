@@ -50,11 +50,11 @@ public class UserDao extends BaseDao {
                 "c.name AS centre_name, un.name AS university_name, " +
                 "uhr.role_id, rol.name AS role_name " +
                 "FROM " + tableName + " u " +
-                "LEFT JOIN user_enrolled_degree AS ued ON u.id = ued.user_id " +
-                "LEFT JOIN degree AS d ON ued.degree_id = d.id " +
-                "LEFT JOIN user_coordinates_centre AS ucc ON ucc.user_id = u.id " +
-                "LEFT JOIN centre AS c ON d.centre_id = c.id " +
-                "LEFT JOIN university AS un ON c.university_id = un.id " +
+                "LEFT JOIN " + UserEnrolledDegreeDao.tableName + " AS ued ON u.id = ued.user_id " +
+                "LEFT JOIN " + DegreeDao.tableName + " AS d ON ued.degree_id = d.id " +
+                "LEFT JOIN " + UserCoordinatesCentreDao.tableName + " AS ucc ON ucc.user_id = u.id " +
+                "LEFT JOIN " + CentreDao.tableName + " AS c ON d.centre_id = c.id " +
+                "LEFT JOIN " + UniversityDao.tableName + " AS un ON c.university_id = un.id " +
                 "JOIN user_has_role AS uhr ON u.id = uhr.user_id " +
                 "JOIN role AS rol ON uhr.role_id = rol.id " +
                 "WHERE u.id = :userId " +
