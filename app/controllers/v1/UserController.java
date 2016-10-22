@@ -1,13 +1,12 @@
 package controllers.v1;
 
 import com.google.inject.Inject;
-import daos.NotificationDao;
-import daos.UserDao;
-import daos.UserEnrolledDegreeDao;
-import daos.UserHasRoleDao;
+import daos.*;
 import http.ErrorResponse;
 import http.SuccessReponse;
 import models.Notification;
+import models.Role;
+import models.Subject;
 import models.User;
 import play.mvc.Result;
 
@@ -24,6 +23,8 @@ public class UserController extends BaseController {
     private UserEnrolledDegreeDao userEnrolledDegreeDao;
     @Inject
     private NotificationDao notificationDao;
+    @Inject
+    private SubjectDao subjectDao;
 
     public Result show(Long id) {
         User u = userDao.find(id);
@@ -51,5 +52,19 @@ public class UserController extends BaseController {
         notificationDao.setRead(userId);
 
         return ok(gson.toJson(ns));
+    }
+
+    public Result recognizerSubjects(Long userId) {
+        Long userRole = userHasRoleDao.userRole(userId);
+
+        if (Role.RECOG != userRole) {
+            return ok(gson.toJson(
+                    new ErrorResponse("Given user is not a recognizer"))
+            );
+        }
+
+        List<Subject> subjects = subjectDao.recognizerSubjects(userId);
+
+        return ok(gson.toJson(subjects));
     }
 }

@@ -1,5 +1,6 @@
 package daos;
 
+import models.Subject;
 import models.User;
 import org.sql2o.Connection;
 
