@@ -15,7 +15,7 @@ public class UserDao extends BaseDao {
                 "FROM " + tableName + " " +
                 "WHERE id = :id";
 
-        User user = null;
+        User user;
         try(Connection con = this.db.open()) {
              user = con.createQuery(sql)
                      .addParameter("id", id)
@@ -31,7 +31,7 @@ public class UserDao extends BaseDao {
                 "JOIN " + OAuth2Dao.tableName + " oat ON oat.user_id = u.id " +
                 "WHERE oat.access_token = :accessToken";
 
-        User user = null;
+        User user;
         try(Connection con = this.db.open()) {
             user = con.createQuery(sql)
                     .addParameter("accessToken", accessToken)
@@ -46,6 +46,7 @@ public class UserDao extends BaseDao {
                 "d.id AS degree_id, " +
                 "u.name, u.surname, u.nif, " +
                 "u.email, d.name AS degree_name, " +
+                "c.id AS centre_id, un.id AS university_id, " +
                 "c.name AS centre_name, un.name AS university_name, " +
                 "uhr.role_id, rol.name AS role_name " +
                 "FROM " + tableName + " u " +
@@ -77,7 +78,9 @@ public class UserDao extends BaseDao {
     public Map<String, Object> coordinatorInfo(Long userId) {
         String sql = "SELECT " +
                 "u.name, u.surname, u.nif, " +
-                "u.email, c.name AS centre_name, un.name AS university_name, " +
+                "c.id AS centre_id, un.id AS university_id, " +
+                "u.email, c.name AS centre_name, " +
+                "un.name AS university_name, " +
                 "uhr.role_id, rol.name AS role_name " +
                 "FROM " + tableName + " u " +
                 "JOIN " + UserCoordinatesCentreDao.tableName + " AS ucc ON u.id = ucc.user_id " +

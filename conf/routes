@@ -20,6 +20,7 @@ GET /api/v1/universities                controllers.v1.UniversityController.inde
 GET /api/v1/universities/:id/centres    controllers.v1.UniversityController.centres(id: Long)
 
 GET /api/v1/centres/:id/degrees         controllers.v1.CentreController.degrees(id: Long)
+GET /api/v1/centres/:id/recognizers     controllers.v1.CentreController.recognizers(id: Long)
 
 GET /api/v1/degrees/:id/subjects        controllers.v1.DegreeController.subjects(id: Long)
 
