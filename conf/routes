@@ -4,6 +4,7 @@ GET /api/v1/users/:id/info              controllers.v1.UserController.userInfo(i
 GET /api/v1/users/:id/notifications     controllers.v1.UserController.notifications(id: Long)
 GET /api/v1/users/info/u                controllers.v1.UserController.userByToken(accessToken: String)
 GET /api/v1/users/:id/subjects          controllers.v1.UserController.recognizerSubjects(id: Long)
+GET /api/v1/users/:id/photo             controllers.v1.UserController.getCircularImage(id: Long)
 
 GET /api/v1/requests/:id                controllers.v1.RequestController.show(id: Long)
 POST /api/v1/requests                   controllers.v1.RequestController.create
