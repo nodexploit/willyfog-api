@@ -58,3 +58,4 @@ server.pid
 /dist/
 /app-2.11
 /test-2.11
+*.iml
