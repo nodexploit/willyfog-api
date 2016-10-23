@@ -9,4 +9,9 @@ public class SuccessReponse {
         this.status = status;
         this.data = data;
     }
+
+    public SuccessReponse(String status) {
+        this.status = status;
+        this.data = null;
+    }
 }

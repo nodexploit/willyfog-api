@@ -5,20 +5,17 @@ import daos.NotificationDao;
 import daos.SubjectDao;
 import daos.UserDao;
 import daos.UserHasRoleDao;
+import daos.UserRecognizeSubjectDao;
 import http.ErrorResponse;
+import http.SuccessReponse;
+import http.actions.CoordinatorAction;
 import models.Notification;
 import models.Role;
 import models.Subject;
 import models.User;
 import play.mvc.Result;
-import play.mvc.Results;
+import play.mvc.With;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +30,8 @@ public class UserController extends BaseController {
     private NotificationDao notificationDao;
     @Inject
     private SubjectDao subjectDao;
+    @Inject
+    private UserRecognizeSubjectDao userRecognizeSubjectDao;
 
     public Result show(Long id) {
         User u = userDao.find(id);
@@ -90,5 +89,12 @@ public class UserController extends BaseController {
         List<Subject> subjects = subjectDao.recognizerSubjects(userId);
 
         return ok(gson.toJson(subjects));
+    }
+
+    @With(CoordinatorAction.class)
+    public Result recognizerSubject(Long userId, Long subjectId) {
+        userRecognizeSubjectDao.deleteSubject(userId, subjectId);
+
+        return ok(gson.toJson(new SuccessReponse("true")));
     }
 }
