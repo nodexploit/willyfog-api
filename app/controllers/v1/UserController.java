@@ -15,10 +15,8 @@ import play.mvc.Results;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
@@ -98,7 +96,6 @@ public class UserController extends BaseController {
         User u = userDao.find(userId);
 
         URL url;
-        OutputStream os = null;
         BufferedImage image;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {
