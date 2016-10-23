@@ -22,4 +22,16 @@ public class UserRecognizeSubjectDao extends BaseDao {
 
         return recognizerIds;
     }
+
+    public void deleteSubject(Long userId, Long subjectId) {
+        String sql = "DELETE FROM " + tableName + " " +
+                "WHERE user_id = :userId AND subject_id = :subjectId";
+
+        try(Connection con = this.db.open()) {
+            con.createQuery(sql)
+                    .addParameter("userId", userId)
+                    .addParameter("subjectId", subjectId)
+                    .executeUpdate();
+        }
+    }
 }

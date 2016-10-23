@@ -5,12 +5,16 @@ import daos.NotificationDao;
 import daos.SubjectDao;
 import daos.UserDao;
 import daos.UserHasRoleDao;
+import daos.UserRecognizeSubjectDao;
 import http.ErrorResponse;
+import http.SuccessReponse;
+import http.actions.CoordinatorAction;
 import models.Notification;
 import models.Role;
 import models.Subject;
 import models.User;
 import play.mvc.Result;
+import play.mvc.With;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +30,8 @@ public class UserController extends BaseController {
     private NotificationDao notificationDao;
     @Inject
     private SubjectDao subjectDao;
+    @Inject
+    private UserRecognizeSubjectDao userRecognizeSubjectDao;
 
     public Result show(Long id) {
         User u = userDao.find(id);
@@ -83,5 +89,12 @@ public class UserController extends BaseController {
         List<Subject> subjects = subjectDao.recognizerSubjects(userId);
 
         return ok(gson.toJson(subjects));
+    }
+
+    @With(CoordinatorAction.class)
+    public Result recognizerSubject(Long userId, Long subjectId) {
+        userRecognizeSubjectDao.deleteSubject(userId, subjectId);
+
+        return ok(gson.toJson(new SuccessReponse("true")));
     }
 }

@@ -2,8 +2,9 @@ GET /api/v1/users/:id                   controllers.v1.UserController.show(id: L
 GET /api/v1/users/:id/requests          controllers.v1.RequestController.showUserRequests(id: Long)
 GET /api/v1/users/:id/info              controllers.v1.UserController.userInfo(id: Long)
 GET /api/v1/users/:id/notifications     controllers.v1.UserController.notifications(id: Long)
-GET /api/v1/users/info/u                controllers.v1.UserController.userByToken(accessToken: String)
+GET /api/v1/users/info/                 controllers.v1.UserController.userByToken(accessToken: String)
 GET /api/v1/users/:id/subjects          controllers.v1.UserController.recognizerSubjects(id: Long)
+DELETE /api/v1/users/:id/subjects/:sId  controllers.v1.UserController.recognizerSubject(id: Long, sId: Long)
 
 GET /api/v1/requests/:id                controllers.v1.RequestController.show(id: Long)
 POST /api/v1/requests                   controllers.v1.RequestController.create
