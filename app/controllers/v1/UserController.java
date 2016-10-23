@@ -91,23 +91,4 @@ public class UserController extends BaseController {
 
         return ok(gson.toJson(subjects));
     }
-
-    public Result getCircularImage(Long userId) {
-        User u = userDao.find(userId);
-
-        URL url;
-        BufferedImage image;
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try {
-            url = new URL(u.gravatar());
-            image = ImageIO.read(url);
-            ImageIO.write(image, "jpg", baos);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return Results.ok(baos.toByteArray()).as("image/jpg");
-    }
 }
