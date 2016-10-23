@@ -16,6 +16,14 @@ import models.User;
 import play.mvc.Result;
 import play.mvc.With;
 
+import play.mvc.Results;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,5 +104,24 @@ public class UserController extends BaseController {
         userRecognizeSubjectDao.deleteSubject(userId, subjectId);
 
         return ok(gson.toJson(new SuccessReponse("true")));
+    }
+
+    public Result getCircularImage(Long userId) {
+        User u = userDao.find(userId);
+
+        URL url;
+        BufferedImage image;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try {
+            url = new URL(u.gravatar());
+            image = ImageIO.read(url);
+            ImageIO.write(image, "jpg", baos);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return Results.ok(baos.toByteArray()).as("image/jpg");
     }
 }
