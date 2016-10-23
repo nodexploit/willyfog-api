@@ -1,15 +1,18 @@
 package controllers.v1;
 
 import com.google.inject.Inject;
-import daos.*;
+import daos.NotificationDao;
+import daos.SubjectDao;
+import daos.UserDao;
+import daos.UserHasRoleDao;
 import http.ErrorResponse;
-import http.SuccessReponse;
 import models.Notification;
 import models.Role;
 import models.Subject;
 import models.User;
 import play.mvc.Result;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,8 +22,6 @@ public class UserController extends BaseController {
     private UserDao userDao;
     @Inject
     private UserHasRoleDao userHasRoleDao;
-    @Inject
-    private UserEnrolledDegreeDao userEnrolledDegreeDao;
     @Inject
     private NotificationDao notificationDao;
     @Inject
@@ -38,13 +39,29 @@ public class UserController extends BaseController {
         return ok(gson.toJson(u));
     }
 
-    public Result userInfo(Long id) {
-        User u = userDao.find(id);
-        Map<String, Object> result = userDao.getUserInfo(id);
+    public Result userInfo(Long userId) {
+        Integer roleId = userHasRoleDao.userRole(userId).intValue();
 
-        result.put("gravatar", u.gravatar());
+        Map<String, Object>  userInfo = new HashMap<>();
+        switch (roleId) {
+            case Role.ADMIN:
+                userInfo = userDao.adminInfo(userId);
+                break;
+            case Role.COORD:
+                userInfo = userDao.coordinatorInfo(userId);
+                break;
+            case Role.RECOG:
+                userInfo = userDao.recognizerInfo(userId);
+                break;
+            case Role.STUDENT:
+                userInfo = userDao.studentInfo(userId);
+                break;
+        }
 
-        return ok(gson.toJson(result));
+        User u = userDao.find(userId);
+        userInfo.put("gravatar", u.gravatar());
+
+        return ok(gson.toJson(userInfo));
     }
 
     public Result notifications(Long userId) {

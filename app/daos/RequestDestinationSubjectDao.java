@@ -1,6 +1,5 @@
 package daos;
 
-import models.City;
 import models.RequestDestinationSubject;
 import org.sql2o.Connection;
 

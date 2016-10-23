@@ -27,11 +27,11 @@ public class RequestController extends BaseController {
     @Inject
     private NotificationDao notificationDao;
     @Inject
-    private UserDao userDao;
-    @Inject
     private AcceptedRequestDao acceptedRequestDao;
     @Inject
     private RejectedRequestDao rejectedRequestDao;
+    @Inject
+    private UserHasRoleDao userHasRoleDao;
 
     public Result show(Long id) {
         Map<String, Object> r = requestDao.find(id);
@@ -42,8 +42,7 @@ public class RequestController extends BaseController {
     }
 
     public Result showUserRequests(Long userId) {
-        Map<String, Object> userInfo = userDao.getUserInfo(userId);
-        Integer roleId = (Integer) userInfo.get("role_id");
+        Integer roleId = userHasRoleDao.userRole(userId).intValue();
 
         List<Map<String, Object>>  rs = new ArrayList<>();
         switch (roleId) {

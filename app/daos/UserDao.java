@@ -1,6 +1,5 @@
 package daos;
 
-import models.Subject;
 import models.User;
 import org.sql2o.Connection;
 
@@ -42,7 +41,7 @@ public class UserDao extends BaseDao {
         return user;
     }
 
-    public Map<String, Object> getUserInfo(Long userId) {
+    public Map<String, Object> studentInfo(Long userId) {
         String sql = "SELECT " +
                 "d.id AS degree_id, " +
                 "u.name, u.surname, u.nif, " +
@@ -50,16 +49,62 @@ public class UserDao extends BaseDao {
                 "c.name AS centre_name, un.name AS university_name, " +
                 "uhr.role_id, rol.name AS role_name " +
                 "FROM " + tableName + " u " +
-                "LEFT JOIN " + UserEnrolledDegreeDao.tableName + " AS ued ON u.id = ued.user_id " +
-                "LEFT JOIN " + DegreeDao.tableName + " AS d ON ued.degree_id = d.id " +
-                "LEFT JOIN " + UserCoordinatesCentreDao.tableName + " AS ucc ON ucc.user_id = u.id " +
-                "LEFT JOIN " + CentreDao.tableName + " AS c ON d.centre_id = c.id " +
-                "LEFT JOIN " + UniversityDao.tableName + " AS un ON c.university_id = un.id " +
+                "JOIN " + UserEnrolledDegreeDao.tableName + " AS ued ON u.id = ued.user_id " +
+                "JOIN " + DegreeDao.tableName + " AS d ON ued.degree_id = d.id " +
+                "JOIN " + CentreDao.tableName + " AS c ON d.centre_id = c.id " +
+                "JOIN " + UniversityDao.tableName + " AS un ON c.university_id = un.id " +
                 "JOIN user_has_role AS uhr ON u.id = uhr.user_id " +
                 "JOIN role AS rol ON uhr.role_id = rol.id " +
                 "WHERE u.id = :userId " +
                 "LIMIT 1";
 
+        return fetchUserInfo(sql, userId);
+    }
+
+    public Map<String, Object> recognizerInfo(Long userId) {
+        String sql = "SELECT " +
+                "u.name, u.surname, u.nif, " +
+                "u.email, uhr.role_id, rol.name AS role_name " +
+                "FROM " + tableName + " u " +
+                "JOIN user_has_role AS uhr ON u.id = uhr.user_id " +
+                "JOIN role AS rol ON uhr.role_id = rol.id " +
+                "WHERE u.id = :userId " +
+                "LIMIT 1";
+
+        return fetchUserInfo(sql, userId);
+    }
+
+    public Map<String, Object> coordinatorInfo(Long userId) {
+        String sql = "SELECT " +
+                "u.name, u.surname, u.nif, " +
+                "u.email, c.name AS centre_name, un.name AS university_name, " +
+                "uhr.role_id, rol.name AS role_name " +
+                "FROM " + tableName + " u " +
+                "JOIN " + UserCoordinatesCentreDao.tableName + " AS ucc ON u.id = ucc.user_id " +
+                "JOIN " + CentreDao.tableName + " AS c ON ucc.centre_id = c.id " +
+                "JOIN " + UniversityDao.tableName + " AS un ON c.university_id = un.id " +
+                "JOIN user_has_role AS uhr ON u.id = uhr.user_id " +
+                "JOIN role AS rol ON uhr.role_id = rol.id " +
+                "WHERE u.id = :userId " +
+                "LIMIT 1";
+
+        return fetchUserInfo(sql, userId);
+    }
+
+    public Map<String, Object> adminInfo(Long userId) {
+        String sql = "SELECT " +
+                "u.name, u.surname, u.nif, " +
+                "u.email, uhr.role_id, rol.name AS role_name " +
+                "FROM " + tableName + " u " +
+                "JOIN user_has_role AS uhr ON u.id = uhr.user_id " +
+                "JOIN role AS rol ON uhr.role_id = rol.id " +
+                "WHERE u.id = :userId " +
+                "LIMIT 1";
+
+        return fetchUserInfo(sql, userId);
+    }
+
+    private Map<String, Object> fetchUserInfo(String sql, Long userId) {
         List<Map<String, Object>> result;
 
         try(Connection con = this.db.open()) {
@@ -73,13 +118,5 @@ public class UserDao extends BaseDao {
         }
 
         return result.get(0);
-    }
-
-    public Long create(User user) {
-        String sql = "INSERT INTO " + tableName + " " +
-                "(name, surname, nif, email, digest) " +
-                "VALUES (:name, :surname, :nif, :email, :digest)";
-
-        return insertModel(sql, user);
     }
 }
