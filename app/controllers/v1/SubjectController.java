@@ -10,6 +10,12 @@ public class SubjectController extends BaseController {
     @Inject
     private SubjectDao subjectDao;
 
+    public Result index() {
+        return ok(gson.toJson(
+                subjectDao.index()
+        ));
+    }
+
     public Result show(Long id) {
         Subject s = subjectDao.find(id);
 

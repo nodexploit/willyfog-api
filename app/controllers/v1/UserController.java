@@ -1,5 +1,6 @@
 package controllers.v1;
 
+import com.google.common.reflect.TypeToken;
 import com.google.inject.Inject;
 import daos.NotificationDao;
 import daos.SubjectDao;
@@ -102,6 +103,19 @@ public class UserController extends BaseController {
     @With(CoordinatorAction.class)
     public Result recognizerSubject(Long userId, Long subjectId) {
         userRecognizeSubjectDao.deleteSubject(userId, subjectId);
+
+        return ok(gson.toJson(new SuccessReponse("true")));
+    }
+
+    @With(CoordinatorAction.class)
+    public Result addSubjects(Long recognizerId) {
+        List<Integer> subjectIds = gson.fromJson(
+                request().body().asFormUrlEncoded()
+                        .get("subject_ids")[0],
+                new TypeToken<List<Integer>>(){}.getType()
+        );
+
+        userRecognizeSubjectDao.addSubjects(recognizerId, subjectIds);
 
         return ok(gson.toJson(new SuccessReponse("true")));
     }
