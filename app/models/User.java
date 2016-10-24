@@ -87,7 +87,7 @@ public class User extends BaseModel{
         String emailHash = (new HexBinaryAdapter())
                 .marshal(md5.digest(email.getBytes()));
 
-        return "https://www.gravatar.com/avatar/" + emailHash;
+        return "https://www.gravatar.com/avatar/" + emailHash.toLowerCase();
     }
 
     public boolean isValid() {
