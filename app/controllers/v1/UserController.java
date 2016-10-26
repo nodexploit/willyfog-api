@@ -104,11 +104,12 @@ public class UserController extends BaseController {
         List<Integer> subjectIds = gson.fromJson(
                 request().body().asFormUrlEncoded()
                         .get("subject_ids")[0],
-                new TypeToken<List<Integer>>(){}.getType()
+                new TypeToken<List<Integer>>() {
+                }.getType()
         );
 
         userRecognizeSubjectDao.addSubjects(recognizerId, subjectIds);
 
         return ok(gson.toJson(new SuccessReponse("true")));
-    
+    }
 }
