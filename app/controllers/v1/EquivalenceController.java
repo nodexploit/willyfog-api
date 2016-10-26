@@ -19,9 +19,4 @@ public class EquivalenceController extends BaseController {
 
         return ok(gson.toJson(result));
     }
-
-    @With(AdminAction.class)
-    public Result hello() {
-        return ok("Hello world!");
-    }
 }
