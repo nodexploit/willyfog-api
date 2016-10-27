@@ -7,6 +7,8 @@ import daos.NotificationDao;
 import daos.RejectedRequestDao;
 import daos.RequestDao;
 import daos.RequestDestinationSubjectDao;
+import daos.SubjectDao;
+import daos.UserDao;
 import daos.UserHasRoleDao;
 import daos.UserRecognizeSubjectDao;
 import http.ErrorResponse;
@@ -17,6 +19,8 @@ import models.Notification;
 import models.Request;
 import models.RequestDestinationSubject;
 import models.Role;
+import models.Subject;
+import models.User;
 import play.mvc.Result;
 import play.mvc.With;
 
@@ -30,7 +34,11 @@ public class RequestController extends BaseController {
     @Inject
     private RequestDao requestDao;
     @Inject
+    private UserDao userDao;
+    @Inject
     private CommentDao commentDao;
+    @Inject
+    private SubjectDao subjectDao;
     @Inject
     private RequestDestinationSubjectDao requestDestinationDao;
     @Inject
@@ -137,7 +145,9 @@ public class RequestController extends BaseController {
         if (!commentUserId.equals(requestStudentId.longValue())) {
             Notification notification = new Notification();
             notification.setUserId(requestStudentId.longValue());
-            notification.setContent("User " + commentUserId + " commented your request.");
+            User commenterUser = userDao.find(commentUserId);
+            notification.setContent("Usuario " + commenterUser.getName() + " " + commenterUser.getSurname() +
+                    " ha comentado tu petición.");
 
             notificationDao.create(notification);
         }
@@ -207,8 +217,8 @@ public class RequestController extends BaseController {
         Map<String, Object> request = requestDao.find(requestId);
         Notification notification = new Notification();
         notification.setUserId(((Integer)request.get("student_id")).longValue());
-        notification.setContent("Your <a href=\"/requests/" + requestId +
-                "\">request</a> has been " + state + ".");
+        notification.setContent("Tu petición para " + request.get("subject_name") + " ha sido " +
+                (state.equals("rejected") ? "rechazada" : "aprobada") + ".");
         notificationDao.create(notification);
     }
 
@@ -272,7 +282,8 @@ public class RequestController extends BaseController {
         for (Long recognizerId: recognizerIds) {
             Notification notification = new Notification();
             notification.setUserId(recognizerId);
-            notification.setContent("Subject " + subjectId + " has a new request.");
+            Subject subject = subjectDao.find(subjectId);
+            notification.setContent("La asignatura " + subject.getName() + " tiene una nueva petición.");
 
             notificationDao.create(notification);
         }
