@@ -5,7 +5,6 @@ import models.User;
 import org.sql2o.Connection;
 
 import java.util.List;
-import java.util.Map;
 
 public class CentreDao extends BaseDao {
 

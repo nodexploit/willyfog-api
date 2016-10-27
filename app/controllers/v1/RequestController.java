@@ -1,11 +1,22 @@
 package controllers.v1;
 
 import com.google.inject.Inject;
-import daos.*;
+import daos.AcceptedRequestDao;
+import daos.CommentDao;
+import daos.NotificationDao;
+import daos.RejectedRequestDao;
+import daos.RequestDao;
+import daos.RequestDestinationSubjectDao;
+import daos.UserHasRoleDao;
+import daos.UserRecognizeSubjectDao;
 import http.ErrorResponse;
 import http.SuccessReponse;
 import http.actions.RecognizerAction;
-import models.*;
+import models.Comment;
+import models.Notification;
+import models.Request;
+import models.RequestDestinationSubject;
+import models.Role;
 import play.mvc.Result;
 import play.mvc.With;
 
