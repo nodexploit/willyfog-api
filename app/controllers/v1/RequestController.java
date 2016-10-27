@@ -33,9 +33,29 @@ public class RequestController extends BaseController {
     @Inject
     private UserHasRoleDao userHasRoleDao;
 
-    public Result show(Long id) {
-        Map<String, Object> r = requestDao.find(id);
-        List<Map<String, Object>> rds = requestDestinationDao.requestDestinations(id);
+    public Result show(Long requestId) {
+        Long userId = (Long) ctx().args.get("user_id");
+
+        Integer userRole = userHasRoleDao.userRole(userId).intValue();
+
+        boolean canSee = true;
+        switch (userRole) {
+            case Role.STUDENT:
+                canSee = requestDao.studentCanSeeRequest(requestId, userId);
+                break;
+            case Role.RECOG:
+                canSee = requestDao.recognizerCanSeeRequest(requestId, userId);
+                break;
+        }
+
+        if (!canSee) {
+            return ok(gson.toJson(
+                    new ErrorResponse("Not authorized")
+            ));
+        }
+
+        Map<String, Object> r = requestDao.find(requestId);
+        List<Map<String, Object>> rds = requestDestinationDao.requestDestinations(requestId);
         r.put("destination_subjects", rds);
 
         return ok(gson.toJson(r));

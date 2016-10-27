@@ -10,10 +10,6 @@ public class UniversityDao extends BaseDao {
 
     public static String tableName = "university";
 
-    /**
-     * TODO: handle pagination
-     * @return
-     */
     public List<University> all() {
         String sql = "SELECT " +
                 "u.id, u.name, u.code " +

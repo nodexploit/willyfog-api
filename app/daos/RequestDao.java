@@ -188,4 +188,41 @@ public class RequestDao extends BaseDao {
 
         return requests.size() > 0;
     }
+
+    public boolean studentCanSeeRequest(Long requestId, Long studentId) {
+        String sql = "SELECT " +
+                "r.id " +
+                "FROM " + tableName + " r " +
+                "WHERE r.id = :requestId AND " +
+                "r.student_id = :studentId";
+
+        List<Map<String, Object>> requests;
+        try(Connection con = this.db.open()) {
+            requests = toMapList(con.createQuery(sql)
+                    .addParameter("requestId", requestId)
+                    .addParameter("studentId", studentId)
+                    .executeAndFetchTable());
+        }
+
+        return requests.size() > 0;
+    }
+
+    public boolean recognizerCanSeeRequest(Long requestId, Long recognizerId) {
+        String sql = "SELECT " +
+                "r.id " +
+                "FROM " + tableName + " r " +
+                "JOIN " + UserRecognizeSubjectDao.tableName + " urs ON r.origin_subject_id = urs.subject_id " +
+                "WHERE r.id = :requestId AND " +
+                "urs.user_id = :recognizerId";
+
+        List<Map<String, Object>> requests;
+        try(Connection con = this.db.open()) {
+            requests = toMapList(con.createQuery(sql)
+                    .addParameter("requestId", requestId)
+                    .addParameter("recognizerId", recognizerId)
+                    .executeAndFetchTable());
+        }
+
+        return requests.size() > 0;
+    }
 }
