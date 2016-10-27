@@ -95,7 +95,7 @@ public class RequestController extends BaseController {
 
         if (commentId == null) {
             return ok(gson.toJson(
-                    new ErrorResponse("Ups something went wrong")
+                    new ErrorResponse("Oops something went wrong")
             ));
         }
 
@@ -122,14 +122,15 @@ public class RequestController extends BaseController {
         return ok(gson.toJson(cs));
     }
 
-    /**
-     * TODO: check if the user recognizer this subject
-     * @param requestId
-     * @return
-     */
     @With(RecognizerAction.class)
     public Result accept(Long requestId) {
         Long recognizerId = (Long) ctx().args.get("user_id");
+
+        if (!requestDao.userRecognizesSubject(requestId, recognizerId)) {
+            return ok(
+                    gson.toJson(new ErrorResponse("Trying to recognize an incorrect subject."))
+            );
+        }
 
         Long acceptedId = acceptedRequestDao.accept(requestId, recognizerId);
 
@@ -141,19 +142,20 @@ public class RequestController extends BaseController {
             );
         } else {
             return ok(
-                    gson.toJson(new ErrorResponse("Ups, something went wrong."))
+                    gson.toJson(new ErrorResponse("Oops, something went wrong."))
             );
         }
     }
 
-    /**
-     * TODO: check if the user recognizer this subject
-     * @param requestId
-     * @return
-     */
     @With(RecognizerAction.class)
     public Result reject(Long requestId) {
         Long recognizerId = (Long) ctx().args.get("user_id");
+
+        if (!requestDao.userRecognizesSubject(requestId, recognizerId)) {
+            return ok(
+                    gson.toJson(new ErrorResponse("Trying to recognize an incorrect subject."))
+            );
+        }
 
         Long rejectedId = rejectedRequestDao.reject(requestId, recognizerId);
 
@@ -165,7 +167,7 @@ public class RequestController extends BaseController {
             );
         } else {
             return ok(
-                    gson.toJson(new ErrorResponse("Ups, something went wrong."))
+                    gson.toJson(new ErrorResponse("Oops, something went wrong."))
             );
         }
     }

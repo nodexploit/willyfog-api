@@ -168,4 +168,24 @@ public class RequestDao extends BaseDao {
 
         return insertModel(sql, request);
     }
+
+    public boolean userRecognizesSubject(Long requestId, Long recognizerId) {
+        String sql = "SELECT " +
+                "s.id " +
+                "FROM " + tableName + " r " +
+                "JOIN " + SubjectDao.tableName + " s ON r.origin_subject_id = s.id " +
+                "JOIN " + UserRecognizeSubjectDao.tableName + " urs ON urs.subject_id = s.id " +
+                "WHERE r.id = :requestId AND " +
+                "urs.user_id = :userId";
+
+        List<Map<String, Object>> requests;
+        try(Connection con = this.db.open()) {
+            requests = toMapList(con.createQuery(sql)
+                    .addParameter("requestId", requestId)
+                    .addParameter("userId", recognizerId)
+                    .executeAndFetchTable());
+        }
+
+        return requests.size() > 0;
+    }
 }
