@@ -94,6 +94,14 @@ public class UserController extends BaseController {
 
     @With(CoordinatorAction.class)
     public Result recognizerSubject(Long userId, Long subjectId) {
+        Long userRole = userHasRoleDao.userRole(userId);
+
+        if (Role.RECOG != userRole) {
+            return ok(gson.toJson(
+                    new ErrorResponse("Given user is not a recognizer"))
+            );
+        }
+
         userRecognizeSubjectDao.deleteSubject(userId, subjectId);
 
         return ok(gson.toJson(new SuccessReponse("true")));
@@ -101,6 +109,14 @@ public class UserController extends BaseController {
 
     @With(CoordinatorAction.class)
     public Result addSubjects(Long recognizerId) {
+        Long userRole = userHasRoleDao.userRole(recognizerId);
+
+        if (Role.RECOG != userRole) {
+            return ok(gson.toJson(
+                    new ErrorResponse("Given user is not a recognizer"))
+            );
+        }
+
         List<Integer> subjectIds = gson.fromJson(
                 request().body().asFormUrlEncoded()
                         .get("subject_ids")[0],
