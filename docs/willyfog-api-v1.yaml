@@ -29,19 +29,17 @@ paths:
         200:
           description: Objeto usuario
           schema:
-            type: object
-            properties:
-              data:
-                $ref: '#/definitions/User'
-            example: {
-                       "id": 1,
-                       "name": "Willy",
-                       "surname": "Fog",
-                       "nif": "1111111H",
-                       "email": "student@willy.com",
-                       "updated_at": "Oct 27, 2016 9:05:08 PM",
-                       "created_at": "Oct 27, 2016 9:05:08 PM"
-                     }
+              $ref: '#/definitions/User'
+          examples:
+            application/json: {
+               "id": 1,
+               "name": "Willy",
+               "surname": "Fog",
+               "nif": "1111111H",
+               "email": "student@willy.com",
+               "updated_at": "Oct 27, 2016 9:05:08 PM",
+               "created_at": "Oct 27, 2016 9:05:08 PM"
+            }
 definitions:
   User:
     type: object
