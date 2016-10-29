@@ -2,17 +2,14 @@ package controllers.v1;
 
 import com.google.gson.Gson;
 import com.google.inject.Inject;
-import http.actions.OAuth2Action;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Results;
-import play.mvc.With;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@With(OAuth2Action.class)
 public class BaseController extends Controller {
 
     @Inject

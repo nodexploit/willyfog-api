@@ -2,9 +2,12 @@ package controllers.v1;
 
 import com.google.inject.Inject;
 import daos.SubjectDao;
+import http.actions.OAuth2Action;
 import models.Subject;
 import play.mvc.Result;
+import play.mvc.With;
 
+@With(OAuth2Action.class)
 public class SubjectController extends BaseController {
 
     @Inject

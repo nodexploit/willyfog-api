@@ -10,6 +10,7 @@ import daos.UserRecognizeSubjectDao;
 import http.ErrorResponse;
 import http.SuccessReponse;
 import http.actions.CoordinatorAction;
+import http.actions.OAuth2Action;
 import models.Notification;
 import models.Role;
 import models.Subject;
@@ -21,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@With(OAuth2Action.class)
 public class UserController extends BaseController {
 
     @Inject

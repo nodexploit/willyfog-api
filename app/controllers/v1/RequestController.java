@@ -13,6 +13,7 @@ import daos.UserHasRoleDao;
 import daos.UserRecognizeSubjectDao;
 import http.ErrorResponse;
 import http.SuccessReponse;
+import http.actions.OAuth2Action;
 import http.actions.RecognizerAction;
 import models.Comment;
 import models.Notification;
@@ -29,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@With(OAuth2Action.class)
 public class RequestController extends BaseController {
 
     @Inject

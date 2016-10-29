@@ -2,12 +2,15 @@ package controllers.v1;
 
 import com.google.inject.Inject;
 import daos.CentreDao;
+import http.actions.OAuth2Action;
 import models.Degree;
 import models.User;
 import play.mvc.Result;
+import play.mvc.With;
 
 import java.util.List;
 
+@With(OAuth2Action.class)
 public class CentreController extends BaseController {
 
     @Inject

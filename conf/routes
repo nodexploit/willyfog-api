@@ -31,3 +31,5 @@ GET /api/v1/countries                   controllers.v1.CountryController.index
 GET /api/v1/countries/:id/cities        controllers.v1.CountryController.cities(id: Long)
 
 GET /api/v1/cities/:id/universities     controllers.v1.CityController.universities(id: Long)
+
+GET /api/v1/docs                        controllers.v1.DocController.swagger
