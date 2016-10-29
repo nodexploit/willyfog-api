@@ -29,22 +29,29 @@ securitySchemes:
       - oauth2
     /{userId}:
         get:
-            description: Retrieve User data for given user id.
+            description: Retrieves user basic data.
             responses:
               200:
                 body:
                   example: !include examples/get-users-id.json
         /requests:
           get:
-            description: Retrieves the requests that belong to the given user. Takes into account the different roles of the user.
+            description: Retrieves requests created. Takes into account the different roles of the user.
             responses:
               200:
                 body:
                   example: !include examples/get-users-id-requests.json
         /info:
           get:
-            description: Retrieves extra info for a given user.
+            description: Retrieves extra info.
             responses:
               200:
                 body:
                   example: !include examples/get-users-id-info.json
+        /notifications:
+          get:
+            description: Retrieves notifications not read yet.
+            responses:
+              200:
+                body:
+                  example: !include examples/get-users-id-notifications.json
