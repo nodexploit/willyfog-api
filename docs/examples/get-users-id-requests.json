@@ -1,0 +1,31 @@
+{
+  "pending": [
+    {
+      "subject_id": 2,
+      "subject_code": "B3Ht",
+      "subject_name": "Arte Moderno",
+      "id": 2,
+      "mobility_type": "Erasmus",
+      "category": "pending"
+    },
+    {
+      "subject_id": 4,
+      "subject_code": "jvdH",
+      "subject_name": "Estructuras de Datos",
+      "id": 3,
+      "mobility_type": "Erasmus",
+      "category": "pending"
+    }
+  ],
+  "closed": [
+    {
+      "subject_id": 1,
+      "subject_code": "T3Rp",
+      "subject_name": "Historia de España",
+      "id": 1,
+      "mobility_type": "Erasmus",
+      "category": "closed",
+      "status": "rejected"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "degree_name": "Grado en Ingeniería Informática",
+  "centre_name": "Escuela Técnica Superior de Ingeniería Informática",
+  "nif": "1111111H",
+  "university_name": "Universidad de Málaga",
+  "role_name": "student",
+  "degree_id": 3,
+  "university_id": 2,
+  "role_id": 4,
+  "surname": "Fog",
+  "gravatar": "https://www.gravatar.com/avatar/ff9ee0c165b45e2a70b98334289408a3",
+  "name": "Willy",
+  "centre_id": 2,
+  "email": "student@willy.com"
+}
