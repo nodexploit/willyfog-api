@@ -1,0 +1,70 @@
+swagger: '2.0'
+info:
+  title: Willyfog API
+  description: Willyfog RESTful API para equivalencias entre asignaturas de movilidad estudiantil.
+  license:
+    name: GPL 3.0
+    url: https://github.com/popokis/willyfog-api/blob/master/LICENSE
+  version: 1.0.0
+host: api.willyfog.com
+basePath: /v1
+schemes:
+  - http
+consumes:
+  - text/plain; charset=utf-8
+  - application/json
+produces:
+  - application/json
+paths:
+  /users/{user-id}:
+    parameters:
+      - $ref: '#/parameters/user-id'
+    get:
+      security:
+        - oauthorized: []
+      summary: Información básica de usuario.
+      description: |
+        Este endpoint devuelve información básica del usuario indicado por el path.
+      responses:
+        200:
+          description: Objeto usuario
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/User'
+definitions:
+  User:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      surname:
+        type: string
+      nif:
+        type: string
+      email:
+        type: string
+      updated_at:
+        type: string
+        format: date-time
+      created_at:
+        type: string
+        format: date-time
+parameters:
+  user-id:
+    name: user-id
+    in: path
+    description: The user identifier
+    type: number
+    required: true
+securityDefinitions:
+  oauthorized:
+    type: oauth2
+    description: Willyfog API usa OAuth2 como protocolo de autorización.
+    flow: implicit
+    authorizationUrl: http://openid.willyfog.com/authorize
+security:
+  - oauthorized: []
