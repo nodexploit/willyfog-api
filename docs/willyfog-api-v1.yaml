@@ -16,6 +16,34 @@ consumes:
 produces:
   - application/json
 paths:
+  /users/info:
+    parameters:
+      - name: accessToken
+        in: query
+        description: Access token de un usuario
+        type: string
+        required: true
+    get:
+      security:
+        - oauthorized: []
+      summary: Información básica de usuario.
+      description: |
+        Este endpoint devuelve información básica del usuario al que pertenece el *access token* dado.
+      responses:
+        200:
+          description: Objeto usuario
+          schema:
+              $ref: '#/definitions/User'
+          examples:
+            application/json: {
+               "id": 1,
+               "name": "Willy",
+               "surname": "Fog",
+               "nif": "1111111H",
+               "email": "student@willy.com",
+               "updated_at": "Oct 27, 2016 9:05:08 PM",
+               "created_at": "Oct 27, 2016 9:05:08 PM"
+            }
   /users/{user-id}:
     parameters:
       - $ref: '#/parameters/user-id'
@@ -40,6 +68,152 @@ paths:
                "updated_at": "Oct 27, 2016 9:05:08 PM",
                "created_at": "Oct 27, 2016 9:05:08 PM"
             }
+  /users/{user-id}/requests:
+      parameters:
+        - $ref: '#/parameters/user-id'
+      get:
+        security:
+          - oauthorized: []
+        summary: Peticiones del usuario dado
+        description: |
+          Este endpoint devuelve las peticiones del usuario dado dependiendo de su rol.
+          Las peticiones se catalagan en los grupos `pending` y `closed`. Dependiendo del
+          rol del usuario dado, las peticiones que aparecerán seguirán el siguiente criterio:
+
+          * *Estudiante*: Peticiones abiertas por el usuario.
+          * *Reconocedor*: Peticiones de asignaturas que modera este usuario.
+          * *Coordinador*: Peticiones de asignaturas que pertenezcan a grados de su centro.
+          * *Admin*: Un índice de todas las peticiones del sistema.
+        responses:
+          200:
+            description: Objeto índice de peticiones
+            schema:
+              $ref: '#/definitions/RequestIndex'
+            examples:
+              application/json: {
+                "pending": [
+                  {
+                    "subject_id": 2,
+                    "subject_code": "B3Ht",
+                    "subject_name": "Arte Moderno",
+                    "id": 2,
+                    "mobility_type": "Erasmus",
+                    "category": "pending"
+                  },
+                  {
+                    "subject_id": 4,
+                    "subject_code": "jvdH",
+                    "subject_name": "Estructuras de Datos",
+                    "id": 3,
+                    "mobility_type": "Erasmus",
+                    "category": "pending"
+                  },
+                  ...
+                ],
+                "closed": [
+                  {
+                    "subject_id": 1,
+                    "subject_code": "T3Rp",
+                    "subject_name": "Historia de España",
+                    "id": 1,
+                    "mobility_type": "Erasmus",
+                    "category": "closed",
+                    "status": "rejected"
+                  },
+                  ...
+                ]
+              }
+  /users/{user-id}/info:
+      parameters:
+        - $ref: '#/parameters/user-id'
+      get:
+        security:
+          - oauthorized: []
+        summary: Información avanzada de usuario
+        description: |
+          Este endpoint devuelve información extra para un usuario dado.
+        responses:
+          200:
+            description: Objeto informacion de usuario
+            schema:
+              $ref: '#/definitions/UserInfo'
+            examples:
+              application/json: {
+                "degree_name": "Grado en Ingeniería Informática",
+                "centre_name": "Escuela Técnica Superior de Ingeniería Informática",
+                "nif": "1111111H",
+                "university_name": "Universidad de Málaga",
+                "role_name": "student",
+                "degree_id": 3,
+                "university_id": 2,
+                "role_id": 4,
+                "surname": "Fog",
+                "gravatar": "https://www.gravatar.com/avatar/ff9ee0c165b45e2a70b98334289408a3",
+                "name": "Willy",
+                "centre_id": 2,
+                "email": "student@willy.com"
+              }
+  /users/{user-id}/notifications:
+      parameters:
+        - $ref: '#/parameters/user-id'
+      get:
+        security:
+          - oauthorized: []
+        summary: Notificaciones de un usuario
+        description: |
+          Este endpoint devuelve las notificaciones para un usuario dado.
+        responses:
+          200:
+            description: Array de notificaciones
+            schema:
+              type: array
+              items:
+                $ref: '#/definitions/Notification'
+            examples:
+              application/json: [
+                {
+                  "content": "You have a new message!",
+                  "created_at": "Oct 29, 2016 12:20:21 PM"
+                },
+                ...
+              ]
+  /users/{recognizer-id}/subjects:
+      parameters:
+        - $ref: '#/parameters/user-id'
+      get:
+        security:
+          - oauthorized: []
+        summary: Asignaturas de un reconcoedor
+        description: |
+          Este endpoint devuelve las asignaturas que modera un Reconocedor.
+        responses:
+          200:
+            description: Array de asignaturas
+            schema:
+              type: array
+              items:
+                $ref: '#/definitions/Subject'
+            examples:
+              application/json: [
+                {
+                  "degree_id": 1,
+                  "name": "Historia de España",
+                  "code": "T3Rp",
+                  "credits": 6,
+                  "updated_at": "Oct 27, 2016 9:05:07 PM",
+                  "id": 1,
+                  "created_at": "Oct 27, 2016 9:05:07 PM"
+                },
+                {
+                  "degree_id": 2,
+                  "name": "Arte Moderno",
+                  "code": "B3Ht",
+                  "credits": 6,
+                  "updated_at": "Oct 27, 2016 9:05:07 PM",
+                  "id": 2,
+                  "created_at": "Oct 27, 2016 9:05:07 PM"
+                }
+              ]
 definitions:
   User:
     type: object
@@ -60,6 +234,114 @@ definitions:
       created_at:
         type: string
         format: date-time
+  UserInfo:
+    type: object
+    properties:
+      role_id:
+        type: integer
+      role_name:
+        type: string
+      degree_id:
+        type: integer
+      degree_name:
+        type: string
+      centre_id:
+        type: integer
+      centre_name:
+        type: string
+      university_id:
+        type: integer
+      university_name:
+        type: string
+      name:
+        type: string
+      surname:
+        type: string
+      nif:
+        type: string
+      email:
+        type: string
+      gravatar:
+        type: string
+  PendingRequest:
+    type: Object
+    properties:
+      id:
+        type: integer
+      subject_id:
+        type: integer
+      subject_code:
+        type: string
+      subject_name:
+        type: string
+      mobility_type:
+        type: string
+      category:
+        type: string
+  ClosedRequest:
+    type: Object
+    properties:
+      id:
+        type: integer
+      subject_id:
+        type: integer
+      subject_code:
+        type: string
+      subject_name:
+        type: string
+      mobility_type:
+        type: string
+      category:
+        type: string
+      status:
+        type: string
+  RequestIndex:
+      type: object
+      properties:
+        pending:
+          type: array
+          items:
+            $ref: '#/definitions/PendingRequest'
+        closed:
+          type: array
+          items:
+            $ref: '#/definitions/ClosedRequest'
+  Notification:
+    type: Object
+    properties:
+      content:
+        type: string
+      created_at:
+        type: string
+        format: date-time
+  Subject:
+    type: Object
+    properties:
+      id:
+        type: integer
+      degree_id:
+        type: integer
+      name:
+        type: string
+      code:
+        type: string
+      credits:
+        type: integer
+      updated_at:
+        type: string
+        format: date-time
+      created_at:
+        type: string
+        format: date-time
+  ErrorResponse:
+    type: Object
+    properties:
+      status:
+        type: string
+      messages:
+        type: array
+        items:
+          type: string
 parameters:
   user-id:
     name: user-id
