@@ -577,6 +577,69 @@ paths:
                   "id": 11
                 }
               ]
+  /countries:
+    get:
+      security:
+        - oauthorized: []
+      tags:
+        - Countries
+      summary: Índice de países
+      description: |
+        Este endpoint devuelve un índice de países.
+      responses:
+        200:
+          description: Array de países
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Country'
+          examples:
+            application/json: [
+                {
+                  "name": "Spain",
+                  "code": "ES",
+                  "id": 202
+                }
+              ]
+  /countries/{country-id}/cities:
+    get:
+      security:
+        - oauthorized: []
+      tags:
+        - Countries
+      summary: Índice de cirudades dado un país
+      description: |
+        Este endpoint devuelve un índice de ciudades dado un país.
+      responses:
+        200:
+          description: Array de ciudades
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/City'
+          examples:
+            application/json: [
+                {
+                  "name": "Madrid",
+                  "id": 1
+                },
+                {
+                  "name": "Málaga",
+                  "id": 2
+                },
+                {
+                  "name": "Barcelona",
+                  "id": 3
+                },
+                {
+                  "name": "Valencia",
+                  "id": 4
+                },
+                {
+                  "name": "Sevilla",
+                  "id": 5
+                }
+              ]
 definitions:
   User:
     type: object
@@ -776,6 +839,22 @@ definitions:
         type: integer
       name:
         type: string
+  Country:
+    type: Object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      code:
+        type: string
+  City:
+    type: Object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
 parameters:
   user-id:
     name: user-id
@@ -805,6 +884,12 @@ parameters:
     name: degree-id
     in: path
     description: Identificador de grado
+    type: number
+    required: true
+  country-id:
+    name: country-id
+    in: path
+    description: Identificador de país
     type: number
     required: true
 securityDefinitions:
