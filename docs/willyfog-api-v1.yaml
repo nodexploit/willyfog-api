@@ -676,6 +676,24 @@ paths:
           description: Fichero Swagger
           schema:
             type: file
+  /requests/{request-id}:
+    get:
+      security:
+        - oauthorized: []
+      tags:
+        - Requests
+      produces:
+        - application/x-yaml
+      summary: Información sobre la petición dada.
+      description: |
+        Retorna la información relacionada a una petición pasada por query del usuario registrado. Tanto la información
+        de la asignatura de origen como la información de las asignaturas (máximo tres) de destino.
+      responses:
+        200:
+          description: Asignatura origen y array asignaturas destino
+          schema:
+            type: array
+
 definitions:
   User:
     type: object
@@ -769,7 +787,7 @@ definitions:
           - approved
           - rejected
   RequestIndex:
-      type: object
+      type: Object
       properties:
         pending:
           type: array
@@ -891,6 +909,124 @@ definitions:
         type: integer
       name:
         type: string
+  Request:
+    type: Object
+    properties:
+      id:
+        type: integer
+      student_id:
+        type: integer
+      origin_subject_id:
+        type: integer
+      mobility_type_id:
+        type: integer
+      destination_subjects:
+        type: array
+        items:
+          $ref: '#/definitions/RequestDestinationSubject'
+      created_at:
+        type: string
+        format: date-time
+      updated_at:
+        type: string
+        format: date-time
+      deleted_at:
+        type: string
+        format: date-time
+  RequestDestinationSubject:
+    type: Object
+    properties:
+      id:
+        type: integer
+      request_id:
+        type: integer
+      subject_id:
+        type: integer
+      subject_name:
+        type: string
+      subject_code:
+        type: string
+      subject_credits:
+        type: integer
+      centre_name:
+        type: string
+      country_name:
+        type: string
+      city_name:
+        type: string
+      university_name:
+        type: string
+      degree_name:
+        type: string
+      uri:
+        type: string
+      attachment:
+        type: string
+      created_at:
+        type: string
+        format: date-time
+      updated_at:
+        type: string
+        format: date-time
+      deleted_at:
+        type: string
+        format: date-time
+  RequestDestinations:
+    type: Object
+    properties:
+      subject_id:
+        type: integer
+      subject_credits:
+        type: integer
+      subject_code:
+        type: string
+      country:
+        type: string
+      city:
+        type: string
+      university:
+        type: string
+      subject_name:
+        type: string
+      degree:
+        type: string
+      centre:
+        type: string
+      uri:
+        type: string
+  RequestFind:
+    type: Object
+    properties:
+      id:
+        type: integer
+      student_id:
+        type: integer
+      subject_id:
+        type: integer
+      student_name:
+        type: string
+      student_surname:
+        type: string
+      student_email:
+        type: string
+      subject_code:
+        type: string
+      subject_name:
+        type: string
+      subject_credits:
+        type: integer
+      mobility_type_id:
+        type: integer
+      mobility_type:
+        type: string
+      category:
+        type: string
+      status:
+        type: string
+      destination_subjects:
+        type: array
+        items:
+          $ref: '#/definitions/RequestDestinations'
 parameters:
   user-id:
     name: user-id
@@ -934,6 +1070,12 @@ parameters:
     description: Identificador de ciudad
     type: number
     required: true
+  request-id:
+    name: request-id
+    in: path
+    description: Identificador de petición
+    type: number
+    required: true
 securityDefinitions:
   oauthorized:
     type: oauth2
@@ -961,3 +1103,5 @@ tags:
     description: Ciudades en el sistema
   - name: Docs
     description: Todo lo relacionado con la documentación de la aplicación
+  - name: Requests
+    description: Acciones sobre las peticiones del sistema
