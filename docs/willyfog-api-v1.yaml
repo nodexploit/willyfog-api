@@ -248,10 +248,9 @@ paths:
         - name: subject_ids
           in: formData
           description: Array de ids de asignatura en formato JSON
-          schema:
-            type: array
-            items:
-              type: integer
+          type: array
+          items:
+            type: integer
       responses:
         200:
           description: Exito en operación
