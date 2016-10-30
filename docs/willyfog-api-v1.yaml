@@ -607,7 +607,7 @@ paths:
         - oauthorized: []
       tags:
         - Countries
-      summary: Índice de cirudades dado un país
+      summary: Índice de ciudades dado un país
       description: |
         Este endpoint devuelve un índice de ciudades dado un país.
       responses:
@@ -640,6 +640,44 @@ paths:
                   "id": 5
                 }
               ]
+  /cities/{city-id}/universities:
+    get:
+      security:
+        - oauthorized: []
+      tags:
+        - Cities
+      summary: Índice de universidades dada una ciudad
+      description: |
+        Este endpoint devuelve un índice de universidades dada una ciudad.
+      responses:
+        200:
+          description: Array de universidades
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/University'
+          examples:
+            application/json: [
+                {
+                  "name": "Universidad Complutense de Madrid",
+                  "code": "010",
+                  "id": 1
+                }
+              ]
+  /docs:
+    get:
+      tags:
+        - Docs
+      produces:
+        - application/x-yaml
+      summary: Fichero YAML Swagger
+      description: |
+        Este endpoint devuelve un fichero Swagger YAML para Swagger UI.
+      responses:
+        200:
+          description: Fichero Swagger
+          schema:
+            type: file
 definitions:
   User:
     type: object
@@ -892,6 +930,12 @@ parameters:
     description: Identificador de país
     type: number
     required: true
+  city-id:
+    name: city-id
+    in: path
+    description: Identificador de ciudad
+    type: number
+    required: true
 securityDefinitions:
   oauthorized:
     type: oauth2
@@ -904,15 +948,15 @@ tags:
   - name: Users
     description: Todo los relacionados con los usuarios del sistema
   - name: Subjects
-    description: Todo lo relacionado con la gestion de asignaturas en el sistema
+    description: Todo lo relacionado con la gestión de asignaturas en el sistema
   - name: Equivalences
-    description: Gestión d equivalencias creadas en el sistema
+    description: Gestión de equivalencias creadas en el sistema
   - name: Universities
     description: Universidades en el sistema
   - name: Centres
     description: Gestión de los centros en el sistema
   - name: Degrees
-    description: Todo lo relacionado con la gestion de grados en el sistema
+    description: Todo lo relacionado con la gestión de grados en el sistema
   - name: Countries
     description: Países en el sistema
   - name: Cities
