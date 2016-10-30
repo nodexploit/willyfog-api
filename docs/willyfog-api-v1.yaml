@@ -396,8 +396,7 @@ paths:
         - name: subjectName
           in: query
           description: Query para la búsqueda en equivalencias
-          schema:
-            type: string
+          type: string
       responses:
         200:
           description: Array de equivalencias
