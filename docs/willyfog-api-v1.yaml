@@ -26,6 +26,8 @@ paths:
     get:
       security:
         - oauthorized: []
+      tags:
+        - Users
       summary: Información básica de usuario.
       description: |
         Este endpoint devuelve información básica del usuario al que pertenece el *access token* dado.
@@ -50,6 +52,8 @@ paths:
     get:
       security:
         - oauthorized: []
+      tags:
+        - Users
       summary: Información básica de usuario.
       description: |
         Este endpoint devuelve información básica del usuario indicado por el path.
@@ -74,6 +78,8 @@ paths:
       get:
         security:
           - oauthorized: []
+        tags:
+          - Users
         summary: Peticiones del usuario dado
         description: |
           Este endpoint devuelve las peticiones del usuario dado dependiendo de su rol.
@@ -129,6 +135,8 @@ paths:
       get:
         security:
           - oauthorized: []
+        tags:
+          - Users
         summary: Información avanzada de usuario
         description: |
           Este endpoint devuelve información extra para un usuario dado.
@@ -159,6 +167,8 @@ paths:
       get:
         security:
           - oauthorized: []
+        tags:
+          - Users
         summary: Notificaciones de un usuario
         description: |
           Este endpoint devuelve las notificaciones para un usuario dado.
@@ -183,6 +193,8 @@ paths:
       get:
         security:
           - oauthorized: []
+        tags:
+          - Users
         summary: Asignaturas de un reconcoedor
         description: |
           Este endpoint devuelve las asignaturas que modera un Reconocedor.
@@ -214,6 +226,67 @@ paths:
                   "created_at": "Oct 27, 2016 9:05:07 PM"
                 }
               ]
+          400:
+            description: El id de usuario no es un reconocedor
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/ErrorResponse'
+            examples:
+              application/json: {
+                  "status": "Given user is not a recognizer",
+                  "messages": []
+                }
+      post:
+        security:
+          - oauthorized: []
+        tags:
+          - Users
+        summary: Añade asignaturas a un reconocedor
+        description: |
+          Este endpoint añade una asignatura a un Reconocedor. Necesita que el usuario
+          portador del access token sea `coordinador`.
+        parameters:
+          - name: subject_ids
+            in: formData
+            description: Array de ids de asignatura en formato JSON
+            schema:
+              type: array
+              items:
+                type: integer
+        responses:
+          200:
+            description: Exito en operación
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/SuccessResponse'
+            examples:
+              application/json: {
+                  "status": "true"
+                }
+          400:
+            description: El id de usuario no es un reconocedor
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/ErrorResponse'
+            examples:
+              application/json: {
+                  "status": "Given user is not a recognizer",
+                  "messages": []
+                }
+          401:
+            description: El access token no tiene los privilegios suficientes
+            schema:
+              type: object
+              items:
+                $ref: '#/definitions/ErrorResponse'
+            examples:
+              application/json: {
+                  "status": "Not authorized",
+                  "messages": []
+                }
 definitions:
   User:
     type: object
@@ -241,6 +314,11 @@ definitions:
         type: integer
       role_name:
         type: string
+        enum:
+          - student
+          - recognizer
+          - coordinator
+          - admin
       degree_id:
         type: integer
       degree_name:
@@ -293,8 +371,14 @@ definitions:
         type: string
       category:
         type: string
+        enum:
+          - pending
+          - closed
       status:
         type: string
+        enum:
+          - approved
+          - rejected
   RequestIndex:
       type: object
       properties:
@@ -342,6 +426,13 @@ definitions:
         type: array
         items:
           type: string
+  SuccessResponse:
+    type: Object
+    properties:
+      status:
+        type: string
+      data:
+        type: object
 parameters:
   user-id:
     name: user-id
@@ -357,3 +448,6 @@ securityDefinitions:
     authorizationUrl: http://openid.willyfog.com/authorize
 security:
   - oauthorized: []
+tags:
+  - name: Users
+    description: Todo los relacionados con los usuarios del sistema

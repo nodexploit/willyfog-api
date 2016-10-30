@@ -12,6 +12,8 @@ import play.mvc.Results;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
+import static play.mvc.Http.HeaderNames.CONTENT_TYPE;
+
 public class OAuth2Action extends play.mvc.Action.Simple {
 
     @Inject
@@ -44,6 +46,7 @@ public class OAuth2Action extends play.mvc.Action.Simple {
         } else {
             result = CompletableFuture.completedFuture(
                     Results.unauthorized(gson.toJson(new ErrorResponse("Not authorized")))
+                            .withHeader(CONTENT_TYPE, "application/json")
             );
         }
 

@@ -84,9 +84,9 @@ public class UserController extends BaseController {
         Long userRole = userHasRoleDao.userRole(userId);
 
         if (Role.RECOG != userRole) {
-            return ok(gson.toJson(
+            return badRequest(gson.toJson(
                     new ErrorResponse("Given user is not a recognizer"))
-            );
+            ).withHeader(CONTENT_TYPE, "application/json");
         }
 
         List<Subject> subjects = subjectDao.recognizerSubjects(userId);
@@ -99,9 +99,9 @@ public class UserController extends BaseController {
         Long userRole = userHasRoleDao.userRole(userId);
 
         if (Role.RECOG != userRole) {
-            return ok(gson.toJson(
+            return badRequest(gson.toJson(
                     new ErrorResponse("Given user is not a recognizer"))
-            );
+            ).withHeader(CONTENT_TYPE, "application/json");
         }
 
         userRecognizeSubjectDao.deleteSubject(userId, subjectId);
@@ -114,9 +114,9 @@ public class UserController extends BaseController {
         Long userRole = userHasRoleDao.userRole(recognizerId);
 
         if (Role.RECOG != userRole) {
-            return ok(gson.toJson(
+            return badRequest(gson.toJson(
                     new ErrorResponse("Given user is not a recognizer"))
-            );
+            ).withHeader(CONTENT_TYPE, "application/json");
         }
 
         List<Integer> subjectIds = gson.fromJson(
