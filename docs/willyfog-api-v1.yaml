@@ -437,6 +437,59 @@ paths:
                   "equivalent_id": 12
                 }
               ]
+  /universities:
+    get:
+      security:
+        - oauthorized: []
+      tags:
+        - Universities
+      summary: Índice de universidades
+      description: |
+        Este endpoint devuelve un índice de universidades en el sistema.
+      responses:
+        200:
+          description: Array de universidades
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/University'
+          examples:
+            application/json: [
+                {
+                  "name": "Universidad Complutense de Madrid",
+                  "code": "010",
+                  "id": 1
+                },
+                {
+                  "name": "Universidad de Málaga",
+                  "code": "011",
+                  "id": 2
+                }
+              ]
+  /universities/{university-id}/centres:
+    get:
+      security:
+        - oauthorized: []
+      tags:
+        - Universities
+      summary: Índice de centros dada una universidad
+      description: |
+        Este endpoint devuelve un índice de centros para una univerisdad dada.
+      responses:
+        200:
+          description: Array de centros
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Centre'
+          examples:
+            application/json: [
+                {
+                  "name": "Facultad de Bellas Artes",
+                  "code": "28027126",
+                  "id": 1
+                }
+              ]
 definitions:
   User:
     type: object
@@ -611,6 +664,24 @@ definitions:
         type: string
       data:
         type: object
+  University:
+    type: Object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      code:
+        type: string
+  Centre:
+    type: Object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      code:
+        type: string
 parameters:
   user-id:
     name: user-id
@@ -622,6 +693,12 @@ parameters:
     name: subject-id
     in: path
     description: Identificador de asignatura
+    type: number
+    required: true
+  university-id:
+    name: university-id
+    in: path
+    description: Identificador de universidad
     type: number
     required: true
 securityDefinitions:
@@ -640,7 +717,7 @@ tags:
   - name: Equivalences
     description: Gestión d equivalencias creadas en el sistema
   - name: Universities
-    description: Universiades en el sistema
+    description: Universidades en el sistema
   - name: Centres
     description: Gestión de los centros en el sistema
   - name: Degrees
