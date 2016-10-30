@@ -73,220 +73,265 @@ paths:
                "created_at": "Oct 27, 2016 9:05:08 PM"
             }
   /users/{user-id}/requests:
-      parameters:
-        - $ref: '#/parameters/user-id'
-      get:
-        security:
-          - oauthorized: []
-        tags:
-          - Users
-        summary: Peticiones del usuario dado
-        description: |
-          Este endpoint devuelve las peticiones del usuario dado dependiendo de su rol.
-          Las peticiones se catalagan en los grupos `pending` y `closed`. Dependiendo del
-          rol del usuario dado, las peticiones que aparecerán seguirán el siguiente criterio:
+    parameters:
+      - $ref: '#/parameters/user-id'
+    get:
+      security:
+        - oauthorized: []
+      tags:
+        - Users
+      summary: Peticiones del usuario dado
+      description: |
+        Este endpoint devuelve las peticiones del usuario dado dependiendo de su rol.
+        Las peticiones se catalagan en los grupos `pending` y `closed`. Dependiendo del
+        rol del usuario dado, las peticiones que aparecerán seguirán el siguiente criterio:
 
-          * *Estudiante*: Peticiones abiertas por el usuario.
-          * *Reconocedor*: Peticiones de asignaturas que modera este usuario.
-          * *Coordinador*: Peticiones de asignaturas que pertenezcan a grados de su centro.
-          * *Admin*: Un índice de todas las peticiones del sistema.
-        responses:
-          200:
-            description: Objeto índice de peticiones
-            schema:
-              $ref: '#/definitions/RequestIndex'
-            examples:
-              application/json: {
-                "pending": [
-                  {
-                    "subject_id": 2,
-                    "subject_code": "B3Ht",
-                    "subject_name": "Arte Moderno",
-                    "id": 2,
-                    "mobility_type": "Erasmus",
-                    "category": "pending"
-                  },
-                  {
-                    "subject_id": 4,
-                    "subject_code": "jvdH",
-                    "subject_name": "Estructuras de Datos",
-                    "id": 3,
-                    "mobility_type": "Erasmus",
-                    "category": "pending"
-                  },
-                  ...
-                ],
-                "closed": [
-                  {
-                    "subject_id": 1,
-                    "subject_code": "T3Rp",
-                    "subject_name": "Historia de España",
-                    "id": 1,
-                    "mobility_type": "Erasmus",
-                    "category": "closed",
-                    "status": "rejected"
-                  },
-                  ...
-                ]
-              }
-  /users/{user-id}/info:
-      parameters:
-        - $ref: '#/parameters/user-id'
-      get:
-        security:
-          - oauthorized: []
-        tags:
-          - Users
-        summary: Información avanzada de usuario
-        description: |
-          Este endpoint devuelve información extra para un usuario dado.
-        responses:
-          200:
-            description: Objeto informacion de usuario
-            schema:
-              $ref: '#/definitions/UserInfo'
-            examples:
-              application/json: {
-                "degree_name": "Grado en Ingeniería Informática",
-                "centre_name": "Escuela Técnica Superior de Ingeniería Informática",
-                "nif": "1111111H",
-                "university_name": "Universidad de Málaga",
-                "role_name": "student",
-                "degree_id": 3,
-                "university_id": 2,
-                "role_id": 4,
-                "surname": "Fog",
-                "gravatar": "https://www.gravatar.com/avatar/ff9ee0c165b45e2a70b98334289408a3",
-                "name": "Willy",
-                "centre_id": 2,
-                "email": "student@willy.com"
-              }
-  /users/{user-id}/notifications:
-      parameters:
-        - $ref: '#/parameters/user-id'
-      get:
-        security:
-          - oauthorized: []
-        tags:
-          - Users
-        summary: Notificaciones de un usuario
-        description: |
-          Este endpoint devuelve las notificaciones para un usuario dado.
-        responses:
-          200:
-            description: Array de notificaciones
-            schema:
-              type: array
-              items:
-                $ref: '#/definitions/Notification'
-            examples:
-              application/json: [
+        * *Estudiante*: Peticiones abiertas por el usuario.
+        * *Reconocedor*: Peticiones de asignaturas que modera este usuario.
+        * *Coordinador*: Peticiones de asignaturas que pertenezcan a grados de su centro.
+        * *Admin*: Un índice de todas las peticiones del sistema.
+      responses:
+        200:
+          description: Objeto índice de peticiones
+          schema:
+            $ref: '#/definitions/RequestIndex'
+          examples:
+            application/json: {
+              "pending": [
                 {
-                  "content": "You have a new message!",
-                  "created_at": "Oct 29, 2016 12:20:21 PM"
+                  "subject_id": 2,
+                  "subject_code": "B3Ht",
+                  "subject_name": "Arte Moderno",
+                  "id": 2,
+                  "mobility_type": "Erasmus",
+                  "category": "pending"
+                },
+                {
+                  "subject_id": 4,
+                  "subject_code": "jvdH",
+                  "subject_name": "Estructuras de Datos",
+                  "id": 3,
+                  "mobility_type": "Erasmus",
+                  "category": "pending"
+                },
+                ...
+              ],
+              "closed": [
+                {
+                  "subject_id": 1,
+                  "subject_code": "T3Rp",
+                  "subject_name": "Historia de España",
+                  "id": 1,
+                  "mobility_type": "Erasmus",
+                  "category": "closed",
+                  "status": "rejected"
                 },
                 ...
               ]
+            }
+  /users/{user-id}/info:
+    parameters:
+      - $ref: '#/parameters/user-id'
+    get:
+      security:
+        - oauthorized: []
+      tags:
+        - Users
+      summary: Información avanzada de usuario
+      description: |
+        Este endpoint devuelve información extra para un usuario dado.
+      responses:
+        200:
+          description: Objeto informacion de usuario
+          schema:
+            $ref: '#/definitions/UserInfo'
+          examples:
+            application/json: {
+              "degree_name": "Grado en Ingeniería Informática",
+              "centre_name": "Escuela Técnica Superior de Ingeniería Informática",
+              "nif": "1111111H",
+              "university_name": "Universidad de Málaga",
+              "role_name": "student",
+              "degree_id": 3,
+              "university_id": 2,
+              "role_id": 4,
+              "surname": "Fog",
+              "gravatar": "https://www.gravatar.com/avatar/ff9ee0c165b45e2a70b98334289408a3",
+              "name": "Willy",
+              "centre_id": 2,
+              "email": "student@willy.com"
+            }
+  /users/{user-id}/notifications:
+    parameters:
+      - $ref: '#/parameters/user-id'
+    get:
+      security:
+        - oauthorized: []
+      tags:
+        - Users
+      summary: Notificaciones de un usuario
+      description: |
+        Este endpoint devuelve las notificaciones para un usuario dado.
+      responses:
+        200:
+          description: Array de notificaciones
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Notification'
+          examples:
+            application/json: [
+              {
+                "content": "You have a new message!",
+                "created_at": "Oct 29, 2016 12:20:21 PM"
+              },
+              ...
+            ]
   /users/{recognizer-id}/subjects:
+    parameters:
+      - $ref: '#/parameters/user-id'
+    get:
+      security:
+        - oauthorized: []
+      tags:
+        - Users
+      summary: Asignaturas de un reconcoedor
+      description: |
+        Este endpoint devuelve las asignaturas que modera un Reconocedor.
+      responses:
+        200:
+          description: Array de asignaturas
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Subject'
+          examples:
+            application/json: [
+              {
+                "degree_id": 1,
+                "name": "Historia de España",
+                "code": "T3Rp",
+                "credits": 6,
+                "updated_at": "Oct 27, 2016 9:05:07 PM",
+                "id": 1,
+                "created_at": "Oct 27, 2016 9:05:07 PM"
+              },
+              {
+                "degree_id": 2,
+                "name": "Arte Moderno",
+                "code": "B3Ht",
+                "credits": 6,
+                "updated_at": "Oct 27, 2016 9:05:07 PM",
+                "id": 2,
+                "created_at": "Oct 27, 2016 9:05:07 PM"
+              }
+            ]
+        400:
+          description: El id de usuario no es un reconocedor
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/ErrorResponse'
+          examples:
+            application/json: {
+                "status": "Given user is not a recognizer",
+                "messages": []
+              }
+    post:
+      security:
+        - oauthorized: []
+      tags:
+        - Users
+      summary: Añade asignaturas a un reconocedor
+      description: |
+        Este endpoint añade una asignatura a un Reconocedor. Necesita que el usuario
+        portador del access token sea `coordinador`.
       parameters:
-        - $ref: '#/parameters/user-id'
-      get:
-        security:
-          - oauthorized: []
-        tags:
-          - Users
-        summary: Asignaturas de un reconcoedor
-        description: |
-          Este endpoint devuelve las asignaturas que modera un Reconocedor.
-        responses:
-          200:
-            description: Array de asignaturas
-            schema:
-              type: array
-              items:
-                $ref: '#/definitions/Subject'
-            examples:
-              application/json: [
-                {
-                  "degree_id": 1,
-                  "name": "Historia de España",
-                  "code": "T3Rp",
-                  "credits": 6,
-                  "updated_at": "Oct 27, 2016 9:05:07 PM",
-                  "id": 1,
-                  "created_at": "Oct 27, 2016 9:05:07 PM"
-                },
-                {
-                  "degree_id": 2,
-                  "name": "Arte Moderno",
-                  "code": "B3Ht",
-                  "credits": 6,
-                  "updated_at": "Oct 27, 2016 9:05:07 PM",
-                  "id": 2,
-                  "created_at": "Oct 27, 2016 9:05:07 PM"
-                }
-              ]
-          400:
-            description: El id de usuario no es un reconocedor
-            schema:
-              type: object
-              items:
-                $ref: '#/definitions/ErrorResponse'
-            examples:
-              application/json: {
-                  "status": "Given user is not a recognizer",
-                  "messages": []
-                }
-      post:
-        security:
-          - oauthorized: []
-        tags:
-          - Users
-        summary: Añade asignaturas a un reconocedor
-        description: |
-          Este endpoint añade una asignatura a un Reconocedor. Necesita que el usuario
-          portador del access token sea `coordinador`.
-        parameters:
-          - name: subject_ids
-            in: formData
-            description: Array de ids de asignatura en formato JSON
-            schema:
-              type: array
-              items:
-                type: integer
-        responses:
-          200:
-            description: Exito en operación
-            schema:
-              type: object
-              items:
-                $ref: '#/definitions/SuccessResponse'
-            examples:
-              application/json: {
-                  "status": "true"
-                }
-          400:
-            description: El id de usuario no es un reconocedor
-            schema:
-              type: object
-              items:
-                $ref: '#/definitions/ErrorResponse'
-            examples:
-              application/json: {
-                  "status": "Given user is not a recognizer",
-                  "messages": []
-                }
-          401:
-            description: El access token no tiene los privilegios suficientes
-            schema:
-              type: object
-              items:
-                $ref: '#/definitions/ErrorResponse'
-            examples:
-              application/json: {
-                  "status": "Not authorized",
-                  "messages": []
-                }
+        - name: subject_ids
+          in: formData
+          description: Array de ids de asignatura en formato JSON
+          schema:
+            type: array
+            items:
+              type: integer
+      responses:
+        200:
+          description: Exito en operación
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/SuccessResponse'
+          examples:
+            application/json: {
+                "status": "true"
+              }
+        400:
+          description: El id de usuario no es un reconocedor
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/ErrorResponse'
+          examples:
+            application/json: {
+                "status": "Given user is not a recognizer",
+                "messages": []
+              }
+        401:
+          description: El access token no tiene los privilegios suficientes
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/ErrorResponse'
+          examples:
+            application/json: {
+                "status": "Not authorized",
+                "messages": []
+              }
+  /users/{recognizer-id}/subjects/{subject-id}:
+    parameters:
+      - $ref: '#/parameters/user-id'
+      - $ref: '#/parameters/subject-id'
+    delete:
+      security:
+        - oauthorized: []
+      tags:
+        - Users
+      summary: Elimina la asignatura de un reconocedor
+      description: |
+        Este endpoint elimina una asignatura que modera un Reconocedor.
+      responses:
+        200:
+          description: Exito en operación
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/SuccessResponse'
+          examples:
+            application/json: {
+                "status": "true"
+              }
+        400:
+          description: El id de usuario no es un reconocedor
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/ErrorResponse'
+          examples:
+            application/json: {
+                "status": "Given user is not a recognizer",
+                "messages": []
+              }
+        401:
+          description: El access token no tiene los privilegios suficientes
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/ErrorResponse'
+          examples:
+            application/json: {
+                "status": "Not authorized",
+                "messages": []
+              }
 definitions:
   User:
     type: object
@@ -437,7 +482,13 @@ parameters:
   user-id:
     name: user-id
     in: path
-    description: The user identifier
+    description:  Identificador de usuario
+    type: number
+    required: true
+  subject-id:
+    name: subject-id
+    in: path
+    description: Identificador de asignatura
     type: number
     required: true
 securityDefinitions:

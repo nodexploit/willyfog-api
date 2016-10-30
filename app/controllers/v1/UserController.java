@@ -95,7 +95,7 @@ public class UserController extends BaseController {
     }
 
     @With(CoordinatorAction.class)
-    public Result recognizerSubject(Long userId, Long subjectId) {
+    public Result deleteRecognizerSubject(Long userId, Long subjectId) {
         Long userRole = userHasRoleDao.userRole(userId);
 
         if (Role.RECOG != userRole) {
