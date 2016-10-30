@@ -692,7 +692,48 @@ paths:
         200:
           description: Asignatura origen y array asignaturas destino
           schema:
-            type: array
+            $ref: '#/definitions/RequestFind'
+          examples:
+            application/json: {
+                "subject_id": 2,
+                "subject_credits": 6,
+                "subject_code": "B3Ht",
+                "student_surname": "Fog",
+                "student_id": 1,
+                "created_at": "Oct 27, 2016 11:05:25 PM",
+                "student_name": "Willy",
+                "mobility_type_id": 1,
+                "destination_subjects": [
+                  {
+                    "subject_id": 3,
+                    "subject_credits": 6,
+                    "subject_code": "Q2RO",
+                    "country": "Spain",
+                    "city": "Málaga",
+                    "university": "Universidad de Málaga",
+                    "subject_name": "Cálculo",
+                    "degree": "Grado en Ingeniería Informática",
+                    "centre": "Escuela Técnica Superior de Ingeniería Informática"
+                  },
+                  {
+                    "subject_id": 4,
+                    "subject_credits": 6,
+                    "subject_code": "jvdH",
+                    "country": "Spain",
+                    "city": "Málaga",
+                    "university": "Universidad de Málaga",
+                    "subject_name": "Estructuras de Datos",
+                    "degree": "Grado en Ingeniería del Software",
+                    "centre": "Escuela Técnica Superior de Ingeniería Informática"
+                  }
+                ],
+                "subject_name": "Arte Moderno",
+                "student_email": "nvortega92@gmail.com",
+                "id": 2,
+                "mobility_type": "Erasmus",
+                "category": "closed",
+                "status": "rejected"
+              }
 
 definitions:
   User:
