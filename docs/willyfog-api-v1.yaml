@@ -546,6 +546,37 @@ paths:
                   "created_at": "Oct 27, 2016 9:05:08 PM"
                 }
               ]
+  /degrees/{degree-id}/subjects:
+    get:
+      security:
+        - oauthorized: []
+      tags:
+        - Degrees
+      summary: Índice de asignaturas para un grado dado
+      description: |
+        Este endpoint devuelve un índice de asignaturas para un grado dado.
+      responses:
+        200:
+          description: Array de asignaturas
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Subject'
+          examples:
+            application/json: [
+                {
+                  "name": "Historia de España",
+                  "code": "T3Rp",
+                  "credits": 6,
+                  "id": 1
+                },
+                {
+                  "name": "Dibujo Técnico",
+                  "code": "JZs8",
+                  "credits": 6,
+                  "id": 11
+                }
+              ]
 definitions:
   User:
     type: object
@@ -768,6 +799,12 @@ parameters:
     name: centre-id
     in: path
     description: Identificador de centro
+    type: number
+    required: true
+  degree-id:
+    name: degree-id
+    in: path
+    description: Identificador de grado
     type: number
     required: true
 securityDefinitions:
