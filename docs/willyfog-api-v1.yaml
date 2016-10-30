@@ -195,7 +195,7 @@ paths:
         - oauthorized: []
       tags:
         - Users
-      summary: Asignaturas de un reconcoedor
+      summary: Asignaturas de un reconocedor
       description: |
         Este endpoint devuelve las asignaturas que modera un Reconocedor.
       responses:
@@ -204,7 +204,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/Subject'
+              $ref: '#/definitions/RecognizerSubject'
           examples:
             application/json: [
               {
@@ -229,9 +229,7 @@ paths:
         400:
           description: El id de usuario no es un reconocedor
           schema:
-            type: object
-            items:
-              $ref: '#/definitions/ErrorResponse'
+            $ref: '#/definitions/ErrorResponse'
           examples:
             application/json: {
                 "status": "Given user is not a recognizer",
@@ -258,9 +256,7 @@ paths:
         200:
           description: Exito en operación
           schema:
-            type: object
-            items:
-              $ref: '#/definitions/SuccessResponse'
+            $ref: '#/definitions/SuccessResponse'
           examples:
             application/json: {
                 "status": "true"
@@ -268,9 +264,7 @@ paths:
         400:
           description: El id de usuario no es un reconocedor
           schema:
-            type: object
-            items:
-              $ref: '#/definitions/ErrorResponse'
+            $ref: '#/definitions/ErrorResponse'
           examples:
             application/json: {
                 "status": "Given user is not a recognizer",
@@ -279,9 +273,7 @@ paths:
         401:
           description: El access token no tiene los privilegios suficientes
           schema:
-            type: object
-            items:
-              $ref: '#/definitions/ErrorResponse'
+            $ref: '#/definitions/ErrorResponse'
           examples:
             application/json: {
                 "status": "Not authorized",
@@ -303,9 +295,7 @@ paths:
         200:
           description: Exito en operación
           schema:
-            type: object
-            items:
-              $ref: '#/definitions/SuccessResponse'
+            $ref: '#/definitions/SuccessResponse'
           examples:
             application/json: {
                 "status": "true"
@@ -313,9 +303,7 @@ paths:
         400:
           description: El id de usuario no es un reconocedor
           schema:
-            type: object
-            items:
-              $ref: '#/definitions/ErrorResponse'
+            $ref: '#/definitions/ErrorResponse'
           examples:
             application/json: {
                 "status": "Given user is not a recognizer",
@@ -324,13 +312,72 @@ paths:
         401:
           description: El access token no tiene los privilegios suficientes
           schema:
-            type: object
-            items:
-              $ref: '#/definitions/ErrorResponse'
+            $ref: '#/definitions/ErrorResponse'
           examples:
             application/json: {
                 "status": "Not authorized",
                 "messages": []
+              }
+  /subjects:
+    get:
+      security:
+        - oauthorized: []
+      tags:
+        - Subjects
+      summary: Índice de asignaturas en el sistema
+      description: |
+        Este endpoint devuelve un índice de asignaturas disponibles en el sistema.
+      responses:
+        200:
+          description: Array de asignaturas
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Subject'
+          examples:
+            application/json: [
+                {
+                  "degree_name": "Grado en Bellas Artes",
+                  "centre_name": "Facultad de Bellas Artes",
+                  "name": "Historia de España",
+                  "country_name": "Spain",
+                  "id": 1,
+                  "university_name": "Universidad Complutense de Madrid"
+                },
+                {
+                  "degree_name": "Grado en Bellas Artes",
+                  "centre_name": "Facultad de Bellas Artes",
+                  "name": "Dibujo Técnico",
+                  "country_name": "Spain",
+                  "id": 11,
+                  "university_name": "Universidad Complutense de Madrid"
+                }
+              ]
+  /subjects/{subject-id}:
+    parameters:
+      - $ref: '#/parameters/subject-id'
+    get:
+      security:
+        - oauthorized: []
+      tags:
+        - Subjects
+      summary: Información de asignatura
+      description: |
+        Este endpoint devuelve información de la asignaturas dada.
+      responses:
+        200:
+          description: Objeto asignatura
+          schema:
+            $ref: '#/definitions/RecognizerSubject'
+          examples:
+            application/json: {
+                "degree_id": 1,
+                "name": "Historia de España",
+                "code": "T3Rp",
+                "credits": 6,
+                "updated_at": "Oct 27, 2016 9:05:07 PM",
+                "id": 1,
+                "created_at": "Oct 27, 2016 9:05:07 PM"
               }
 definitions:
   User:
@@ -443,7 +490,7 @@ definitions:
       created_at:
         type: string
         format: date-time
-  Subject:
+  RecognizerSubject:
     type: Object
     properties:
       id:
@@ -462,6 +509,21 @@ definitions:
       created_at:
         type: string
         format: date-time
+  Subject:
+    type: Object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      degree_name:
+        type: string
+      centre_name:
+        type: string
+      university_name:
+        type: string
+      country_name:
+        type: string
   ErrorResponse:
     type: Object
     properties:
@@ -502,3 +564,19 @@ security:
 tags:
   - name: Users
     description: Todo los relacionados con los usuarios del sistema
+  - name: Subjects
+    description: Todo lo relacionado con la gestion de asignaturas en el sistema
+  - name: Equivalences
+    description: Gestión d equivalencias creadas en el sistema
+  - name: Universities
+    description: Universiades en el sistema
+  - name: Centres
+    description: Gestión de los centros en el sistema
+  - name: Degrees
+    description: Todo lo relacionado con la gestion de grados en el sistema
+  - name: Countries
+    description: Países en el sistema
+  - name: Cities
+    description: Ciudades en el sistema
+  - name: Docs
+    description: Todo lo relacionado con la documentación de la aplicación
