@@ -10,4 +10,6 @@ the process of setting equivalences between subjects of different universities.
 If you came directly here, please see [willyfog](https://github.com/popokis/willyfog)
  for more details about the deployment.
 
+## API Documentation
 
+You can read the API RESTful documentation under [Swagger documentation](http://popokis.com/swagger-ui)
