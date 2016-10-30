@@ -490,6 +490,62 @@ paths:
                   "id": 1
                 }
               ]
+  /centres/{centre-id}/degrees:
+    get:
+      security:
+        - oauthorized: []
+      tags:
+        - Centres
+      summary: Índice de grados para un centro dado
+      description: |
+        Este endpoint devuelve un índice de grados para un centro dada.
+      responses:
+        200:
+          description: Array de grados
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Degree'
+          examples:
+            application/json: [
+                {
+                  "name": "Grado en Bellas Artes",
+                  "id": 1
+                },
+                {
+                  "name": "Grado en Historia del Arte",
+                  "id": 2
+                }
+              ]
+  /centres/{centre-id}/recognizers:
+    get:
+      security:
+        - oauthorized: []
+      tags:
+        - Centres
+      summary: Índice de reconocedores para un centro dado
+      description: |
+        Este endpoint devuelve un índice de reconocedores para un centro dado. Es decir, los reconocedores
+        de asignaturas que pertenecen al centro dado.
+      responses:
+        200:
+          description: Array de reconocedores
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+          examples:
+            application/json: [
+                {
+                  "name": "Morcilla",
+                  "surname": "Reconocedor",
+                  "nif": "1111411H",
+                  "email": "recog@willy.com",
+                  "updated_at": "Oct 27, 2016 9:05:08 PM",
+                  "id": 2,
+                  "created_at": "Oct 27, 2016 9:05:08 PM"
+                }
+              ]
 definitions:
   User:
     type: object
@@ -682,6 +738,13 @@ definitions:
         type: string
       code:
         type: string
+  Degree:
+    type: Object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
 parameters:
   user-id:
     name: user-id
@@ -699,6 +762,12 @@ parameters:
     name: university-id
     in: path
     description: Identificador de universidad
+    type: number
+    required: true
+  centre-id:
+    name: centre-id
+    in: path
+    description: Identificador de centro
     type: number
     required: true
 securityDefinitions:
