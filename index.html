@@ -1,0 +1,1623 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Willyfog API</title>
+    <style type="text/css">
+      body { 
+	font-family: Trebuchet MS, sans-serif;
+	font-size: 15px;
+	color: #444;
+	margin-right: 24px;
+}
+
+h1	{
+	font-size: 25px;
+}
+h2	{
+	font-size: 20px;
+}
+h3	{
+	font-size: 16px;
+	font-weight: bold;
+}
+hr	{
+	height: 1px;
+	border: 0;
+	color: #ddd;
+	background-color: #ddd;
+	display: none;
+}
+
+.app-desc {
+  clear: both;
+  margin-left: 20px;
+}
+.param-name {
+  width: 100%;
+}
+.license-info {
+  margin-left: 20px;
+}
+
+.license-url {
+  margin-left: 20px;
+}
+
+.model {
+  margin: 0 0 0px 20px;
+}
+
+.method {
+  margin-left: 20px;
+}
+
+.method-notes	{
+	margin: 10px 0 20px 0;
+	font-size: 90%;
+	color: #555;
+}
+
+pre {
+  padding: 10px;
+  margin-bottom: 2px;
+}
+
+.http-method {
+ text-transform: uppercase;
+}
+
+pre.get {
+  background-color: #0f6ab4;
+}
+
+pre.post {
+  background-color: #10a54a;
+}
+
+pre.put {
+  background-color: #c5862b;
+}
+
+pre.delete {
+  background-color: #a41e22;
+}
+
+.huge	{
+	color: #fff;
+}
+
+pre.example {
+  background-color: #f3f3f3;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+code {
+  white-space: pre;
+}
+
+.nickname {
+  font-weight: bold;
+}
+
+.method-path {
+  font-size: 1.5em;
+  background-color: #0f6ab4;
+}
+
+.up {
+  float:right;
+}
+
+.parameter {
+  width: 500px;
+}
+
+.param {
+  width: 500px;
+  padding: 10px 0 0 20px;
+  font-weight: bold;
+}
+
+.param-desc {
+  width: 700px;
+  padding: 0 0 0 20px;
+  color: #777;
+}
+
+.param-type {
+  font-style: italic;
+}
+
+.param-enum-header {
+width: 700px;
+padding: 0 0 0 60px;
+color: #777;
+font-weight: bold;
+}
+
+.param-enum {
+width: 700px;
+padding: 0 0 0 80px;
+color: #777;
+font-style: italic;
+}
+
+.field-label {
+  padding: 0;
+  margin: 0;
+  clear: both;
+}
+
+.field-items	{
+	padding: 0 0 15px 0;
+	margin-bottom: 15px;
+}
+
+.return-type {
+  clear: both;
+  padding-bottom: 10px;
+}
+
+.param-header {
+  font-weight: bold;
+}
+
+.method-tags {
+  text-align: right;
+}
+
+.method-tag {
+  background: none repeat scroll 0% 0% #24A600;
+  border-radius: 3px;
+  padding: 2px 10px;
+  margin: 2px;
+  color: #FFF;
+  display: inline-block;
+  text-decoration: none;
+}
+    </style>
+  </head>
+  <body>
+  <h1>Willyfog API</h1>
+    <div class="app-desc">Willyfog RESTful API para equivalencias entre asignaturas de movilidad estudiantil.</div>
+    <div class="app-desc">Version: 1.0.0</div>
+    <div class="app-desc">BasePath:/v1</div>
+    <div class="license-info">GPL 3.0</div>
+    <div class="license-url">https://github.com/popokis/willyfog-api/blob/master/LICENSE</div>
+  <h2>Access</h2>
+    <ol>
+      <li>OAuth AuthorizationUrl:http://openid.willyfog.com/authorizeTokenUrl:</li>
+    </ol>
+
+  <h2><a name="__Methods">Methods</a></h2>
+  [ Jump to <a href="#__Models">Models</a> ]
+
+  <h2>Table of Contents </h2>
+  <div class="method-summary"></div>
+  <ol>
+  <li><a href="#centresCentreIdDegreesGet"><code><span class="http-method">get</span> /centres/{centre-id}/degrees</code></a></li>
+  <li><a href="#centresCentreIdRecognizersGet"><code><span class="http-method">get</span> /centres/{centre-id}/recognizers</code></a></li>
+  <li><a href="#citiesCityIdUniversitiesGet"><code><span class="http-method">get</span> /cities/{city-id}/universities</code></a></li>
+  <li><a href="#countriesCountryIdCitiesGet"><code><span class="http-method">get</span> /countries/{country-id}/cities</code></a></li>
+  <li><a href="#countriesGet"><code><span class="http-method">get</span> /countries</code></a></li>
+  <li><a href="#degreesDegreeIdSubjectsGet"><code><span class="http-method">get</span> /degrees/{degree-id}/subjects</code></a></li>
+  <li><a href="#docsGet"><code><span class="http-method">get</span> /docs</code></a></li>
+  <li><a href="#equivalencesGet"><code><span class="http-method">get</span> /equivalences</code></a></li>
+  <li><a href="#subjectsGet"><code><span class="http-method">get</span> /subjects</code></a></li>
+  <li><a href="#subjectsSubjectIdGet"><code><span class="http-method">get</span> /subjects/{subject-id}</code></a></li>
+  <li><a href="#universitiesGet"><code><span class="http-method">get</span> /universities</code></a></li>
+  <li><a href="#universitiesUniversityIdCentresGet"><code><span class="http-method">get</span> /universities/{university-id}/centres</code></a></li>
+  <li><a href="#usersInfoGet"><code><span class="http-method">get</span> /users/info</code></a></li>
+  <li><a href="#usersRecognizerIdSubjectsGet"><code><span class="http-method">get</span> /users/{recognizer-id}/subjects</code></a></li>
+  <li><a href="#usersRecognizerIdSubjectsPost"><code><span class="http-method">post</span> /users/{recognizer-id}/subjects</code></a></li>
+  <li><a href="#usersRecognizerIdSubjectsSubjectIdDelete"><code><span class="http-method">delete</span> /users/{recognizer-id}/subjects/{subject-id}</code></a></li>
+  <li><a href="#usersUserIdGet"><code><span class="http-method">get</span> /users/{user-id}</code></a></li>
+  <li><a href="#usersUserIdInfoGet"><code><span class="http-method">get</span> /users/{user-id}/info</code></a></li>
+  <li><a href="#usersUserIdNotificationsGet"><code><span class="http-method">get</span> /users/{user-id}/notifications</code></a></li>
+  <li><a href="#usersUserIdRequestsGet"><code><span class="http-method">get</span> /users/{user-id}/requests</code></a></li>
+  </ol>
+
+  <div class="method"><a name="centresCentreIdDegreesGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /centres/{centre-id}/degrees</code></pre></div>
+    <div class="method-summary">Índice de grados para un centro dado (<span class="nickname">centresCentreIdDegreesGet</span>)</div>
+    <div class="method-notes">Este endpoint devuelve un índice de grados para un centro dada. </div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>text/plain; charset=utf-8</code></li>
+      <li><code>application/json</code></li>
+    </ul>
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Degree">Degree</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "name" : "Grado en Bellas Artes",
+  "id" : 1
+}, {
+  "name" : "Grado en Historia del Arte",
+  "id" : 2
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Array de grados
+        
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[{name&#x3D;Grado en Bellas Artes, id&#x3D;1}, {name&#x3D;Grado en Historia del Arte, id&#x3D;2}]</code></pre>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="centresCentreIdRecognizersGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /centres/{centre-id}/recognizers</code></pre></div>
+    <div class="method-summary">Índice de reconocedores para un centro dado (<span class="nickname">centresCentreIdRecognizersGet</span>)</div>
+    <div class="method-notes">Este endpoint devuelve un índice de reconocedores para un centro dado. Es decir, los reconocedores de asignaturas que pertenecen al centro dado. </div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>text/plain; charset=utf-8</code></li>
+      <li><code>application/json</code></li>
+    </ul>
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#User">User</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "name" : "Morcilla",
+  "surname" : "Reconocedor",
+  "nif" : "1111411H",
+  "email" : "recog@willy.com",
+  "updated_at" : "Oct 27, 2016 9:05:08 PM",
+  "id" : 2,
+  "created_at" : "Oct 27, 2016 9:05:08 PM"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Array de reconocedores
+        
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[{name&#x3D;Morcilla, surname&#x3D;Reconocedor, nif&#x3D;1111411H, email&#x3D;recog@willy.com, updated_at&#x3D;Oct 27, 2016 9:05:08 PM, id&#x3D;2, created_at&#x3D;Oct 27, 2016 9:05:08 PM}]</code></pre>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="citiesCityIdUniversitiesGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /cities/{city-id}/universities</code></pre></div>
+    <div class="method-summary">Índice de universidades dada una ciudad (<span class="nickname">citiesCityIdUniversitiesGet</span>)</div>
+    <div class="method-notes">Este endpoint devuelve un índice de universidades dada una ciudad. </div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>text/plain; charset=utf-8</code></li>
+      <li><code>application/json</code></li>
+    </ul>
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#University">University</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "name" : "Universidad Complutense de Madrid",
+  "code" : "010",
+  "id" : 1
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Array de universidades
+        
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[{name&#x3D;Universidad Complutense de Madrid, code&#x3D;010, id&#x3D;1}]</code></pre>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="countriesCountryIdCitiesGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /countries/{country-id}/cities</code></pre></div>
+    <div class="method-summary">Índice de ciudades dado un país (<span class="nickname">countriesCountryIdCitiesGet</span>)</div>
+    <div class="method-notes">Este endpoint devuelve un índice de ciudades dado un país. </div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>text/plain; charset=utf-8</code></li>
+      <li><code>application/json</code></li>
+    </ul>
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#City">City</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "name" : "Madrid",
+  "id" : 1
+}, {
+  "name" : "Málaga",
+  "id" : 2
+}, {
+  "name" : "Barcelona",
+  "id" : 3
+}, {
+  "name" : "Valencia",
+  "id" : 4
+}, {
+  "name" : "Sevilla",
+  "id" : 5
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Array de ciudades
+        
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[{name&#x3D;Madrid, id&#x3D;1}, {name&#x3D;Málaga, id&#x3D;2}, {name&#x3D;Barcelona, id&#x3D;3}, {name&#x3D;Valencia, id&#x3D;4}, {name&#x3D;Sevilla, id&#x3D;5}]</code></pre>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="countriesGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /countries</code></pre></div>
+    <div class="method-summary">Índice de países (<span class="nickname">countriesGet</span>)</div>
+    <div class="method-notes">Este endpoint devuelve un índice de países. </div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>text/plain; charset=utf-8</code></li>
+      <li><code>application/json</code></li>
+    </ul>
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Country">Country</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "name" : "Spain",
+  "code" : "ES",
+  "id" : 202
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Array de países
+        
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[{name&#x3D;Spain, code&#x3D;ES, id&#x3D;202}]</code></pre>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="degreesDegreeIdSubjectsGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /degrees/{degree-id}/subjects</code></pre></div>
+    <div class="method-summary">Índice de asignaturas para un grado dado (<span class="nickname">degreesDegreeIdSubjectsGet</span>)</div>
+    <div class="method-notes">Este endpoint devuelve un índice de asignaturas para un grado dado. </div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>text/plain; charset=utf-8</code></li>
+      <li><code>application/json</code></li>
+    </ul>
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Subject">Subject</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "name" : "Historia de España",
+  "code" : "T3Rp",
+  "credits" : 6,
+  "id" : 1
+}, {
+  "name" : "Dibujo Técnico",
+  "code" : "JZs8",
+  "credits" : 6,
+  "id" : 11
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Array de asignaturas
+        
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[{name&#x3D;Historia de España, code&#x3D;T3Rp, credits&#x3D;6, id&#x3D;1}, {name&#x3D;Dibujo Técnico, code&#x3D;JZs8, credits&#x3D;6, id&#x3D;11}]</code></pre>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="docsGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /docs</code></pre></div>
+    <div class="method-summary">Fichero YAML Swagger (<span class="nickname">docsGet</span>)</div>
+    <div class="method-notes">Este endpoint devuelve un fichero Swagger YAML para Swagger UI. </div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>text/plain; charset=utf-8</code></li>
+      <li><code>application/json</code></li>
+    </ul>
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      
+      file
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: </div>
+    <pre class="example"><code></code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/x-yaml</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Fichero Swagger
+        <a href="#file">file</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="equivalencesGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /equivalences</code></pre></div>
+    <div class="method-summary">Índice de equivalencias (<span class="nickname">equivalencesGet</span>)</div>
+    <div class="method-notes">Este endpoint devuelve un índice de equivalencias creadas en el sistema. Tiene un parametro de &#x60;query string&#x60; que es &#x60;subjectName&#x60; en el caso de enviarse con un string vacío, se devolvera un índice de todas las equivalencias.  En el caso de que contenga un valor, se devolverán todas las equivalencias donde hay una coincidencia con la búsqueda índicada tanto en asignatura de origen como de destino. </div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>text/plain; charset=utf-8</code></li>
+      <li><code>application/json</code></li>
+    </ul>
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">subjectName (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Query para la búsqueda en equivalencias </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Equivalence">Equivalence</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "subject_id" : 1,
+  "equivalent_name" : "Arte Moderno",
+  "subject_name" : "Historia de España",
+  "id" : 1,
+  "equivalent_id" : 2
+}, {
+  "subject_id" : 2,
+  "equivalent_name" : "Cálculo",
+  "subject_name" : "Arte Moderno",
+  "id" : 2,
+  "equivalent_id" : 3
+}, {
+  "subject_id" : 3,
+  "equivalent_name" : "Derecho Romano",
+  "subject_name" : "Cálculo",
+  "id" : 3,
+  "equivalent_id" : 7
+}, {
+  "subject_id" : 10,
+  "equivalent_name" : "Historia de Grecia",
+  "subject_name" : "Anatomía I",
+  "id" : 4,
+  "equivalent_id" : 12
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Array de equivalencias
+        
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[{subject_id&#x3D;1, equivalent_name&#x3D;Arte Moderno, subject_name&#x3D;Historia de España, id&#x3D;1, equivalent_id&#x3D;2}, {subject_id&#x3D;2, equivalent_name&#x3D;Cálculo, subject_name&#x3D;Arte Moderno, id&#x3D;2, equivalent_id&#x3D;3}, {subject_id&#x3D;3, equivalent_name&#x3D;Derecho Romano, subject_name&#x3D;Cálculo, id&#x3D;3, equivalent_id&#x3D;7}, {subject_id&#x3D;10, equivalent_name&#x3D;Historia de Grecia, subject_name&#x3D;Anatomía I, id&#x3D;4, equivalent_id&#x3D;12}]</code></pre>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="subjectsGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /subjects</code></pre></div>
+    <div class="method-summary">Índice de asignaturas en el sistema (<span class="nickname">subjectsGet</span>)</div>
+    <div class="method-notes">Este endpoint devuelve un índice de asignaturas disponibles en el sistema. </div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>text/plain; charset=utf-8</code></li>
+      <li><code>application/json</code></li>
+    </ul>
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Subject">Subject</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "degree_name" : "Grado en Bellas Artes",
+  "centre_name" : "Facultad de Bellas Artes",
+  "name" : "Historia de España",
+  "country_name" : "Spain",
+  "id" : 1,
+  "university_name" : "Universidad Complutense de Madrid"
+}, {
+  "degree_name" : "Grado en Bellas Artes",
+  "centre_name" : "Facultad de Bellas Artes",
+  "name" : "Dibujo Técnico",
+  "country_name" : "Spain",
+  "id" : 11,
+  "university_name" : "Universidad Complutense de Madrid"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Array de asignaturas
+        
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[{degree_name&#x3D;Grado en Bellas Artes, centre_name&#x3D;Facultad de Bellas Artes, name&#x3D;Historia de España, country_name&#x3D;Spain, id&#x3D;1, university_name&#x3D;Universidad Complutense de Madrid}, {degree_name&#x3D;Grado en Bellas Artes, centre_name&#x3D;Facultad de Bellas Artes, name&#x3D;Dibujo Técnico, country_name&#x3D;Spain, id&#x3D;11, university_name&#x3D;Universidad Complutense de Madrid}]</code></pre>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="subjectsSubjectIdGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /subjects/{subject-id}</code></pre></div>
+    <div class="method-summary">Información de asignatura (<span class="nickname">subjectsSubjectIdGet</span>)</div>
+    <div class="method-notes">Este endpoint devuelve información de la asignaturas dada. </div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">subject-id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Identificador de asignatura </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>text/plain; charset=utf-8</code></li>
+      <li><code>application/json</code></li>
+    </ul>
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#RecognizerSubject">RecognizerSubject</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "degree_id" : 1,
+  "name" : "Historia de España",
+  "code" : "T3Rp",
+  "credits" : 6,
+  "updated_at" : "Oct 27, 2016 9:05:07 PM",
+  "id" : 1,
+  "created_at" : "Oct 27, 2016 9:05:07 PM"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Objeto asignatura
+        <a href="#RecognizerSubject">RecognizerSubject</a>
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{degree_id&#x3D;1, name&#x3D;Historia de España, code&#x3D;T3Rp, credits&#x3D;6, updated_at&#x3D;Oct 27, 2016 9:05:07 PM, id&#x3D;1, created_at&#x3D;Oct 27, 2016 9:05:07 PM}</code></pre>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="universitiesGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /universities</code></pre></div>
+    <div class="method-summary">Índice de universidades (<span class="nickname">universitiesGet</span>)</div>
+    <div class="method-notes">Este endpoint devuelve un índice de universidades en el sistema. </div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>text/plain; charset=utf-8</code></li>
+      <li><code>application/json</code></li>
+    </ul>
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#University">University</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "name" : "Universidad Complutense de Madrid",
+  "code" : "010",
+  "id" : 1
+}, {
+  "name" : "Universidad de Málaga",
+  "code" : "011",
+  "id" : 2
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Array de universidades
+        
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[{name&#x3D;Universidad Complutense de Madrid, code&#x3D;010, id&#x3D;1}, {name&#x3D;Universidad de Málaga, code&#x3D;011, id&#x3D;2}]</code></pre>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="universitiesUniversityIdCentresGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /universities/{university-id}/centres</code></pre></div>
+    <div class="method-summary">Índice de centros dada una universidad (<span class="nickname">universitiesUniversityIdCentresGet</span>)</div>
+    <div class="method-notes">Este endpoint devuelve un índice de centros para una univerisdad dada. </div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>text/plain; charset=utf-8</code></li>
+      <li><code>application/json</code></li>
+    </ul>
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Centre">Centre</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "name" : "Facultad de Bellas Artes",
+  "code" : "28027126",
+  "id" : 1
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Array de centros
+        
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[{name&#x3D;Facultad de Bellas Artes, code&#x3D;28027126, id&#x3D;1}]</code></pre>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="usersInfoGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /users/info</code></pre></div>
+    <div class="method-summary">Información básica de usuario. (<span class="nickname">usersInfoGet</span>)</div>
+    <div class="method-notes">Este endpoint devuelve información básica del usuario al que pertenece el *access token* dado. </div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>text/plain; charset=utf-8</code></li>
+      <li><code>application/json</code></li>
+    </ul>
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">accessToken (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Access token de un usuario </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#User">User</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "id" : 1,
+  "name" : "Willy",
+  "surname" : "Fog",
+  "nif" : "1111111H",
+  "email" : "student@willy.com",
+  "updated_at" : "Oct 27, 2016 9:05:08 PM",
+  "created_at" : "Oct 27, 2016 9:05:08 PM"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Objeto usuario
+        <a href="#User">User</a>
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{id&#x3D;1, name&#x3D;Willy, surname&#x3D;Fog, nif&#x3D;1111111H, email&#x3D;student@willy.com, updated_at&#x3D;Oct 27, 2016 9:05:08 PM, created_at&#x3D;Oct 27, 2016 9:05:08 PM}</code></pre>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="usersRecognizerIdSubjectsGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /users/{recognizer-id}/subjects</code></pre></div>
+    <div class="method-summary">Asignaturas de un reconocedor (<span class="nickname">usersRecognizerIdSubjectsGet</span>)</div>
+    <div class="method-notes">Este endpoint devuelve las asignaturas que modera un Reconocedor. </div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">user-id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Identificador de usuario </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>text/plain; charset=utf-8</code></li>
+      <li><code>application/json</code></li>
+    </ul>
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#RecognizerSubject">RecognizerSubject</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "degree_id" : 1,
+  "name" : "Historia de España",
+  "code" : "T3Rp",
+  "credits" : 6,
+  "updated_at" : "Oct 27, 2016 9:05:07 PM",
+  "id" : 1,
+  "created_at" : "Oct 27, 2016 9:05:07 PM"
+}, {
+  "degree_id" : 2,
+  "name" : "Arte Moderno",
+  "code" : "B3Ht",
+  "credits" : 6,
+  "updated_at" : "Oct 27, 2016 9:05:07 PM",
+  "id" : 2,
+  "created_at" : "Oct 27, 2016 9:05:07 PM"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Array de asignaturas
+        
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[{degree_id&#x3D;1, name&#x3D;Historia de España, code&#x3D;T3Rp, credits&#x3D;6, updated_at&#x3D;Oct 27, 2016 9:05:07 PM, id&#x3D;1, created_at&#x3D;Oct 27, 2016 9:05:07 PM}, {degree_id&#x3D;2, name&#x3D;Arte Moderno, code&#x3D;B3Ht, credits&#x3D;6, updated_at&#x3D;Oct 27, 2016 9:05:07 PM, id&#x3D;2, created_at&#x3D;Oct 27, 2016 9:05:07 PM}]</code></pre>
+    <h4 class="field-label">400</h4>
+    El id de usuario no es un reconocedor
+        <a href="#ErrorResponse">ErrorResponse</a>
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{status&#x3D;Given user is not a recognizer, messages&#x3D;[]}</code></pre>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="usersRecognizerIdSubjectsPost"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /users/{recognizer-id}/subjects</code></pre></div>
+    <div class="method-summary">Añade asignaturas a un reconocedor (<span class="nickname">usersRecognizerIdSubjectsPost</span>)</div>
+    <div class="method-notes">Este endpoint añade una asignatura a un Reconocedor. Necesita que el usuario portador del access token sea &#x60;coordinador&#x60;. </div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">user-id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Identificador de usuario </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>text/plain; charset=utf-8</code></li>
+      <li><code>application/json</code></li>
+    </ul>
+
+
+
+
+    <h3 class="field-label">Form parameters</h3>
+    <div class="field-items">
+      <div class="param">subject_ids (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash; Array de ids de asignatura en formato JSON </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#SuccessResponse">SuccessResponse</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "status" : "true"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Exito en operación
+        <a href="#SuccessResponse">SuccessResponse</a>
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{status&#x3D;true}</code></pre>
+    <h4 class="field-label">400</h4>
+    El id de usuario no es un reconocedor
+        <a href="#ErrorResponse">ErrorResponse</a>
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{status&#x3D;Given user is not a recognizer, messages&#x3D;[]}</code></pre>
+    <h4 class="field-label">401</h4>
+    El access token no tiene los privilegios suficientes
+        <a href="#ErrorResponse">ErrorResponse</a>
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{status&#x3D;Not authorized, messages&#x3D;[]}</code></pre>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="usersRecognizerIdSubjectsSubjectIdDelete"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /users/{recognizer-id}/subjects/{subject-id}</code></pre></div>
+    <div class="method-summary">Elimina la asignatura de un reconocedor (<span class="nickname">usersRecognizerIdSubjectsSubjectIdDelete</span>)</div>
+    <div class="method-notes">Este endpoint elimina una asignatura que modera un Reconocedor. </div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">user-id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Identificador de usuario </div><div class="param">subject-id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Identificador de asignatura </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>text/plain; charset=utf-8</code></li>
+      <li><code>application/json</code></li>
+    </ul>
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#SuccessResponse">SuccessResponse</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "status" : "true"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Exito en operación
+        <a href="#SuccessResponse">SuccessResponse</a>
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{status&#x3D;true}</code></pre>
+    <h4 class="field-label">400</h4>
+    El id de usuario no es un reconocedor
+        <a href="#ErrorResponse">ErrorResponse</a>
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{status&#x3D;Given user is not a recognizer, messages&#x3D;[]}</code></pre>
+    <h4 class="field-label">401</h4>
+    El access token no tiene los privilegios suficientes
+        <a href="#ErrorResponse">ErrorResponse</a>
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{status&#x3D;Not authorized, messages&#x3D;[]}</code></pre>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="usersUserIdGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /users/{user-id}</code></pre></div>
+    <div class="method-summary">Información básica de usuario. (<span class="nickname">usersUserIdGet</span>)</div>
+    <div class="method-notes">Este endpoint devuelve información básica del usuario indicado por el path. </div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">user-id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Identificador de usuario </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>text/plain; charset=utf-8</code></li>
+      <li><code>application/json</code></li>
+    </ul>
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#User">User</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "id" : 1,
+  "name" : "Willy",
+  "surname" : "Fog",
+  "nif" : "1111111H",
+  "email" : "student@willy.com",
+  "updated_at" : "Oct 27, 2016 9:05:08 PM",
+  "created_at" : "Oct 27, 2016 9:05:08 PM"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Objeto usuario
+        <a href="#User">User</a>
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{id&#x3D;1, name&#x3D;Willy, surname&#x3D;Fog, nif&#x3D;1111111H, email&#x3D;student@willy.com, updated_at&#x3D;Oct 27, 2016 9:05:08 PM, created_at&#x3D;Oct 27, 2016 9:05:08 PM}</code></pre>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="usersUserIdInfoGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /users/{user-id}/info</code></pre></div>
+    <div class="method-summary">Información avanzada de usuario (<span class="nickname">usersUserIdInfoGet</span>)</div>
+    <div class="method-notes">Este endpoint devuelve información extra para un usuario dado. </div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">user-id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Identificador de usuario </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>text/plain; charset=utf-8</code></li>
+      <li><code>application/json</code></li>
+    </ul>
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#UserInfo">UserInfo</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "degree_name" : "Grado en Ingeniería Informática",
+  "centre_name" : "Escuela Técnica Superior de Ingeniería Informática",
+  "nif" : "1111111H",
+  "university_name" : "Universidad de Málaga",
+  "role_name" : "student",
+  "degree_id" : 3,
+  "university_id" : 2,
+  "role_id" : 4,
+  "surname" : "Fog",
+  "gravatar" : "https://www.gravatar.com/avatar/ff9ee0c165b45e2a70b98334289408a3",
+  "name" : "Willy",
+  "centre_id" : 2,
+  "email" : "student@willy.com"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Objeto informacion de usuario
+        <a href="#UserInfo">UserInfo</a>
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{degree_name&#x3D;Grado en Ingeniería Informática, centre_name&#x3D;Escuela Técnica Superior de Ingeniería Informática, nif&#x3D;1111111H, university_name&#x3D;Universidad de Málaga, role_name&#x3D;student, degree_id&#x3D;3, university_id&#x3D;2, role_id&#x3D;4, surname&#x3D;Fog, gravatar&#x3D;https://www.gravatar.com/avatar/ff9ee0c165b45e2a70b98334289408a3, name&#x3D;Willy, centre_id&#x3D;2, email&#x3D;student@willy.com}</code></pre>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="usersUserIdNotificationsGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /users/{user-id}/notifications</code></pre></div>
+    <div class="method-summary">Notificaciones de un usuario (<span class="nickname">usersUserIdNotificationsGet</span>)</div>
+    <div class="method-notes">Este endpoint devuelve las notificaciones para un usuario dado. </div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">user-id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Identificador de usuario </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>text/plain; charset=utf-8</code></li>
+      <li><code>application/json</code></li>
+    </ul>
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Notification">Notification</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "content" : "You have a new message!",
+  "created_at" : "Oct 29, 2016 12:20:21 PM"
+}, "..." ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Array de notificaciones
+        
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[{content&#x3D;You have a new message!, created_at&#x3D;Oct 29, 2016 12:20:21 PM}, ...]</code></pre>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="usersUserIdRequestsGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /users/{user-id}/requests</code></pre></div>
+    <div class="method-summary">Peticiones del usuario dado (<span class="nickname">usersUserIdRequestsGet</span>)</div>
+    <div class="method-notes">Este endpoint devuelve las peticiones del usuario dado dependiendo de su rol. Las peticiones se catalagan en los grupos &#x60;pending&#x60; y &#x60;closed&#x60;. Dependiendo del rol del usuario dado, las peticiones que aparecerán seguirán el siguiente criterio:  * *Estudiante*: Peticiones abiertas por el usuario. * *Reconocedor*: Peticiones de asignaturas que modera este usuario. * *Coordinador*: Peticiones de asignaturas que pertenezcan a grados de su centro. * *Admin*: Un índice de todas las peticiones del sistema. </div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">user-id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Identificador de usuario </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+      <li><code>text/plain; charset=utf-8</code></li>
+      <li><code>application/json</code></li>
+    </ul>
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#RequestIndex">RequestIndex</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "pending" : [ {
+    "subject_id" : 2,
+    "subject_code" : "B3Ht",
+    "subject_name" : "Arte Moderno",
+    "id" : 2,
+    "mobility_type" : "Erasmus",
+    "category" : "pending"
+  }, {
+    "subject_id" : 4,
+    "subject_code" : "jvdH",
+    "subject_name" : "Estructuras de Datos",
+    "id" : 3,
+    "mobility_type" : "Erasmus",
+    "category" : "pending"
+  }, "..." ],
+  "closed" : [ {
+    "subject_id" : 1,
+    "subject_code" : "T3Rp",
+    "subject_name" : "Historia de España",
+    "id" : 1,
+    "mobility_type" : "Erasmus",
+    "category" : "closed",
+    "status" : "rejected"
+  }, "..." ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Objeto índice de peticiones
+        <a href="#RequestIndex">RequestIndex</a>
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{pending&#x3D;[{subject_id&#x3D;2, subject_code&#x3D;B3Ht, subject_name&#x3D;Arte Moderno, id&#x3D;2, mobility_type&#x3D;Erasmus, category&#x3D;pending}, {subject_id&#x3D;4, subject_code&#x3D;jvdH, subject_name&#x3D;Estructuras de Datos, id&#x3D;3, mobility_type&#x3D;Erasmus, category&#x3D;pending}, ...], closed&#x3D;[{subject_id&#x3D;1, subject_code&#x3D;T3Rp, subject_name&#x3D;Historia de España, id&#x3D;1, mobility_type&#x3D;Erasmus, category&#x3D;closed, status&#x3D;rejected}, ...]}</code></pre>
+  </div> <!-- method -->
+  <hr/>
+
+  <div class="up"><a href="#__Models">Up</a></div>
+  <h2><a name="__Models">Models</a></h2>
+  [ Jump to <a href="#__Methods">Methods</a> ]
+
+  <h2>Table of Contents</h2>
+  <ol>
+    <li><a href="#Centre"><code>Centre</code></a></li>
+    <li><a href="#City"><code>City</code></a></li>
+    <li><a href="#ClosedRequest"><code>ClosedRequest</code></a></li>
+    <li><a href="#Country"><code>Country</code></a></li>
+    <li><a href="#Degree"><code>Degree</code></a></li>
+    <li><a href="#Equivalence"><code>Equivalence</code></a></li>
+    <li><a href="#ErrorResponse"><code>ErrorResponse</code></a></li>
+    <li><a href="#Notification"><code>Notification</code></a></li>
+    <li><a href="#PendingRequest"><code>PendingRequest</code></a></li>
+    <li><a href="#RecognizerSubject"><code>RecognizerSubject</code></a></li>
+    <li><a href="#RequestIndex"><code>RequestIndex</code></a></li>
+    <li><a href="#Subject"><code>Subject</code></a></li>
+    <li><a href="#SuccessResponse"><code>SuccessResponse</code></a></li>
+    <li><a href="#University"><code>University</code></a></li>
+    <li><a href="#User"><code>User</code></a></li>
+    <li><a href="#UserInfo"><code>UserInfo</code></a></li>
+  </ol>
+
+  <div class="model">
+    <h3 class="field-label"><a name="Centre">Centre</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">code (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="City">City</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="ClosedRequest">ClosedRequest</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">subject_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">subject_code (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">subject_name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">mobility_type (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">category (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-enum-header">Enum:</div>
+        <div class="param-enum">pending</div><div class="param-enum">closed</div>
+<div class="param">status (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-enum-header">Enum:</div>
+        <div class="param-enum">approved</div><div class="param-enum">rejected</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="Country">Country</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">code (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="Degree">Degree</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="Equivalence">Equivalence</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">subject_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">equivalent_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">subject_name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">equivalen_name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="ErrorResponse">ErrorResponse</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">status (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">messages (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="Notification">Notification</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">content (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">created_at (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="PendingRequest">PendingRequest</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">subject_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">subject_code (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">subject_name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">mobility_type (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">category (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="RecognizerSubject">RecognizerSubject</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">degree_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">code (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">credits (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">updated_at (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+<div class="param">created_at (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="RequestIndex">RequestIndex</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">pending (optional)</div><div class="param-desc"><span class="param-type"><a href="#PendingRequest">array[PendingRequest]</a></span>  </div>
+<div class="param">closed (optional)</div><div class="param-desc"><span class="param-type"><a href="#ClosedRequest">array[ClosedRequest]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="Subject">Subject</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">degree_name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">centre_name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">university_name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">country_name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="SuccessResponse">SuccessResponse</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">status (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">data (optional)</div><div class="param-desc"><span class="param-type"><a href="#object">Object</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="University">University</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">code (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="User">User</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">surname (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">nif (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">email (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">updated_at (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+<div class="param">created_at (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="UserInfo">UserInfo</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">role_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">role_name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-enum-header">Enum:</div>
+        <div class="param-enum">student</div><div class="param-enum">recognizer</div><div class="param-enum">coordinator</div><div class="param-enum">admin</div>
+<div class="param">degree_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">degree_name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">centre_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">centre_name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">university_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">university_name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">surname (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">nif (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">email (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">gravatar (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  </body>
+</html>
