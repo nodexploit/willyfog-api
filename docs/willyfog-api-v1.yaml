@@ -676,9 +676,290 @@ paths:
           description: Fichero Swagger
           schema:
             type: file
+  /requests/{request-id}:
+    get:
+      security:
+        - oauthorized: []
+      tags:
+        - Requests
+      produces:
+        - application/json
+      summary: Información sobre la petición dada.
+      description: |
+        Retorna la información relacionada a una petición pasada por query del usuario registrado. Tanto la información
+        de la asignatura de origen como la información de las asignaturas (máximo tres) de destino.
+      responses:
+        200:
+          description: Asignatura origen y array asignaturas destino
+          schema:
+            $ref: '#/definitions/RequestFind'
+          examples:
+            application/json: {
+                "subject_id": 2,
+                "subject_credits": 6,
+                "subject_code": "B3Ht",
+                "student_surname": "Fog",
+                "student_id": 1,
+                "created_at": "Oct 27, 2016 11:05:25 PM",
+                "student_name": "Willy",
+                "mobility_type_id": 1,
+                "destination_subjects": [
+                  {
+                    "subject_id": 3,
+                    "subject_credits": 6,
+                    "subject_code": "Q2RO",
+                    "country": "Spain",
+                    "city": "Málaga",
+                    "university": "Universidad de Málaga",
+                    "subject_name": "Cálculo",
+                    "degree": "Grado en Ingeniería Informática",
+                    "centre": "Escuela Técnica Superior de Ingeniería Informática"
+                  },
+                  {
+                    "subject_id": 4,
+                    "subject_credits": 6,
+                    "subject_code": "jvdH",
+                    "country": "Spain",
+                    "city": "Málaga",
+                    "university": "Universidad de Málaga",
+                    "subject_name": "Estructuras de Datos",
+                    "degree": "Grado en Ingeniería del Software",
+                    "centre": "Escuela Técnica Superior de Ingeniería Informática"
+                  }
+                ],
+                "subject_name": "Arte Moderno",
+                "student_email": "nvortega92@gmail.com",
+                "id": 2,
+                "mobility_type": "Erasmus",
+                "category": "closed",
+                "status": "rejected"
+              }
+  /requests:
+    post:
+      security:
+        - oauthorized: []
+      tags:
+        - Requests
+      summary: Crea una petición
+      description: |
+        Crea una petición de equivalencia entre una asignatura de origen y muchas de destino. Cuando la petición
+        es creada, se notifica a los reconocedores.
+      parameters:
+        - name: request_content
+          in: formData
+          description: Información de la asignatura de origen y las de destino.
+          type: Object
+          items:
+            $ref: '#/definitions/RequestContent'
+      responses:
+        200:
+          description: Exito en operación
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+          examples:
+            application/json: {
+                "status": "true"
+              }
+        400:
+          description: Faltan parametros obligatorios
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          examples:
+            application/json: {
+                "status": "Missing required fields",
+                "messages": []
+              }
+        401:
+          description: El access token no tiene los privilegios suficientes
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          examples:
+            application/json: {
+                "status": "Not authorized",
+                "messages": []
+              }
+  /requests/{request-id}/comments:
+    get:
+      security:
+        - oauthorized: []
+      tags:
+        - Requests
+      produces:
+        - application/json
+      summary: Comentarios de una petición
+      description: |
+        Devuelve los comentarios asociados a una petición de equivalencia.
+      responses:
+        200:
+          description: Comentarios ordenados por date time.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/RequestComments'
+          examples:
+            application/json: [
+                {
+                  "user_id": 2,
+                  "user_name": "Morcilla",
+                  "created_at": "Oct 27, 2016 11:24:07 PM",
+                  "user_surname": "Reconocedor",
+                  "id": 4,
+                  "content": "Falta documentacion"
+                },
+                {
+                  "user_id": 2,
+                  "user_name": "Morcilla",
+                  "created_at": "Oct 27, 2016 11:18:06 PM",
+                  "user_surname": "Reconocedor",
+                  "id": 3,
+                  "content": "Prueba de comentario"
+                },
+                {
+                  "user_id": 2,
+                  "user_name": "Morcilla",
+                  "created_at": "Oct 27, 2016 11:15:03 PM",
+                  "user_surname": "Reconocedor",
+                  "id": 2,
+                  "content": "Ahora es cuando"
+                },
+                {
+                  "user_id": 2,
+                  "user_name": "Morcilla",
+                  "created_at": "Oct 27, 2016 11:13:32 PM",
+                  "user_surname": "Reconocedor",
+                  "id": 1,
+                  "content": "Totalmente"
+                }
+              ]
+  /requests/{request-id}/comment:
+    post:
+      security:
+        - oauthorized: []
+      tags:
+        - Requests
+      summary: Crea un comentario
+      description: |
+        Crea un comentario en la petición correspondiente. Notifica al dueño de la petición.
+      parameters:
+        - name: content
+          in: formData
+          description: Información del usuario que comenta y el contenido del comentario.
+          type: Object
+          items:
+            $ref: '#/definitions/Comment'
+      responses:
+        200:
+          description: Exito en operación
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+          examples:
+            application/json: {
+                "status": "true"
+              }
+        400:
+          description: Faltan parametros obligatorios
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          examples:
+            application/json: {
+                "status": "Missing required fields",
+                "messages": []
+              }
+        401:
+          description: El access token no tiene los privilegios suficientes
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          examples:
+            application/json: {
+                "status": "Not authorized",
+                "messages": []
+              }
+  /requests/{request-id}/accept:
+    post:
+      security:
+        - oauthorized: []
+      tags:
+        - Requests
+      summary: Acepta una petición
+      description: |
+        Se acepta una petición dada la supervisión de un reconocedor. Sólo los reconocedores pueden aceptar peticiones.
+      parameters:
+        - name: request_id
+          in: path
+          description: Identificador de la petición que se acepta.
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Exito en operación
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+          examples:
+            application/json: {
+                "status": "true"
+              }
+        400:
+          description: Intento de reconocer una asignatura incorrecta
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          examples:
+            application/json: {
+                "status": "Trying to recognize an incorrect subject.",
+                "messages": []
+              }
+        401:
+          description: El access token no tiene los privilegios suficientes
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          examples:
+            application/json: {
+                "status": "Not authorized",
+                "messages": []
+              }
+  /requests/{request-id}/reject:
+    post:
+      security:
+        - oauthorized: []
+      tags:
+        - Requests
+      summary: Rechaza una petición
+      description: |
+        Se rechaza una petición dada la supervisión de un reconocedor. Sólo los reconocedores pueden rechazar peticiones.
+      parameters:
+        - name: request_id
+          in: path
+          description: Identificador de la petición que se rechaza.
+          type: integer
+      responses:
+        200:
+          description: Exito en operación
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+          examples:
+            application/json: {
+                "status": "true"
+              }
+        400:
+          description: Intento de reconocer una asignatura incorrecta
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          examples:
+            application/json: {
+                "status": "Trying to recognize an incorrect subject.",
+                "messages": []
+              }
+        401:
+          description: El access token no tiene los privilegios suficientes
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+          examples:
+            application/json: {
+                "status": "Not authorized",
+                "messages": []
+              }
 definitions:
   User:
-    type: object
+    type: Object
     properties:
       id:
         type: integer
@@ -697,7 +978,7 @@ definitions:
         type: string
         format: date-time
   UserInfo:
-    type: object
+    type: Object
     properties:
       role_id:
         type: integer
@@ -769,7 +1050,7 @@ definitions:
           - approved
           - rejected
   RequestIndex:
-      type: object
+      type: Object
       properties:
         pending:
           type: array
@@ -891,6 +1172,194 @@ definitions:
         type: integer
       name:
         type: string
+  Request:
+    type: Object
+    properties:
+      id:
+        type: integer
+      student_id:
+        type: integer
+      origin_subject_id:
+        type: integer
+      mobility_type_id:
+        type: integer
+      destination_subjects:
+        type: array
+        items:
+          $ref: '#/definitions/RequestDestinationSubject'
+      created_at:
+        type: string
+        format: date-time
+      updated_at:
+        type: string
+        format: date-time
+      deleted_at:
+        type: string
+        format: date-time
+  RequestDestinationSubject:
+    type: Object
+    properties:
+      id:
+        type: integer
+      request_id:
+        type: integer
+      subject_id:
+        type: integer
+      subject_name:
+        type: string
+      subject_code:
+        type: string
+      subject_credits:
+        type: integer
+      centre_name:
+        type: string
+      country_name:
+        type: string
+      city_name:
+        type: string
+      university_name:
+        type: string
+      degree_name:
+        type: string
+      uri:
+        type: string
+      attachment:
+        type: string
+      created_at:
+        type: string
+        format: date-time
+      updated_at:
+        type: string
+        format: date-time
+      deleted_at:
+        type: string
+        format: date-time
+  RequestDestinations:
+    type: Object
+    properties:
+      subject_id:
+        type: integer
+      subject_credits:
+        type: integer
+      subject_code:
+        type: string
+      country:
+        type: string
+      city:
+        type: string
+      university:
+        type: string
+      subject_name:
+        type: string
+      degree:
+        type: string
+      centre:
+        type: string
+      uri:
+        type: string
+  RequestFind:
+    type: Object
+    properties:
+      id:
+        type: integer
+      student_id:
+        type: integer
+      subject_id:
+        type: integer
+      student_name:
+        type: string
+      student_surname:
+        type: string
+      student_email:
+        type: string
+      subject_code:
+        type: string
+      subject_name:
+        type: string
+      subject_credits:
+        type: integer
+      mobility_type_id:
+        type: integer
+      mobility_type:
+        type: string
+      category:
+        type: string
+      status:
+        type: string
+      destination_subjects:
+        type: array
+        items:
+          $ref: '#/definitions/RequestDestinations'
+  RequestContent:
+    type: Object
+    properties:
+      origin_subject_id:
+        type: integer
+      mobility_type_id:
+        type: integer
+      destinations:
+        type: array
+        items:
+          $ref: '#/definitions/Destination'
+  Destination:
+    type: Object
+    properties:
+      destination_subject_id:
+        type: integer
+      destination_url:
+        type: string
+      destination_country:
+        type: string
+      destination_city:
+        type: string
+      destination_university:
+        type: string
+      destination_centre:
+        type: string
+      destination_degree:
+        type: string
+      destination_subject_code:
+        type: string
+      destination_subject:
+        type: string
+      destination_subject_credits:
+        type: integer
+  RequestComments:
+    type: Object
+    properties:
+      id:
+        type: integer
+      user_id:
+        type: integer
+      user_name:
+        type: string
+      created_at:
+        type: string
+        format: date-time
+      user_surname:
+        type: string
+      content:
+        type: string
+  Comment:
+    type: Object
+    properties:
+      id:
+        type: integer
+      user_id:
+        type: integer
+      request_id:
+        type: integer
+      content:
+        type: string
+      created_at:
+        type: string
+        format: date-time
+      updated_at:
+        type: string
+        format: date-time
+      deleted_at:
+        type: string
+        format: date-time
 parameters:
   user-id:
     name: user-id
@@ -934,6 +1403,12 @@ parameters:
     description: Identificador de ciudad
     type: number
     required: true
+  request-id:
+    name: request-id
+    in: path
+    description: Identificador de petición
+    type: number
+    required: true
 securityDefinitions:
   oauthorized:
     type: oauth2
@@ -961,3 +1436,5 @@ tags:
     description: Ciudades en el sistema
   - name: Docs
     description: Todo lo relacionado con la documentación de la aplicación
+  - name: Requests
+    description: Acciones sobre las peticiones del sistema
